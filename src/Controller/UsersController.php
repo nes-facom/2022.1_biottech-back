@@ -243,7 +243,7 @@ class UsersController extends AppController {
         if ($result->isValid()) {
 
             $data = $this->request->input('json_decode', true);
-            $id = $this->request->getQuery('id');
+            $id = $identity->getOriginalData()['id'];
 
             $user = $this->UserService->updateUserPassword($id, $data);
             
