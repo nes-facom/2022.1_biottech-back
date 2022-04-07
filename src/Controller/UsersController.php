@@ -81,7 +81,8 @@ class UsersController extends AppController {
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
 
@@ -104,7 +105,8 @@ class UsersController extends AppController {
         } else {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
     }
@@ -127,19 +129,19 @@ class UsersController extends AppController {
         if ($result->isValid()) {
 
             $id = $this->request->getQuery('id');
-       
+
             $response = $this->response
                     ->withType('application/json')
                     ->withStatus(200)
                     ->withStringBody(json_encode($this->UserService->getUser($id)));
             return $response;
         } else {
-            $this->response = $this->response->withStatus(401);
-            $json = [];
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
+            return $response;
         }
-
-        $this->set(compact('json'));
-        $this->viewBuilder()->setOption('serialize', 'json');
     }
 
     public function save() {
@@ -149,7 +151,8 @@ class UsersController extends AppController {
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
 
@@ -165,18 +168,21 @@ class UsersController extends AppController {
             if ($this->UserService->saveUser($data)) {
                 $response = $this->response
                         ->withType('application/json')
-                        ->withStatus(201);
+                        ->withStatus(201)
+                        ->withStringBody(json_encode([]));
                 return $response;
             } else {
                 $response = $this->response
                         ->withType('application/json')
-                        ->withStatus(400);
+                        ->withStatus(400)
+                        ->withStringBody(json_encode([]));
                 return $response;
             }
         } else {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
     }
@@ -188,7 +194,8 @@ class UsersController extends AppController {
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
 
@@ -203,7 +210,7 @@ class UsersController extends AppController {
             $id = $this->request->getQuery('id');
 
             $user = $this->UserService->updateUser($id, $data);
-            
+
             if ($user != null) {
                 $response = $this->response
                         ->withType('application/json')
@@ -213,27 +220,22 @@ class UsersController extends AppController {
             } else {
                 $response = $this->response
                         ->withType('application/json')
-                        ->withStatus(400);
+                        ->withStatus(400)
+                        ->withStringBody(json_encode([]));
                 return $response;
             }
         } else {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
     }
-    
+
     public function updatePassword() {
 
-        //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
-        if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401);
-            return $response;
-        }
 
         //seta os métodos aceitos
         $this->request->allowMethod(['put']);
@@ -246,7 +248,52 @@ class UsersController extends AppController {
             $id = $identity->getOriginalData()['id'];
 
             $user = $this->UserService->updateUserPassword($id, $data);
-            
+
+            if ($user) {
+                $response = $this->response
+                        ->withType('application/json')
+                        ->withStatus(200)
+                        ->withStringBody(json_encode([]));
+                return $response;
+            } else {
+                $response = $this->response
+                        ->withType('application/json')
+                        ->withStatus(400)
+                        ->withStringBody(json_encode([]));
+                return $response;
+            }
+        } else {
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
+            return $response;
+        }
+    }
+
+    public function newPassword() {
+
+        //verificar se é admin e está ativo
+        $identity = $this->Authentication->getIdentity();
+        if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
+            return $response;
+        }
+
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+
+            $id = $this->request->getQuery('id');
+
+            $user = $this->UserService->generateNewPassword($id);
+
             if ($user != null) {
                 $response = $this->response
                         ->withType('application/json')
@@ -256,13 +303,15 @@ class UsersController extends AppController {
             } else {
                 $response = $this->response
                         ->withType('application/json')
-                        ->withStatus(400);
+                        ->withStatus(400)
+                        ->withStringBody(json_encode([]));
                 return $response;
             }
         } else {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
     }
@@ -274,10 +323,11 @@ class UsersController extends AppController {
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
-        
+
         //seta os métodos aceitos
         $this->request->allowMethod(['put']);
 
@@ -297,12 +347,14 @@ class UsersController extends AppController {
             } else {
                 $response = $this->response
                         ->withType('application/json')
-                        ->withStatus(400);
+                        ->withStatus(400)
+                        ->withStringBody(json_encode([]));
             }
         } else {
             $response = $this->response
                     ->withType('application/json')
-                    ->withStatus(401);
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
             return $response;
         }
     }

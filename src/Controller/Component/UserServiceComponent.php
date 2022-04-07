@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Component;
 
 use App\Utility\UsersGetRequestBody;
+use App\Utility\UserNewPasswordRequestBody;
 use Cake\Controller\Component;
 use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
@@ -91,7 +92,7 @@ class UserServiceComponent extends Component {
             return null;
         }
     }
-    
+
     public function updateUserPassword($id, $data) {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
@@ -100,9 +101,31 @@ class UserServiceComponent extends Component {
 
         $user->password = $data['password'];
         $user->modified = FrozenTime::now();
+        if ($table->save($user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function generateNewPassword($id) {
+        $table = TableRegistry::getTableLocator()->get('Users');
+        $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
+
+        $user = $usersTable->where(['id' => $id])->first();
+
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 6; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        $user->password = $randomString;
+        $user->modified = FrozenTime::now();
 
         if ($table->save($user)) {
-            return $user;
+            return new UserNewPasswordRequestBody($randomString);
         } else {
             return null;
         }
