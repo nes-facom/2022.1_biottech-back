@@ -223,6 +223,49 @@ class UsersController extends AppController {
             return $response;
         }
     }
+    
+    public function updatePassword() {
+
+        //verificar se é admin e está ativo
+        $identity = $this->Authentication->getIdentity();
+        if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(401);
+            return $response;
+        }
+
+        //seta os métodos aceitos
+        $this->request->allowMethod(['put']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+
+            $data = $this->request->input('json_decode', true);
+            $id = $this->request->getQuery('id');
+
+            $user = $this->UserService->updateUserPassword($id, $data);
+            
+            if ($user != null) {
+                $response = $this->response
+                        ->withType('application/json')
+                        ->withStatus(200)
+                        ->withStringBody(json_encode($user));
+                return $response;
+            } else {
+                $response = $this->response
+                        ->withType('application/json')
+                        ->withStatus(400);
+                return $response;
+            }
+        } else {
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(401);
+            return $response;
+        }
+    }
 
     public function activeAndDisable() {
 

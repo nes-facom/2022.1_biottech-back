@@ -91,6 +91,22 @@ class UserServiceComponent extends Component {
             return null;
         }
     }
+    
+    public function updateUserPassword($id, $data) {
+        $table = TableRegistry::getTableLocator()->get('Users');
+        $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
+
+        $user = $usersTable->where(['id' => $id])->first();
+
+        $user->password = $data['password'];
+        $user->modified = FrozenTime::now();
+
+        if ($table->save($user)) {
+            return $user;
+        } else {
+            return null;
+        }
+    }
 
     public function updateActiveAndDisable($id, $active) {
         $table = TableRegistry::getTableLocator()->get('Users');
