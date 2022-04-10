@@ -358,5 +358,43 @@ class UsersController extends AppController {
             return $response;
         }
     }
+    
+    public function updateAvatar() {
+
+        $identity = $this->Authentication->getIdentity();
+
+        //seta os métodos aceitos
+        $this->request->allowMethod(['put']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+
+            $data = $this->request->input('json_decode', true);
+            $id = $identity->getOriginalData()['id'];
+
+            $user = $this->UserService->updateUserAvatar($id, $data);
+
+            if ($user != null) {
+                $response = $this->response
+                        ->withType('application/json')
+                        ->withStatus(200)
+                        ->withStringBody(json_encode($user));
+                return $response;
+            } else {
+                $response = $this->response
+                        ->withType('application/json')
+                        ->withStatus(400)
+                        ->withStringBody(json_encode([]));
+                return $response;
+            }
+        } else {
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
+            return $response;
+        }
+    }
 
 }

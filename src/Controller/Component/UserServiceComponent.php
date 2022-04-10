@@ -107,6 +107,22 @@ class UserServiceComponent extends Component {
             return false;
         }
     }
+    
+    public function updateUserAvatar($id, $data) {
+        $table = TableRegistry::getTableLocator()->get('Users');
+        $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
+
+        $user = $usersTable->where(['id' => $id])->first();
+
+        $user->avatar = $data['avatar'];
+        $user->modified = FrozenTime::now();
+        
+        if ($table->save($user)) {
+            return $user;
+        } else {
+            return false;
+        }
+    }
 
     public function generateNewPassword($id) {
         $table = TableRegistry::getTableLocator()->get('Users');
