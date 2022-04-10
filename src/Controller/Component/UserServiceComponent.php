@@ -46,7 +46,7 @@ class UserServiceComponent extends Component {
         }
     }
 
-    public function getAllUsers($active) {
+    public function getAllUsers($active , $idCurrent) {
 
         // Prior to 3.6 use TableRegistry::get('Articles')
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
@@ -54,7 +54,7 @@ class UserServiceComponent extends Component {
         //$queryUser = $usersTable->all();
 
         $newUsers = array();
-        $query = $usersTable->where(['active' => $active]);
+        $query = $usersTable->where(['active' => $active , 'id !=' => $idCurrent]);
 
         foreach ($query as $row) {
             $newUser = new UsersGetRequestBody($row->id, $row->name, $row->username, $row->type);

@@ -94,12 +94,13 @@ class UsersController extends AppController {
         if ($result->isValid()) {
 
             $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
-            $this->UserService->getAllUsers($active);
+            $id = $identity->getOriginalData()['id'];
+            $responseGetAll = $this->UserService->getAllUsers($active, $id);
 
             $response = $this->response
                     ->withType('application/json')
                     ->withStatus(200)
-                    ->withStringBody(json_encode($this->UserService->getAllUsers($active)));
+                    ->withStringBody(json_encode($responseGetAll));
 
             return $response;
         } else {
@@ -358,7 +359,7 @@ class UsersController extends AppController {
             return $response;
         }
     }
-    
+
     public function updateAvatar() {
 
         $identity = $this->Authentication->getIdentity();
