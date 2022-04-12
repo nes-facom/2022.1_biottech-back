@@ -164,7 +164,7 @@ class UsersController extends AppController {
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
 
-            $data = $this->request->input('json_decode', true);
+            $data = $this->request->getParsedBody();
 
             if ($this->UserService->saveUser($data)) {
                 $response = $this->response
@@ -207,7 +207,7 @@ class UsersController extends AppController {
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
 
-            $data = $this->request->input('json_decode', true);
+            $data = $this->request->getParsedBody();
             $id = $this->request->getQuery('id');
 
             $user = $this->UserService->updateUser($id, $data);
@@ -245,7 +245,7 @@ class UsersController extends AppController {
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
 
-            $data = $this->request->input('json_decode', true);
+            $data = $this->request->getParsedBody();
             $id = $identity->getOriginalData()['id'];
 
             $user = $this->UserService->updateUserPassword($id, $data);
@@ -371,7 +371,8 @@ class UsersController extends AppController {
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
 
-            $data = $this->request->input('json_decode', true);
+            //$data = $this->request->input('json_decode', true);
+            $data = $this->request->getParsedBody();
             $id = $identity->getOriginalData()['id'];
 
             $user = $this->UserService->updateUserAvatar($id, $data);
