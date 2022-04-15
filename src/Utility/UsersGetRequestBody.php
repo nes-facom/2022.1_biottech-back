@@ -6,13 +6,13 @@ class UsersGetRequestBody {
 
     public $id;
     public $name;
-    public $usename;
+    public $username;
     public $type;
     
-    public function __construct($id, $name, $usename, $type) {
+    public function __construct($id, $name, $username, $type) {
         $this->id = $id;
         $this->name = $name;
-        $this->usename = $usename;
+        $this->username = $username;
         $this->type = $type;
     }
     
@@ -24,8 +24,8 @@ class UsersGetRequestBody {
         return $this->name;
     }
 
-    public function getUsename() {
-        return $this->usename;
+    public function getUsername() {
+        return $this->username;
     }
 
     public function getType() {
@@ -40,8 +40,8 @@ class UsersGetRequestBody {
         $this->name = $name;
     }
 
-    public function setUsename($usename): void {
-        $this->usename = $usename;
+    public function setUsername($username): void {
+        $this->username = $username;
     }
 
     public function setType($type): void {

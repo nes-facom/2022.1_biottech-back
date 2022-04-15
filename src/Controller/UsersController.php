@@ -58,11 +58,24 @@ class UsersController extends AppController {
     }
 
     public function getCurrentUser() {
-        $identity = $this->Authentication->getIdentity();
-        $json = ['user' => $identity->getOriginalData()];
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
 
-        $this->set(compact('json'));
-        $this->viewBuilder()->setOption('serialize', 'json');
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $identity = $this->Authentication->getIdentity();
+            $json = ['user' => $identity->getOriginalData()];
+
+            $this->set(compact('json'));
+            $this->viewBuilder()->setOption('serialize', 'json');
+        } else {
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(401)
+                    ->withStringBody(json_encode([]));
+            return $response;
+        }
     }
 
     public function logout() {
