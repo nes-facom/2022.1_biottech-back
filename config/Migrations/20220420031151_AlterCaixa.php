@@ -15,7 +15,7 @@ class AlterCaixa extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('caixa');
-        $table->addForeignKey('id_caixa_matriz_origem', 'caixa_matriz', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE']);
+        $table->addForeignKey('caixa_matriz_id', 'caixa_matriz', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE']);
         $table->update();
     }
 

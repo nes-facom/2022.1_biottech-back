@@ -15,8 +15,8 @@ class CaixaMatriz extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('caixa_matriz');
-        $table->addColumn('id_caixa_macho', 'integer')
-                ->addColumn('id_caixa_femea', 'integer')
+        $table->addColumn('caixa_macho_id', 'integer', ['null' => true])
+                ->addColumn('caixa_femea_id', 'integer', ['null' => true])
                 ->addColumn('caixa_matriz_numero', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('tipo_acasalamento', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('num_femea', 'integer', ['null' => false])
@@ -25,8 +25,8 @@ class CaixaMatriz extends AbstractMigration {
                 ->addColumn('peso_macho', 'decimal', ['null' => false])
                 ->addColumn('peso_femea', 'decimal', ['null' => false])
                 ->addColumn('saida_da_colonia', 'date', ['null' => false])
-                ->addForeignKey('id_caixa_macho', 'caixa', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-                ->addForeignKey('id_caixa_femea', 'caixa', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('caixa_macho_id', 'caixa', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('caixa_femea_id', 'caixa', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addIndex(['caixa_matriz_numero'], ['unique' => true])
                 ->create();
     }

@@ -14,11 +14,11 @@ class PartoMatriz extends AbstractMigration {
      * @return void
      */
     public function change() {
-        $table = $this->table('parto_matriz', ['id' => false, 'primary_key' => ['id_caixa_matriz', 'id_parto']]);
-        $table->addColumn('id_caixa_matriz', 'integer')
-                ->addColumn('id_parto', 'integer')
-                ->addForeignKey('id_caixa_matriz', 'caixa_matriz', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-                ->addForeignKey('id_parto', 'parto', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+        $table = $this->table('parto_matriz', ['id' => false, 'primary_key' => ['caixa_matriz_id', 'parto_id']]);
+        $table->addColumn('caixa_matriz_id', 'integer')
+                ->addColumn('parto_id', 'integer')
+                ->addForeignKey('caixa_matriz_id', 'caixa_matriz', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('parto_id', 'parto', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->create();
     }
 

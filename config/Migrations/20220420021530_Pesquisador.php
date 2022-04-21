@@ -15,7 +15,7 @@ class Pesquisador extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('pesquisador');
-        $table->addColumn('nome', 'integer', ['null' => false])
+        $table->addColumn('nome', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('instituicao', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('setor', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('pos', 'string', ['limit' => 255, 'null' => true])

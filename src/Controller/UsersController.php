@@ -21,10 +21,6 @@ class UsersController extends AppController {
 
     public function initialize(): void {
         parent::initialize();
-
-        $this->loadComponent('UserService');
-
-        // $this->UserService->saveUser();
     }
 
     public function beforeFilter(EventInterface $event) {
@@ -108,7 +104,8 @@ class UsersController extends AppController {
 
             $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
             $id = $identity->getOriginalData()['id'];
-            $responseGetAll = $this->UserService->getAllUsers($active, $id);
+            $responseGetAll = $this->Users->getAllUsers($active, $id);
+            
 
             $response = $this->response
                     ->withType('application/json')
@@ -147,7 +144,7 @@ class UsersController extends AppController {
             $response = $this->response
                     ->withType('application/json')
                     ->withStatus(200)
-                    ->withStringBody(json_encode($this->UserService->getUser($id)));
+                    ->withStringBody(json_encode($this->Users->getUser($id)));
             return $response;
         } else {
             $response = $this->response
@@ -179,7 +176,7 @@ class UsersController extends AppController {
 
             $data = $this->request->getParsedBody();
 
-            if ($this->UserService->saveUser($data)) {
+            if ($this->Users->saveUser($data)) {
                 $response = $this->response
                         ->withType('application/json')
                         ->withStatus(201)
@@ -223,7 +220,7 @@ class UsersController extends AppController {
             $data = $this->request->getParsedBody();
             $id = $this->request->getQuery('id');
 
-            $user = $this->UserService->updateUser($id, $data);
+            $user = $this->Users->updateUser($id, $data);
 
             if ($user != null) {
                 $response = $this->response
@@ -261,7 +258,7 @@ class UsersController extends AppController {
             $data = $this->request->getParsedBody();
             $id = $identity->getOriginalData()['id'];
 
-            $user = $this->UserService->updateUserPassword($id, $data);
+            $user = $this->Users->updateUserPassword($id, $data);
 
             if ($user) {
                 $response = $this->response
@@ -306,7 +303,7 @@ class UsersController extends AppController {
 
             $id = $this->request->getQuery('id');
 
-            $user = $this->UserService->generateNewPassword($id);
+            $user = $this->Users->generateNewPassword($id);
 
             if ($user != null) {
                 $response = $this->response
@@ -350,7 +347,7 @@ class UsersController extends AppController {
 
             $id = $this->request->getQuery('id');
             $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
-            $user = $this->UserService->updateActiveAndDisable($id, $active);
+            $user = $this->Users->updateActiveAndDisable($id, $active);
 
             if ($user != null) {
                 $response = $this->response
@@ -388,7 +385,7 @@ class UsersController extends AppController {
             $data = $this->request->getParsedBody();
             $id = $identity->getOriginalData()['id'];
 
-            $user = $this->UserService->updateUserAvatar($id, $data);
+            $user = $this->Users->updateUserAvatar($id, $data);
 
             if ($user != null) {
                 $response = $this->response

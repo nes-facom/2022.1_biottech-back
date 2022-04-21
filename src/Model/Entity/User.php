@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -16,8 +17,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
-class User extends Entity
-{
+class User extends Entity {
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -50,10 +51,10 @@ class User extends Entity
      * @param string $password Password to hash.
      * @return string|null
      */
-    protected function _setPassword(string $password) : ?string
-    {
+    protected function _setPassword(string $password): ?string {
         if (strlen($password) > 0) {
             return (new DefaultPasswordHasher())->hash($password);
         }
     }
+
 }

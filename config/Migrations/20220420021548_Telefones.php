@@ -15,9 +15,9 @@ class Telefones extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('telefones');
-        $table->addColumn('id_pesquisador', 'integer')
+        $table->addColumn('pesquisador_id', 'integer', ['null' => true])
                 ->addColumn('telefone', 'string', ['limit' => 255, 'null' => false])
-                ->addForeignKey('id_pesquisador', 'pesquisador', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('pesquisador_id', 'pesquisador', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->create();
     }
 

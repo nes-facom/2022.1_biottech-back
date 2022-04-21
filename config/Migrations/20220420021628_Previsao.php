@@ -15,14 +15,14 @@ class Previsao extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('previsao');
-        $table->addColumn('id_pedido', 'integer')
+        $table->addColumn('pedido_id', 'integer', ['null' => true])
                 ->addColumn('num_previsao', 'integer', ['null' => false])
                 ->addColumn('retirada_num', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('qtd_retirar', 'integer', ['null' => false])
                 ->addColumn('retirada_data', 'date', ['null' => true])
                 ->addColumn('retirado', 'integer', ['null' => false])
                 ->addColumn('status', 'string', ['limit' => 255, 'null' => false])
-                ->addForeignKey('id_pedido', 'pedido', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('pedido_id', 'pedido', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addIndex(['num_previsao'], ['unique' => true])
                 ->create();
     }

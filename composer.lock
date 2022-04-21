@@ -4,8 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7338f370983360a5855be69a963aac9d",
+    "content-hash": "3f91790430676bc03561d660e59fd563",
     "packages": [
+        {
+            "name": "bcrowe/cakephp-api-pagination",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bcrowe/cakephp-api-pagination.git",
+                "reference": "f5c2cae9ee8ca0009d00d60fcad9c20e73d0e15b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bcrowe/cakephp-api-pagination/zipball/f5c2cae9ee8ca0009d00d60fcad9c20e73d0e15b",
+                "reference": "f5c2cae9ee8ca0009d00d60fcad9c20e73d0e15b",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^4.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "~4.0.0",
+                "phpunit/phpunit": "^8.5",
+                "scrutinizer/ocular": "1.7"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BryanCrowe\\ApiPagination\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bryan Crowe",
+                    "email": "bryan@bryan-crowe.com",
+                    "homepage": "http://bryan-crowe.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CakePHP 4 plugin that injects pagination information into API responses.",
+            "homepage": "https://github.com/bcrowe/cakephp-api-pagination",
+            "keywords": [
+                "api",
+                "cakephp",
+                "cakephp3",
+                "cakephp4",
+                "pagination"
+            ],
+            "support": {
+                "issues": "https://github.com/bcrowe/cakephp-api-pagination/issues",
+                "source": "https://github.com/bcrowe/cakephp-api-pagination/tree/2.1.1"
+            },
+            "time": "2021-07-01T19:02:52+00:00"
+        },
         {
             "name": "cakephp/authentication",
             "version": "2.9.0",

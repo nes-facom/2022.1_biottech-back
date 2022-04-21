@@ -15,9 +15,9 @@ class Sala extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('sala');
-        $table->addColumn('id_linhagem', 'integer')
+        $table->addColumn('linhagem_id', 'integer', ['null' => true])
                 ->addColumn('num_sala', 'integer', ['null' => false])
-                ->addForeignKey('id_linhagem', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('linhagem_id', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addIndex(['num_sala'], ['unique' => true])
                 ->create();
     }
