@@ -1,0 +1,82 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Model\Table;
+
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
+
+/**
+ * Laboratorio Model
+ *
+ * @property \App\Model\Table\PedidoTable&\Cake\ORM\Association\HasMany $Pedido
+ *
+ * @method \App\Model\Entity\Laboratorio newEmptyEntity()
+ * @method \App\Model\Entity\Laboratorio newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Laboratorio[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Laboratorio get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Laboratorio findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Laboratorio patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Laboratorio[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Laboratorio|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Laboratorio saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Laboratorio[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Laboratorio[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Laboratorio[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Laboratorio[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ */
+class LaboratorioTable extends Table
+{
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
+    public function initialize(array $config): void
+    {
+        parent::initialize($config);
+
+        $this->setTable('laboratorio');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
+
+        $this->hasMany('Pedido', [
+            'foreignKey' => 'laboratorio_id',
+        ]);
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator
+            ->scalar('nome_laboratorio')
+            ->maxLength('nome_laboratorio', 255)
+            ->requirePresence('nome_laboratorio', 'create')
+            ->notEmptyString('nome_laboratorio')
+            ->add('nome_laboratorio', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['nome_laboratorio']), ['errorField' => 'nome_laboratorio']);
+
+        return $rules;
+    }
+}

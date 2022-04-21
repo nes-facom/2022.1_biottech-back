@@ -27,10 +27,18 @@ class PedidoController extends AppController {
         if ($result->isValid()) {
             $responseGetAll = $this->Pedido->getAllPedidos();
 
-            $this->set('pedidos', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['pedidos']);
+            //paginação
+            /* $this->set('pedidos', $this->paginate($responseGetAll));
+              $this->viewBuilder()->setOption('serialize', ['pedidos']);
 
-            return;
+              return; */
+
+            $response = $this->response
+                    ->withType('application/json')
+                    ->withStatus(200)
+                    ->withStringBody(json_encode($responseGetAll));
+
+            return $response;
         } else {
             $response = $this->response
                     ->withType('application/json')
