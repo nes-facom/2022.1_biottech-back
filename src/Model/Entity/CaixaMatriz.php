@@ -21,7 +21,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $saida_da_colonia
  *
  * @property \App\Model\Entity\Caixa[] $caixa
- * @property \App\Model\Entity\PartoMatriz[] $parto_matriz
+ * @property \App\Model\Entity\Parto[] $parto
  */
 class CaixaMatriz extends Entity
 {
@@ -46,6 +46,6 @@ class CaixaMatriz extends Entity
         'peso_femea' => true,
         'saida_da_colonia' => true,
         'caixa' => true,
-        'parto_matriz' => true,
+        'parto' => true,
     ];
 }

@@ -26,8 +26,10 @@ class PartoFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
+                'ano_id' => 1,
+                'caixa_matriz_id' => 1,
                 'numero_parto' => 1,
-                'data_parto' => '2022-04-21',
+                'data_parto' => '2022-04-22',
                 'num_macho' => 1,
                 'num_femea' => 1,
                 'des_macho' => 1,

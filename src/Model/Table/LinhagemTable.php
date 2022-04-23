@@ -13,7 +13,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\HasMany $Caixa
  * @property \App\Model\Table\PedidoTable&\Cake\ORM\Association\HasMany $Pedido
- * @property \App\Model\Table\SalaTable&\Cake\ORM\Association\HasMany $Sala
  * @property \App\Model\Table\SalaTable&\Cake\ORM\Association\BelongsToMany $Sala
  *
  * @method \App\Model\Entity\Linhagem newEmptyEntity()
@@ -50,9 +49,6 @@ class LinhagemTable extends Table
             'foreignKey' => 'linhagem_id',
         ]);
         $this->hasMany('Pedido', [
-            'foreignKey' => 'linhagem_id',
-        ]);
-        $this->hasMany('Sala', [
             'foreignKey' => 'linhagem_id',
         ]);
         $this->belongsToMany('Sala', [

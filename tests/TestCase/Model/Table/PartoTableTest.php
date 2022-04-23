@@ -25,7 +25,8 @@ class PartoTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Parto',
-        'app.PartoMatriz',
+        'app.Ano',
+        'app.CaixaMatriz',
     ];
 
     /**
@@ -59,6 +60,17 @@ class PartoTableTest extends TestCase
      * @uses \App\Model\Table\PartoTable::validationDefault()
      */
     public function testValidationDefault(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     * @uses \App\Model\Table\PartoTable::buildRules()
+     */
+    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

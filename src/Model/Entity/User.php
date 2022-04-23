@@ -14,8 +14,11 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $username
  * @property string $password
+ * @property int $type
+ * @property bool $active
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string|null $avatar
  */
 class User extends Entity {
 
@@ -26,20 +29,23 @@ class User extends Entity {
      * be mass assigned. For security purposes, it is advised to set '*' to false
      * (or remove it), and explicitly make individual fields accessible as needed.
      *
-     * @var array
+     * @var array<string, bool>
      */
     protected $_accessible = [
         'name' => true,
         'username' => true,
         'password' => true,
+        'type' => true,
+        'active' => true,
         'created' => true,
         'modified' => true,
+        'avatar' => true,
     ];
 
     /**
      * Fields that are excluded from JSON versions of the entity.
      *
-     * @var array
+     * @var array<string>
      */
     protected $_hidden = [
         'password',

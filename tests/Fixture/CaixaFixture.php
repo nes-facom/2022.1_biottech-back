@@ -26,14 +26,15 @@ class CaixaFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
+                'ano_id' => 1,
                 'linhagem_id' => 1,
                 'caixa_matriz_id' => 1,
                 'caixa_numero' => 'Lorem ipsum dolor sit amet',
-                'nascimento' => '2022-04-21',
+                'nascimento' => '2022-04-22',
                 'sexo' => 'Lorem ipsum dolor sit amet',
                 'num_animais' => 1,
                 'saida' => 1,
-                'ultima_saida' => '2022-04-21',
+                'ultima_saida' => '2022-04-22',
             ],
         ];
         parent::init();

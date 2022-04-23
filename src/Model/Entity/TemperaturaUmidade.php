@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * TemperaturaUmidade Entity
  *
  * @property int $id
+ * @property int|null $ano_id
  * @property int|null $sala_id
  * @property \Cake\I18n\FrozenDate $data
  * @property string|null $temp_matutino
@@ -17,6 +18,7 @@ use Cake\ORM\Entity;
  * @property string|null $ur_vespertino
  * @property string|null $observacoes
  *
+ * @property \App\Model\Entity\Ano $ano
  * @property \App\Model\Entity\Sala $sala
  */
 class TemperaturaUmidade extends Entity
@@ -31,6 +33,7 @@ class TemperaturaUmidade extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
+        'ano_id' => true,
         'sala_id' => true,
         'data' => true,
         'temp_matutino' => true,
@@ -38,6 +41,7 @@ class TemperaturaUmidade extends Entity
         'temp_vespertino' => true,
         'ur_vespertino' => true,
         'observacoes' => true,
+        'ano' => true,
         'sala' => true,
     ];
 }

@@ -25,6 +25,7 @@ class CaixaTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Caixa',
+        'app.Ano',
         'app.Linhagem',
         'app.CaixaMatriz',
         'app.Saida',

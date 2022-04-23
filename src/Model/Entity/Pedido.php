@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * Pedido Entity
  *
  * @property int $id
+ * @property int $ano_id
  * @property int|null $vinculo_institucional_id
  * @property int $projeto_id
  * @property int $especie_id
@@ -36,6 +37,7 @@ use Cake\ORM\Entity;
  * @property string $peso
  * @property string $observacoes
  *
+ * @property \App\Model\Entity\Ano $ano
  * @property \App\Model\Entity\VinculoInstitucional $vinculo_institucional
  * @property \App\Model\Entity\Projeto $projeto
  * @property \App\Model\Entity\Especie $especie
@@ -61,6 +63,7 @@ class Pedido extends Entity
     protected $_hidden = ['vinculo_institucional_id', 'projeto_id', 'especie_id', 'linha_pesquisa_id',
         'nivel_projeto_id', 'laboratorio_id', 'finalidade_id', 'pesquisador_id', 'linhagem_id'];
     protected $_accessible = [
+        'ano_id' => true,
         'vinculo_institucional_id' => true,
         'projeto_id' => true,
         'especie_id' => true,
@@ -87,6 +90,7 @@ class Pedido extends Entity
         'idade' => true,
         'peso' => true,
         'observacoes' => true,
+        'ano' => true,
         'vinculo_institucional' => true,
         'projeto' => true,
         'especie' => true,

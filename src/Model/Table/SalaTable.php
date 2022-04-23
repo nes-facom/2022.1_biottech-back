@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
 /**
  * Sala Model
  *
- * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsTo $Linhagem
  * @property \App\Model\Table\TemperaturaUmidadeTable&\Cake\ORM\Association\HasMany $TemperaturaUmidade
  * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsToMany $Linhagem
  *
@@ -45,9 +44,6 @@ class SalaTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Linhagem', [
-            'foreignKey' => 'linhagem_id',
-        ]);
         $this->hasMany('TemperaturaUmidade', [
             'foreignKey' => 'sala_id',
         ]);
@@ -67,10 +63,6 @@ class SalaTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('linhagem_id')
-            ->allowEmptyString('linhagem_id');
-
-        $validator
             ->integer('num_sala')
             ->requirePresence('num_sala', 'create')
             ->notEmptyString('num_sala')
@@ -89,7 +81,6 @@ class SalaTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['num_sala']), ['errorField' => 'num_sala']);
-        $rules->add($rules->existsIn('linhagem_id', 'Linhagem'), ['errorField' => 'linhagem_id']);
 
         return $rules;
     }

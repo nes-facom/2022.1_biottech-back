@@ -31,11 +31,11 @@ class CaixaMatrizFixture extends TestFixture
                 'caixa_matriz_numero' => 'Lorem ipsum dolor sit amet',
                 'tipo_acasalamento' => 'Lorem ipsum dolor sit amet',
                 'num_femea' => 1,
-                'data_acasalamento' => '2022-04-21',
+                'data_acasalamento' => '2022-04-22',
                 'intervalo_parto' => 1,
                 'peso_macho' => 1.5,
                 'peso_femea' => 1.5,
-                'saida_da_colonia' => '2022-04-21',
+                'saida_da_colonia' => '2022-04-22',
             ],
         ];
         parent::init();

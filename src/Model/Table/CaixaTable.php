@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Caixa Model
  *
+ * @property \App\Model\Table\AnoTable&\Cake\ORM\Association\BelongsTo $Ano
  * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsTo $Linhagem
  * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsTo $CaixaMatriz
  * @property \App\Model\Table\SaidaTable&\Cake\ORM\Association\HasMany $Saida
@@ -45,6 +46,10 @@ class CaixaTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Ano', [
+            'foreignKey' => 'ano_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Linhagem', [
             'foreignKey' => 'linhagem_id',
         ]);
@@ -64,6 +69,11 @@ class CaixaTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
+        $validator
+            ->integer('ano_id')
+            ->requirePresence('ano_id', 'create')
+            ->notEmptyString('ano_id');
+
         $validator
             ->integer('linhagem_id')
             ->allowEmptyString('linhagem_id');
@@ -117,6 +127,7 @@ class CaixaTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['caixa_numero']), ['errorField' => 'caixa_numero']);
+        $rules->add($rules->existsIn('ano_id', 'Ano'), ['errorField' => 'ano_id']);
         $rules->add($rules->existsIn('linhagem_id', 'Linhagem'), ['errorField' => 'linhagem_id']);
         $rules->add($rules->existsIn('caixa_matriz_id', 'CaixaMatriz'), ['errorField' => 'caixa_matriz_id']);
 

@@ -25,8 +25,8 @@ class SalaTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Sala',
-        'app.Linhagem',
         'app.TemperaturaUmidade',
+        'app.Linhagem',
     ];
 
     /**

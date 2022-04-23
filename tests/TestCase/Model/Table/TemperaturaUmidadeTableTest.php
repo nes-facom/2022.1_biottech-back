@@ -25,6 +25,7 @@ class TemperaturaUmidadeTableTest extends TestCase
      */
     protected $fixtures = [
         'app.TemperaturaUmidade',
+        'app.Ano',
         'app.Sala',
     ];
 

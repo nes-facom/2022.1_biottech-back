@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\SaidaTable;
+use App\Model\Table\AnoTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\SaidaTable Test Case
+ * App\Model\Table\AnoTable Test Case
  */
-class SaidaTableTest extends TestCase
+class AnoTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\SaidaTable
+     * @var \App\Model\Table\AnoTable
      */
-    protected $Saida;
+    protected $Ano;
 
     /**
      * Fixtures
@@ -24,9 +24,12 @@ class SaidaTableTest extends TestCase
      * @var array<string>
      */
     protected $fixtures = [
-        'app.Saida',
         'app.Ano',
         'app.Caixa',
+        'app.Parto',
+        'app.Pedido',
+        'app.Saida',
+        'app.TemperaturaUmidade',
     ];
 
     /**
@@ -37,8 +40,8 @@ class SaidaTableTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Saida') ? [] : ['className' => SaidaTable::class];
-        $this->Saida = $this->getTableLocator()->get('Saida', $config);
+        $config = $this->getTableLocator()->exists('Ano') ? [] : ['className' => AnoTable::class];
+        $this->Ano = $this->getTableLocator()->get('Ano', $config);
     }
 
     /**
@@ -48,7 +51,7 @@ class SaidaTableTest extends TestCase
      */
     protected function tearDown(): void
     {
-        unset($this->Saida);
+        unset($this->Ano);
 
         parent::tearDown();
     }
@@ -57,20 +60,9 @@ class SaidaTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     * @uses \App\Model\Table\SaidaTable::validationDefault()
+     * @uses \App\Model\Table\AnoTable::validationDefault()
      */
     public function testValidationDefault(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     * @uses \App\Model\Table\SaidaTable::buildRules()
-     */
-    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

@@ -26,6 +26,7 @@ class PedidoFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
+                'ano_id' => 1,
                 'vinculo_institucional_id' => 1,
                 'projeto_id' => 1,
                 'especie_id' => 1,
@@ -38,12 +39,12 @@ class PedidoFixture extends TestFixture
                 'num_previsao' => 1,
                 'processo_sei' => 'Lorem ipsum dolor sit amet',
                 'equipe_executora' => 'Lorem ipsum dolor sit amet',
-                'data_solicitacao' => '2022-04-21',
+                'data_solicitacao' => '2022-04-22',
                 'titulo' => 'Lorem ipsum dolor sit amet',
                 'especificar' => 'Lorem ipsum dolor sit amet',
                 'exper' => 1,
                 'num_ceua' => 'Lorem ipsum dolor sit amet',
-                'vigencia_ceua' => '2022-04-21',
+                'vigencia_ceua' => '2022-04-22',
                 'num_aprovado' => 1,
                 'num_solicitado' => 1,
                 'adendo_1' => 1,

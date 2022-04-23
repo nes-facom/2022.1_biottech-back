@@ -15,7 +15,8 @@ class Caixa extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('caixa');
-        $table->addColumn('linhagem_id', 'integer', ['null' => true])
+        $table->addColumn('ano_id', 'integer', ['null' => false])
+                ->addColumn('linhagem_id', 'integer', ['null' => true])
                 ->addColumn('caixa_matriz_id', 'integer', ['null' => true])
                 ->addColumn('caixa_numero', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('nascimento', 'date', ['null' => false])
@@ -27,6 +28,7 @@ class Caixa extends AbstractMigration {
                 ->addColumn('ultima_saida', 'date', ['null' => false])
                
                 ->addForeignKey('linhagem_id', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('ano_id', 'ano', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 
                 ->addIndex(['caixa_numero'], ['unique' => true])
                 ->create();

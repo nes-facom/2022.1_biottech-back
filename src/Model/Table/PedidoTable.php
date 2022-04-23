@@ -14,6 +14,7 @@ use App\Utility\PedidosGetRequestBody;
 /**
  * Pedido Model
  *
+ * @property \App\Model\Table\AnoTable&\Cake\ORM\Association\BelongsTo $Ano
  * @property \App\Model\Table\VinculoInstitucionalTable&\Cake\ORM\Association\BelongsTo $VinculoInstitucional
  * @property \App\Model\Table\ProjetoTable&\Cake\ORM\Association\BelongsTo $Projeto
  * @property \App\Model\Table\EspecieTable&\Cake\ORM\Association\BelongsTo $Especie
@@ -54,6 +55,10 @@ class PedidoTable extends Table {
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Ano', [
+            'foreignKey' => 'ano_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('VinculoInstitucional', [
             'foreignKey' => 'vinculo_institucional_id',
         ]);
@@ -98,6 +103,11 @@ class PedidoTable extends Table {
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator {
+        $validator
+                ->integer('ano_id')
+                ->requirePresence('ano_id', 'create')
+                ->notEmptyString('ano_id');
+
         $validator
                 ->integer('vinculo_institucional_id')
                 ->allowEmptyString('vinculo_institucional_id');
@@ -244,6 +254,7 @@ class PedidoTable extends Table {
      */
     public function buildRules(RulesChecker $rules): RulesChecker {
         $rules->add($rules->isUnique(['num_previsao']), ['errorField' => 'num_previsao']);
+        $rules->add($rules->existsIn('ano_id', 'Ano'), ['errorField' => 'ano_id']);
         $rules->add($rules->existsIn('vinculo_institucional_id', 'VinculoInstitucional'), ['errorField' => 'vinculo_institucional_id']);
         $rules->add($rules->existsIn('projeto_id', 'Projeto'), ['errorField' => 'projeto_id']);
         $rules->add($rules->existsIn('especie_id', 'Especie'), ['errorField' => 'especie_id']);
@@ -270,7 +281,7 @@ class PedidoTable extends Table {
         $query = $pedidoTable->find('all', ['contain' => ['VinculoInstitucional', 'Projeto', 'Especie', 'LinhaPesquisa'
                 , 'NivelProjeto', 'Laboratorio', 'Finalidade', 'Pesquisador', 'Linhagem', 'Previsao']]);
         $newPedidos = array();
-        
+
         foreach ($query as $row) {
             $saldoCEUA = ($row->num_aprovado - $row->num_solicitado) + $row->adendo_1 + $row->adendo_2;
             $newPedido = new PedidosGetRequestBody();
@@ -305,10 +316,8 @@ class PedidoTable extends Table {
             //$newPedido->setTotalRetirado($row->adento_1);
             $newPedido->setVigencia_ceua($row->vigencia_ceua);
             $newPedido->setVinculo_institucional($row->vinculo_institucional);
-            
-            
-            
-           array_push($newPedidos, $newPedido);
+
+            array_push($newPedidos, $newPedido);
         }
         //$query = $pedidoTable->find('all');
         //$query =   $pedidoTable->all();

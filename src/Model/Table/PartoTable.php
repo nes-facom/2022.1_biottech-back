@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -7,11 +8,14 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
+use App\Utility\PartoGetRequestBody;
 
 /**
  * Parto Model
  *
- * @property \App\Model\Table\PartoMatrizTable&\Cake\ORM\Association\HasMany $PartoMatriz
+ * @property \App\Model\Table\AnoTable&\Cake\ORM\Association\BelongsTo $Ano
+ * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsTo $CaixaMatriz
  *
  * @method \App\Model\Entity\Parto newEmptyEntity()
  * @method \App\Model\Entity\Parto newEntity(array $data, array $options = [])
@@ -27,24 +31,27 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Parto[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Parto[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
-class PartoTable extends Table
-{
+class PartoTable extends Table {
+
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config): void
-    {
+    public function initialize(array $config): void {
         parent::initialize($config);
 
         $this->setTable('parto');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->hasMany('PartoMatriz', [
-            'foreignKey' => 'parto_id',
+        $this->belongsTo('Ano', [
+            'foreignKey' => 'ano_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('CaixaMatriz', [
+            'foreignKey' => 'caixa_matriz_id',
         ]);
     }
 
@@ -54,52 +61,102 @@ class PartoTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator
-    {
+    public function validationDefault(Validator $validator): Validator {
         $validator
-            ->integer('numero_parto')
-            ->requirePresence('numero_parto', 'create')
-            ->notEmptyString('numero_parto');
+                ->integer('ano_id')
+                ->requirePresence('ano_id', 'create')
+                ->notEmptyString('ano_id');
 
         $validator
-            ->date('data_parto')
-            ->requirePresence('data_parto', 'create')
-            ->notEmptyDate('data_parto');
+                ->integer('caixa_matriz_id')
+                ->allowEmptyString('caixa_matriz_id');
 
         $validator
-            ->integer('num_macho')
-            ->requirePresence('num_macho', 'create')
-            ->notEmptyString('num_macho');
+                ->integer('numero_parto')
+                ->requirePresence('numero_parto', 'create')
+                ->notEmptyString('numero_parto');
 
         $validator
-            ->integer('num_femea')
-            ->requirePresence('num_femea', 'create')
-            ->notEmptyString('num_femea');
+                ->date('data_parto')
+                ->requirePresence('data_parto', 'create')
+                ->notEmptyDate('data_parto');
 
         $validator
-            ->integer('des_macho')
-            ->requirePresence('des_macho', 'create')
-            ->notEmptyString('des_macho');
+                ->integer('num_macho')
+                ->requirePresence('num_macho', 'create')
+                ->notEmptyString('num_macho');
 
         $validator
-            ->integer('des_femea')
-            ->requirePresence('des_femea', 'create')
-            ->notEmptyString('des_femea');
+                ->integer('num_femea')
+                ->requirePresence('num_femea', 'create')
+                ->notEmptyString('num_femea');
 
         $validator
-            ->integer('qtd_canib')
-            ->requirePresence('qtd_canib', 'create')
-            ->notEmptyString('qtd_canib');
+                ->integer('des_macho')
+                ->requirePresence('des_macho', 'create')
+                ->notEmptyString('des_macho');
 
         $validator
-            ->integer('qtd_gamba')
-            ->requirePresence('qtd_gamba', 'create')
-            ->notEmptyString('qtd_gamba');
+                ->integer('des_femea')
+                ->requirePresence('des_femea', 'create')
+                ->notEmptyString('des_femea');
 
         $validator
-            ->integer('qtd_outros')
-            ->allowEmptyString('qtd_outros');
+                ->integer('qtd_canib')
+                ->requirePresence('qtd_canib', 'create')
+                ->notEmptyString('qtd_canib');
+
+        $validator
+                ->integer('qtd_gamba')
+                ->requirePresence('qtd_gamba', 'create')
+                ->notEmptyString('qtd_gamba');
+
+        $validator
+                ->integer('qtd_outros')
+                ->allowEmptyString('qtd_outros');
 
         return $validator;
     }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker {
+        $rules->add($rules->existsIn('ano_id', 'Ano'), ['errorField' => 'ano_id']);
+        $rules->add($rules->existsIn('caixa_matriz_id', 'CaixaMatriz'), ['errorField' => 'caixa_matriz_id']);
+
+        return $rules;
+    }
+
+    public function getAllPartos() {
+
+        // Prior to 3.6 use TableRegistry::get('Articles')
+        $partoTable = TableRegistry::getTableLocator()->get('Parto')->find();
+
+        //$queryUser = $usersTable->all();
+
+
+
+
+        $query = $partoTable->find('all', ['contain' => ['CaixaMatriz']]);
+        $newPartos = array();
+
+        foreach ($query as $row) {
+            
+        }
+        //$query = $pedidoTable->find('all');
+        //$query =   $pedidoTable->all();
+
+        /* $query = $usersTable->all()->contains([
+          'Pesquisador'
+          ]); */
+
+
+        return $query;
+    }
+
 }

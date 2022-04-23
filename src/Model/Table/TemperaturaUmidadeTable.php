@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * TemperaturaUmidade Model
  *
+ * @property \App\Model\Table\AnoTable&\Cake\ORM\Association\BelongsTo $Ano
  * @property \App\Model\Table\SalaTable&\Cake\ORM\Association\BelongsTo $Sala
  *
  * @method \App\Model\Entity\TemperaturaUmidade newEmptyEntity()
@@ -43,6 +44,9 @@ class TemperaturaUmidadeTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Ano', [
+            'foreignKey' => 'ano_id',
+        ]);
         $this->belongsTo('Sala', [
             'foreignKey' => 'sala_id',
         ]);
@@ -56,6 +60,10 @@ class TemperaturaUmidadeTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
+        $validator
+            ->integer('ano_id')
+            ->allowEmptyString('ano_id');
+
         $validator
             ->integer('sala_id')
             ->allowEmptyString('sala_id');
@@ -100,6 +108,7 @@ class TemperaturaUmidadeTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add($rules->existsIn('ano_id', 'Ano'), ['errorField' => 'ano_id']);
         $rules->add($rules->existsIn('sala_id', 'Sala'), ['errorField' => 'sala_id']);
 
         return $rules;

@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Saida Model
  *
+ * @property \App\Model\Table\AnoTable&\Cake\ORM\Association\BelongsTo $Ano
  * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\BelongsTo $Caixa
  *
  * @method \App\Model\Entity\Saida newEmptyEntity()
@@ -43,6 +44,10 @@ class SaidaTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Ano', [
+            'foreignKey' => 'ano_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Caixa', [
             'foreignKey' => 'caixa_id',
         ]);
@@ -56,6 +61,11 @@ class SaidaTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
+        $validator
+            ->integer('ano_id')
+            ->requirePresence('ano_id', 'create')
+            ->notEmptyString('ano_id');
+
         $validator
             ->integer('caixa_id')
             ->allowEmptyString('caixa_id');
@@ -112,6 +122,7 @@ class SaidaTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add($rules->existsIn('ano_id', 'Ano'), ['errorField' => 'ano_id']);
         $rules->add($rules->existsIn('caixa_id', 'Caixa'), ['errorField' => 'caixa_id']);
 
         return $rules;

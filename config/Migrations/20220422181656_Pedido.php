@@ -15,7 +15,8 @@ class Pedido extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('pedido');
-        $table->addColumn('vinculo_institucional_id', 'integer', ['null' => true])
+        $table->addColumn('ano_id', 'integer', ['null' => false])
+                ->addColumn('vinculo_institucional_id', 'integer', ['null' => true])
                 ->addColumn('projeto_id', 'integer', ['null' => false])
                 ->addColumn('especie_id', 'integer', ['null' => false])
                 ->addColumn('linha_pesquisa_id', 'integer', ['null' => true])
@@ -52,6 +53,7 @@ class Pedido extends AbstractMigration {
                 ->addForeignKey('finalidade_id', 'finalidade', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addForeignKey('pesquisador_id', 'pesquisador', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addForeignKey('linhagem_id', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addForeignKey('ano_id', 'ano', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addIndex(['num_previsao'], ['unique' => true])
                 ->create();
     }
