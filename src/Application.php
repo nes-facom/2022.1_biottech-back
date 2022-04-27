@@ -37,6 +37,8 @@ use Cake\Utility\Security;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Service\PedidoService;
 use App\Service\UserService;
+use App\Service\LinhagemService;
+use App\Service\PesquisadorSerice;
 
 /**
  * Application setup class.
@@ -51,6 +53,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function services(\Cake\Core\ContainerInterface $container): void {
         $container->add(PedidoService::class);
         $container->add(UserService::class);
+        $container->add(LinhagemService::class);
+        $container->add(PesquisadorSerice::class);
     }
 
     /**

@@ -34,7 +34,7 @@ class DatabaseSeed extends AbstractSeed
                 'modified' => FrozenTime::now(),
             ]
         ];
-
+        
         $table = $this->table('users');
         $table->insert($users)->save();
     }
