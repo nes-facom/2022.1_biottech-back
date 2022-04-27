@@ -13,11 +13,11 @@ use Cake\ORM\Entity;
  * @property int $num_previsao
  * @property string $retirada_num
  * @property int $qtd_retirar
- * @property \Cake\I18n\FrozenDate|null $retirada_data
- * @property int $retirado
+ * @property \Cake\I18n\FrozenDate $retirada_data
  * @property string $status
  *
  * @property \App\Model\Entity\Pedido $pedido
+ * @property \App\Model\Entity\Saida[] $saida
  */
 class Previsao extends Entity
 {
@@ -36,8 +36,8 @@ class Previsao extends Entity
         'retirada_num' => true,
         'qtd_retirar' => true,
         'retirada_data' => true,
-        'retirado' => true,
         'status' => true,
         'pedido' => true,
+        'saida' => true,
     ];
 }

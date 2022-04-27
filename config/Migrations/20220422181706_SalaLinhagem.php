@@ -14,7 +14,7 @@ class SalaLinhagem extends AbstractMigration {
      * @return void
      */
     public function change() {
-        $table = $this->table('sala_linhagem', ['id' => false, 'primary_key' => ['linhagem_id', 'sala_id']]);
+        $table = $this->table('sala_linhagem');
         $table->addColumn('linhagem_id', 'integer')
                 ->addColumn('sala_id', 'integer')
                 ->addForeignKey('linhagem_id', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])

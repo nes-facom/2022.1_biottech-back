@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\PedidoService;
+
 /**
  * Pedido Controller
  *
@@ -17,7 +19,7 @@ class PedidoController extends AppController {
         $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
     }
 
-    public function getAllPedidos() {
+    public function getAllPedidos(PedidoService $service) {
 
         //seta os métodos aceitos
         $this->request->allowMethod(['get']);
@@ -25,7 +27,9 @@ class PedidoController extends AppController {
         //verifica se o token é valido
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
-            $responseGetAll = $this->Pedido->getAllPedidos();
+            $responseGetAll = $service->getAllPedidos();
+            
+            
 
             //paginação
             /* $this->set('pedidos', $this->paginate($responseGetAll));

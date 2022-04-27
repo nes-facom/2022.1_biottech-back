@@ -26,6 +26,7 @@ class PrevisaoTableTest extends TestCase
     protected $fixtures = [
         'app.Previsao',
         'app.Pedido',
+        'app.Saida',
     ];
 
     /**

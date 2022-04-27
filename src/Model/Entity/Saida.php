@@ -9,10 +9,9 @@ use Cake\ORM\Entity;
  * Saida Entity
  *
  * @property int $id
- * @property int $ano_id
  * @property int|null $caixa_id
  * @property \Cake\I18n\FrozenDate $data_saida
- * @property string $tipo_ocorrencia
+ * @property string $tipo_saida
  * @property string|null $usuario
  * @property int $num_animais
  * @property string $saida
@@ -20,8 +19,8 @@ use Cake\ORM\Entity;
  * @property int $sobra
  * @property string|null $observacoes
  *
- * @property \App\Model\Entity\Ano $ano
  * @property \App\Model\Entity\Caixa $caixa
+ * @property \App\Model\Entity\Previsao[] $previsao
  */
 class Saida extends Entity
 {
@@ -35,17 +34,16 @@ class Saida extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'ano_id' => true,
         'caixa_id' => true,
         'data_saida' => true,
-        'tipo_ocorrencia' => true,
+        'tipo_saida' => true,
         'usuario' => true,
         'num_animais' => true,
         'saida' => true,
         'sexo' => true,
         'sobra' => true,
         'observacoes' => true,
-        'ano' => true,
         'caixa' => true,
+        'previsao' => true,
     ];
 }

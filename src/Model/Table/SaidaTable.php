@@ -11,8 +11,8 @@ use Cake\Validation\Validator;
 /**
  * Saida Model
  *
- * @property \App\Model\Table\AnoTable&\Cake\ORM\Association\BelongsTo $Ano
  * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\BelongsTo $Caixa
+ * @property \App\Model\Table\PrevisaoTable&\Cake\ORM\Association\BelongsToMany $Previsao
  *
  * @method \App\Model\Entity\Saida newEmptyEntity()
  * @method \App\Model\Entity\Saida newEntity(array $data, array $options = [])
@@ -44,12 +44,13 @@ class SaidaTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Ano', [
-            'foreignKey' => 'ano_id',
-            'joinType' => 'INNER',
-        ]);
         $this->belongsTo('Caixa', [
             'foreignKey' => 'caixa_id',
+        ]);
+        $this->belongsToMany('Previsao', [
+            'foreignKey' => 'saida_id',
+            'targetForeignKey' => 'previsao_id',
+            'joinTable' => 'previsao_saida',
         ]);
     }
 
@@ -62,11 +63,6 @@ class SaidaTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('ano_id')
-            ->requirePresence('ano_id', 'create')
-            ->notEmptyString('ano_id');
-
-        $validator
             ->integer('caixa_id')
             ->allowEmptyString('caixa_id');
 
@@ -76,9 +72,9 @@ class SaidaTable extends Table
             ->notEmptyDate('data_saida');
 
         $validator
-            ->scalar('tipo_ocorrencia')
-            ->requirePresence('tipo_ocorrencia', 'create')
-            ->notEmptyString('tipo_ocorrencia');
+            ->scalar('tipo_saida')
+            ->requirePresence('tipo_saida', 'create')
+            ->notEmptyString('tipo_saida');
 
         $validator
             ->scalar('usuario')
@@ -122,7 +118,6 @@ class SaidaTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('ano_id', 'Ano'), ['errorField' => 'ano_id']);
         $rules->add($rules->existsIn('caixa_id', 'Caixa'), ['errorField' => 'caixa_id']);
 
         return $rules;

@@ -26,7 +26,6 @@ class PedidoFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'ano_id' => 1,
                 'vinculo_institucional_id' => 1,
                 'projeto_id' => 1,
                 'especie_id' => 1,
@@ -36,15 +35,14 @@ class PedidoFixture extends TestFixture
                 'finalidade_id' => 1,
                 'pesquisador_id' => 1,
                 'linhagem_id' => 1,
-                'num_previsao' => 1,
                 'processo_sei' => 'Lorem ipsum dolor sit amet',
                 'equipe_executora' => 'Lorem ipsum dolor sit amet',
-                'data_solicitacao' => '2022-04-22',
+                'data_solicitacao' => '2022-04-27',
                 'titulo' => 'Lorem ipsum dolor sit amet',
                 'especificar' => 'Lorem ipsum dolor sit amet',
                 'exper' => 1,
                 'num_ceua' => 'Lorem ipsum dolor sit amet',
-                'vigencia_ceua' => '2022-04-22',
+                'vigencia_ceua' => '2022-04-27',
                 'num_aprovado' => 1,
                 'num_solicitado' => 1,
                 'adendo_1' => 1,
@@ -53,6 +51,7 @@ class PedidoFixture extends TestFixture
                 'idade' => 'Lorem ipsum dolor sit amet',
                 'peso' => 1.5,
                 'observacoes' => 'Lorem ipsum dolor sit amet',
+                'teste' => 1,
             ],
         ];
         parent::init();

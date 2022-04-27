@@ -6,18 +6,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Ano Entity
+ * PrevisaoSaida Entity
  *
  * @property int $id
- * @property int $ano
+ * @property int $previsao_id
+ * @property int $saida_id
  *
- * @property \App\Model\Entity\Caixa[] $caixa
- * @property \App\Model\Entity\Parto[] $parto
- * @property \App\Model\Entity\Pedido[] $pedido
- * @property \App\Model\Entity\Saida[] $saida
- * @property \App\Model\Entity\TemperaturaUmidade[] $temperatura_umidade
+ * @property \App\Model\Entity\Previsao $previsao
+ * @property \App\Model\Entity\Saida $saida
  */
-class Ano extends Entity
+class PrevisaoSaida extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -29,11 +27,9 @@ class Ano extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'ano' => true,
-        'caixa' => true,
-        'parto' => true,
-        'pedido' => true,
+        'previsao_id' => true,
+        'saida_id' => true,
+        'previsao' => true,
         'saida' => true,
-        'temperatura_umidade' => true,
     ];
 }

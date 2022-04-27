@@ -9,9 +9,7 @@ use Cake\ORM\Entity;
  * Caixa Entity
  *
  * @property int $id
- * @property int $ano_id
  * @property int|null $linhagem_id
- * @property int|null $caixa_matriz_id
  * @property string $caixa_numero
  * @property \Cake\I18n\FrozenDate $nascimento
  * @property string $sexo
@@ -19,9 +17,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $ultima_saida
  *
  * @property \App\Model\Entity\Saida[] $saida
- * @property \App\Model\Entity\Ano $ano
  * @property \App\Model\Entity\Linhagem $linhagem
- * @property \App\Model\Entity\CaixaMatriz $caixa_matriz
+ * @property \App\Model\Entity\CaixaMatriz[] $caixa_matriz
  */
 class Caixa extends Entity
 {
@@ -35,16 +32,13 @@ class Caixa extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'ano_id' => true,
         'linhagem_id' => true,
-        'caixa_matriz_id' => true,
         'caixa_numero' => true,
         'nascimento' => true,
         'sexo' => true,
         'num_animais' => true,
         'saida' => true,
         'ultima_saida' => true,
-        'ano' => true,
         'linhagem' => true,
         'caixa_matriz' => true,
     ];

@@ -6,18 +6,18 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * CaixaMatriz Entity
+ * CaixaCaixaMatriz Entity
  *
  * @property int $id
- * @property string $caixa_matriz_numero
- * @property \Cake\I18n\FrozenDate $data_acasalamento
- * @property \Cake\I18n\FrozenDate|null $saida_da_colonia
- * @property \Cake\I18n\FrozenDate|null $data_obito
+ * @property int $caixa_matriz_id
+ * @property int $caixa_id
+ * @property string $sexo
+ * @property string $peso
  *
- * @property \App\Model\Entity\Parto[] $parto
- * @property \App\Model\Entity\Caixa[] $caixa
+ * @property \App\Model\Entity\CaixaMatriz $caixa_matriz
+ * @property \App\Model\Entity\Caixa $caixa
  */
-class CaixaMatriz extends Entity
+class CaixaCaixaMatriz extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -29,11 +29,11 @@ class CaixaMatriz extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'caixa_matriz_numero' => true,
-        'data_acasalamento' => true,
-        'saida_da_colonia' => true,
-        'data_obito' => true,
-        'parto' => true,
+        'caixa_matriz_id' => true,
+        'caixa_id' => true,
+        'sexo' => true,
+        'peso' => true,
+        'caixa_matriz' => true,
         'caixa' => true,
     ];
 }

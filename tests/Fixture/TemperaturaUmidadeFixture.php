@@ -26,9 +26,8 @@ class TemperaturaUmidadeFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'ano_id' => 1,
                 'sala_id' => 1,
-                'data' => '2022-04-22',
+                'data' => '2022-04-27',
                 'temp_matutino' => 1.5,
                 'ur_matutino' => 'Lorem ipsum dolor sit amet',
                 'temp_vespertino' => 1.5,

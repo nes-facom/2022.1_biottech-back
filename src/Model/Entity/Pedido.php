@@ -9,7 +9,6 @@ use Cake\ORM\Entity;
  * Pedido Entity
  *
  * @property int $id
- * @property int $ano_id
  * @property int|null $vinculo_institucional_id
  * @property int $projeto_id
  * @property int $especie_id
@@ -19,25 +18,24 @@ use Cake\ORM\Entity;
  * @property int $finalidade_id
  * @property int $pesquisador_id
  * @property int $linhagem_id
- * @property int $num_previsao
  * @property string $processo_sei
- * @property string $equipe_executora
+ * @property string|null $equipe_executora
  * @property \Cake\I18n\FrozenDate $data_solicitacao
  * @property string $titulo
- * @property string $especificar
+ * @property string|null $especificar
  * @property int $exper
  * @property string $num_ceua
  * @property \Cake\I18n\FrozenDate $vigencia_ceua
  * @property int $num_aprovado
  * @property int $num_solicitado
- * @property int $adendo_1
- * @property int $adendo_2
+ * @property int|null $adendo_1
+ * @property int|null $adendo_2
  * @property string $sexo
- * @property string $idade
- * @property string $peso
- * @property string $observacoes
+ * @property string|null $idade
+ * @property string|null $peso
+ * @property string|null $observacoes
+ * @property int|null $teste
  *
- * @property \App\Model\Entity\Ano $ano
  * @property \App\Model\Entity\VinculoInstitucional $vinculo_institucional
  * @property \App\Model\Entity\Projeto $projeto
  * @property \App\Model\Entity\Especie $especie
@@ -60,10 +58,7 @@ class Pedido extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_hidden = ['vinculo_institucional_id', 'projeto_id', 'especie_id', 'linha_pesquisa_id',
-        'nivel_projeto_id', 'laboratorio_id', 'finalidade_id', 'pesquisador_id', 'linhagem_id'];
     protected $_accessible = [
-        'ano_id' => true,
         'vinculo_institucional_id' => true,
         'projeto_id' => true,
         'especie_id' => true,
@@ -73,7 +68,6 @@ class Pedido extends Entity
         'finalidade_id' => true,
         'pesquisador_id' => true,
         'linhagem_id' => true,
-        'num_previsao' => true,
         'processo_sei' => true,
         'equipe_executora' => true,
         'data_solicitacao' => true,
@@ -90,7 +84,7 @@ class Pedido extends Entity
         'idade' => true,
         'peso' => true,
         'observacoes' => true,
-        'ano' => true,
+        'teste' => true,
         'vinculo_institucional' => true,
         'projeto' => true,
         'especie' => true,

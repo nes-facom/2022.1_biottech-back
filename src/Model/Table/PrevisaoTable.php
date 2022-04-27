@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * Previsao Model
  *
  * @property \App\Model\Table\PedidoTable&\Cake\ORM\Association\BelongsTo $Pedido
+ * @property \App\Model\Table\SaidaTable&\Cake\ORM\Association\BelongsToMany $Saida
  *
  * @method \App\Model\Entity\Previsao newEmptyEntity()
  * @method \App\Model\Entity\Previsao newEntity(array $data, array $options = [])
@@ -46,6 +47,11 @@ class PrevisaoTable extends Table
         $this->belongsTo('Pedido', [
             'foreignKey' => 'pedido_id',
         ]);
+        $this->belongsToMany('Saida', [
+            'foreignKey' => 'previsao_id',
+            'targetForeignKey' => 'saida_id',
+            'joinTable' => 'previsao_saida',
+        ]);
     }
 
     /**
@@ -79,12 +85,8 @@ class PrevisaoTable extends Table
 
         $validator
             ->date('retirada_data')
-            ->allowEmptyDate('retirada_data');
-
-        $validator
-            ->integer('retirado')
-            ->requirePresence('retirado', 'create')
-            ->notEmptyString('retirado');
+            ->requirePresence('retirada_data', 'create')
+            ->notEmptyDate('retirada_data');
 
         $validator
             ->scalar('status')

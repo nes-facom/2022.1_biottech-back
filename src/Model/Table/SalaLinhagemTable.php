@@ -41,8 +41,8 @@ class SalaLinhagemTable extends Table
         parent::initialize($config);
 
         $this->setTable('sala_linhagem');
-        $this->setDisplayField(['linhagem_id', 'sala_id']);
-        $this->setPrimaryKey(['linhagem_id', 'sala_id']);
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->belongsTo('Linhagem', [
             'foreignKey' => 'linhagem_id',
@@ -52,6 +52,27 @@ class SalaLinhagemTable extends Table
             'foreignKey' => 'sala_id',
             'joinType' => 'INNER',
         ]);
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator
+            ->integer('linhagem_id')
+            ->requirePresence('linhagem_id', 'create')
+            ->notEmptyString('linhagem_id');
+
+        $validator
+            ->integer('sala_id')
+            ->requirePresence('sala_id', 'create')
+            ->notEmptyString('sala_id');
+
+        return $validator;
     }
 
     /**

@@ -15,8 +15,7 @@ class Pedido extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('pedido');
-        $table->addColumn('ano_id', 'integer', ['null' => false])
-                ->addColumn('vinculo_institucional_id', 'integer', ['null' => true])
+        $table->addColumn('vinculo_institucional_id', 'integer', ['null' => true])
                 ->addColumn('projeto_id', 'integer', ['null' => false])
                 ->addColumn('especie_id', 'integer', ['null' => false])
                 ->addColumn('linha_pesquisa_id', 'integer', ['null' => true])
@@ -25,25 +24,27 @@ class Pedido extends AbstractMigration {
                 ->addColumn('finalidade_id', 'integer', ['null' => false])
                 ->addColumn('pesquisador_id', 'integer', ['null' => false])
                 ->addColumn('linhagem_id', 'integer', ['null' => false])
-                ->addColumn('num_previsao', 'integer', ['null' => false])
                 ->addColumn('processo_sei', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('equipe_executora', 'string', ['limit' => 255, 'null' => false])
+                ->addColumn('equipe_executora', 'string', ['limit' => 255, 'null' => true])
                 ->addColumn('data_solicitacao', 'date', ['null' => false])
                 ->addColumn('titulo', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('especificar', 'string', ['limit' => 255, 'null' => false])
+                ->addColumn('especificar', 'string', ['limit' => 255, 'null' => true])
                 ->addColumn('exper', 'integer', ['null' => false])
                 ->addColumn('num_ceua', 'string', ['limit' => 255, 'null' => false])
                 ->addColumn('vigencia_ceua', 'date', ['null' => false])
                 ->addColumn('num_aprovado', 'integer', ['null' => false])
                 ->addColumn('num_solicitado', 'integer', ['null' => false])
-                ->addColumn('adendo_1', 'integer', ['null' => false])
-                ->addColumn('adendo_2', 'integer', ['null' => false])
+                ->addColumn('adendo_1', 'integer', ['null' => true])
+                ->addColumn('adendo_2', 'integer', ['null' => true])
                 ->addColumn('sexo', 'enum', [
                     'values' => ['macho', 'femea'], 'null' => false
                 ])
-                ->addColumn('idade', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('peso', 'decimal', ['null' => false])
-                ->addColumn('observacoes', 'string', ['limit' => 255, 'null' => false])
+                ->addColumn('idade', 'string', ['limit' => 255, 'null' => true])
+                ->addColumn('peso', 'decimal', ['null' => true])
+                ->addColumn('observacoes', 'string', ['limit' => 255, 'null' => true])
+                ->addColumn('teste', 'integer', ['null' => true])
+                
+                
                 ->addForeignKey('vinculo_institucional_id', 'vinculo_institucional', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addForeignKey('projeto_id', 'projeto', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addForeignKey('especie_id', 'especie', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
@@ -53,8 +54,6 @@ class Pedido extends AbstractMigration {
                 ->addForeignKey('finalidade_id', 'finalidade', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addForeignKey('pesquisador_id', 'pesquisador', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addForeignKey('linhagem_id', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-                ->addForeignKey('ano_id', 'ano', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-                ->addIndex(['num_previsao'], ['unique' => true])
                 ->create();
     }
 

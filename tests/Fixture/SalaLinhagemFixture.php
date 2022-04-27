@@ -25,6 +25,7 @@ class SalaLinhagemFixture extends TestFixture
     {
         $this->records = [
             [
+                'id' => 1,
                 'linhagem_id' => 1,
                 'sala_id' => 1,
             ],

@@ -26,10 +26,9 @@ class SaidaFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'ano_id' => 1,
                 'caixa_id' => 1,
-                'data_saida' => '2022-04-22',
-                'tipo_ocorrencia' => 'Lorem ipsum dolor sit amet',
+                'data_saida' => '2022-04-27',
+                'tipo_saida' => 'Lorem ipsum dolor sit amet',
                 'usuario' => 'Lorem ipsum dolor sit amet',
                 'num_animais' => 1,
                 'saida' => 'Lorem ipsum dolor sit amet',

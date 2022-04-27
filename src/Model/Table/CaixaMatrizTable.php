@@ -11,10 +11,8 @@ use Cake\Validation\Validator;
 /**
  * CaixaMatriz Model
  *
- * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\BelongsTo $Caixa
- * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\BelongsTo $Caixa
- * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\HasMany $Caixa
  * @property \App\Model\Table\PartoTable&\Cake\ORM\Association\HasMany $Parto
+ * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\BelongsToMany $Caixa
  *
  * @method \App\Model\Entity\CaixaMatriz newEmptyEntity()
  * @method \App\Model\Entity\CaixaMatriz newEntity(array $data, array $options = [])
@@ -46,17 +44,13 @@ class CaixaMatrizTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Caixa', [
-            'foreignKey' => 'caixa_macho_id',
-        ]);
-        $this->belongsTo('Caixa', [
-            'foreignKey' => 'caixa_femea_id',
-        ]);
-        $this->hasMany('Caixa', [
-            'foreignKey' => 'caixa_matriz_id',
-        ]);
         $this->hasMany('Parto', [
             'foreignKey' => 'caixa_matriz_id',
+        ]);
+        $this->belongsToMany('Caixa', [
+            'foreignKey' => 'caixa_matriz_id',
+            'targetForeignKey' => 'caixa_id',
+            'joinTable' => 'caixa_caixa_matriz',
         ]);
     }
 
@@ -69,14 +63,6 @@ class CaixaMatrizTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('caixa_macho_id')
-            ->allowEmptyString('caixa_macho_id');
-
-        $validator
-            ->integer('caixa_femea_id')
-            ->allowEmptyString('caixa_femea_id');
-
-        $validator
             ->scalar('caixa_matriz_numero')
             ->maxLength('caixa_matriz_numero', 255)
             ->requirePresence('caixa_matriz_numero', 'create')
@@ -84,40 +70,17 @@ class CaixaMatrizTable extends Table
             ->add('caixa_matriz_numero', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('tipo_acasalamento')
-            ->maxLength('tipo_acasalamento', 255)
-            ->requirePresence('tipo_acasalamento', 'create')
-            ->notEmptyString('tipo_acasalamento');
-
-        $validator
-            ->integer('num_femea')
-            ->requirePresence('num_femea', 'create')
-            ->notEmptyString('num_femea');
-
-        $validator
             ->date('data_acasalamento')
             ->requirePresence('data_acasalamento', 'create')
             ->notEmptyDate('data_acasalamento');
 
         $validator
-            ->integer('intervalo_parto')
-            ->requirePresence('intervalo_parto', 'create')
-            ->notEmptyString('intervalo_parto');
-
-        $validator
-            ->decimal('peso_macho')
-            ->requirePresence('peso_macho', 'create')
-            ->notEmptyString('peso_macho');
-
-        $validator
-            ->decimal('peso_femea')
-            ->requirePresence('peso_femea', 'create')
-            ->notEmptyString('peso_femea');
-
-        $validator
             ->date('saida_da_colonia')
-            ->requirePresence('saida_da_colonia', 'create')
-            ->notEmptyDate('saida_da_colonia');
+            ->allowEmptyDate('saida_da_colonia');
+
+        $validator
+            ->date('data_obito')
+            ->allowEmptyDate('data_obito');
 
         return $validator;
     }
@@ -132,8 +95,6 @@ class CaixaMatrizTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['caixa_matriz_numero']), ['errorField' => 'caixa_matriz_numero']);
-        $rules->add($rules->existsIn('caixa_macho_id', 'Caixa'), ['errorField' => 'caixa_macho_id']);
-        $rules->add($rules->existsIn('caixa_femea_id', 'Caixa'), ['errorField' => 'caixa_femea_id']);
 
         return $rules;
     }

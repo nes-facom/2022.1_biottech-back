@@ -25,7 +25,6 @@ class PartoTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Parto',
-        'app.Ano',
         'app.CaixaMatriz',
     ];
 

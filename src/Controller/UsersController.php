@@ -7,10 +7,7 @@ namespace App\Controller;
 use Cake\Event\EventInterface;
 use Cake\Utility\Security;
 use Firebase\JWT\JWT;
-use App\Utility\UsersGetRequestBody;
-use App\Model\Entity\User;
-use Cake\I18n\FrozenTime;
-use Cake\Auth\DefaultPasswordHasher;
+use App\Service\UserService;
 
 /**
  * Users Controller
@@ -83,7 +80,7 @@ class UsersController extends AppController {
         $this->viewBuilder()->setOption('serialize', 'json');
     }
 
-    public function getAllUsers() {
+    public function getAllUsers(UserService $service) {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -104,7 +101,7 @@ class UsersController extends AppController {
 
             $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
             $id = $identity->getOriginalData()['id'];
-            $responseGetAll = $this->Users->getAllUsers($active, $id);
+            $responseGetAll = $service->getAllUsers($active, $id);
             
 
             $response = $this->response
@@ -122,7 +119,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function getUser() {
+    public function getUser(UserService $service) {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
@@ -144,7 +141,7 @@ class UsersController extends AppController {
             $response = $this->response
                     ->withType('application/json')
                     ->withStatus(200)
-                    ->withStringBody(json_encode($this->Users->getUser($id)));
+                    ->withStringBody(json_encode($service->getUser($id)));
             return $response;
         } else {
             $response = $this->response
@@ -155,7 +152,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function save() {
+    public function save(UserService $service) {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -176,7 +173,7 @@ class UsersController extends AppController {
 
             $data = $this->request->getParsedBody();
 
-            if ($this->Users->saveUser($data)) {
+            if ($service->saveUser($data)) {
                 $response = $this->response
                         ->withType('application/json')
                         ->withStatus(201)
@@ -198,7 +195,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function update() {
+    public function update(UserService $service) {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -220,7 +217,7 @@ class UsersController extends AppController {
             $data = $this->request->getParsedBody();
             $id = $this->request->getQuery('id');
 
-            $user = $this->Users->updateUser($id, $data);
+            $user = $service->updateUser($id, $data);
 
             if ($user != null) {
                 $response = $this->response
@@ -244,7 +241,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function updatePassword() {
+    public function updatePassword(UserService $service) {
 
         $identity = $this->Authentication->getIdentity();
 
@@ -258,7 +255,7 @@ class UsersController extends AppController {
             $data = $this->request->getParsedBody();
             $id = $identity->getOriginalData()['id'];
 
-            $user = $this->Users->updateUserPassword($id, $data);
+            $user = $service->updateUserPassword($id, $data);
 
             if ($user) {
                 $response = $this->response
@@ -282,7 +279,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function newPassword() {
+    public function newPassword(UserService $service) {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -303,7 +300,7 @@ class UsersController extends AppController {
 
             $id = $this->request->getQuery('id');
 
-            $user = $this->Users->generateNewPassword($id);
+            $user = $service->generateNewPassword($id);
 
             if ($user != null) {
                 $response = $this->response
@@ -327,7 +324,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function activeAndDisable() {
+    public function activeAndDisable(UserService $service) {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -347,7 +344,7 @@ class UsersController extends AppController {
 
             $id = $this->request->getQuery('id');
             $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
-            $user = $this->Users->updateActiveAndDisable($id, $active);
+            $user = $service->updateActiveAndDisable($id, $active);
 
             if ($user != null) {
                 $response = $this->response
@@ -370,7 +367,7 @@ class UsersController extends AppController {
         }
     }
 
-    public function updateAvatar() {
+    public function updateAvatar(UserService $service) {
 
         $identity = $this->Authentication->getIdentity();
 
@@ -385,7 +382,9 @@ class UsersController extends AppController {
             $data = $this->request->getParsedBody();
             $id = $identity->getOriginalData()['id'];
 
-            $user = $this->Users->updateUserAvatar($id, $data);
+            $user = $service->updateUserAvatar($id, $data);
+            
+            
 
             if ($user != null) {
                 $response = $this->response

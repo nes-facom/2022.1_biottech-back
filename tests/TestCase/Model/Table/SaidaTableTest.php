@@ -25,8 +25,8 @@ class SaidaTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Saida',
-        'app.Ano',
         'app.Caixa',
+        'app.Previsao',
     ];
 
     /**

@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
 /**
  * SalaLinhagem Entity
  *
+ * @property int $id
  * @property int $linhagem_id
  * @property int $sala_id
  *
@@ -26,6 +27,8 @@ class SalaLinhagem extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
+        'linhagem_id' => true,
+        'sala_id' => true,
         'linhagem' => true,
         'sala' => true,
     ];

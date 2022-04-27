@@ -9,7 +9,6 @@ use Cake\ORM\Entity;
  * Parto Entity
  *
  * @property int $id
- * @property int $ano_id
  * @property int|null $caixa_matriz_id
  * @property int $numero_parto
  * @property \Cake\I18n\FrozenDate $data_parto
@@ -21,7 +20,6 @@ use Cake\ORM\Entity;
  * @property int $qtd_gamba
  * @property int|null $qtd_outros
  *
- * @property \App\Model\Entity\Ano $ano
  * @property \App\Model\Entity\CaixaMatriz $caixa_matriz
  */
 class Parto extends Entity
@@ -36,7 +34,6 @@ class Parto extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'ano_id' => true,
         'caixa_matriz_id' => true,
         'numero_parto' => true,
         'data_parto' => true,
@@ -47,7 +44,6 @@ class Parto extends Entity
         'qtd_canib' => true,
         'qtd_gamba' => true,
         'qtd_outros' => true,
-        'ano' => true,
         'caixa_matriz' => true,
     ];
 }

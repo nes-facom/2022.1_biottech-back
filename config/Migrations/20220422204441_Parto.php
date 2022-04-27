@@ -15,8 +15,7 @@ class Parto extends AbstractMigration {
      */
     public function change() {
         $table = $this->table('parto');
-        $table->addColumn('ano_id', 'integer', ['null' => false])
-                ->addColumn('caixa_matriz_id', 'integer', ['null' => true])
+        $table->addColumn('caixa_matriz_id', 'integer', ['null' => true])
                 ->addColumn('numero_parto', 'integer', ['null' => false])
                 ->addColumn('data_parto', 'date', ['null' => false])
                 ->addColumn('num_macho', 'integer', ['null' => false])
@@ -27,7 +26,6 @@ class Parto extends AbstractMigration {
                 ->addColumn('qtd_gamba', 'integer', ['null' => false])
                 ->addColumn('qtd_outros', 'integer', ['null' => true])
                 ->addForeignKey('caixa_matriz_id', 'caixa_matriz', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-                ->addForeignKey('ano_id', 'ano', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->create();
     }
 

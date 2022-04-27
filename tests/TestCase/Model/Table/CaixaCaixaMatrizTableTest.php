@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\CaixaTable;
+use App\Model\Table\CaixaCaixaMatrizTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CaixaTable Test Case
+ * App\Model\Table\CaixaCaixaMatrizTable Test Case
  */
-class CaixaTableTest extends TestCase
+class CaixaCaixaMatrizTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CaixaTable
+     * @var \App\Model\Table\CaixaCaixaMatrizTable
      */
-    protected $Caixa;
+    protected $CaixaCaixaMatriz;
 
     /**
      * Fixtures
@@ -24,10 +24,9 @@ class CaixaTableTest extends TestCase
      * @var array<string>
      */
     protected $fixtures = [
-        'app.Caixa',
-        'app.Linhagem',
-        'app.Saida',
+        'app.CaixaCaixaMatriz',
         'app.CaixaMatriz',
+        'app.Caixa',
     ];
 
     /**
@@ -38,8 +37,8 @@ class CaixaTableTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Caixa') ? [] : ['className' => CaixaTable::class];
-        $this->Caixa = $this->getTableLocator()->get('Caixa', $config);
+        $config = $this->getTableLocator()->exists('CaixaCaixaMatriz') ? [] : ['className' => CaixaCaixaMatrizTable::class];
+        $this->CaixaCaixaMatriz = $this->getTableLocator()->get('CaixaCaixaMatriz', $config);
     }
 
     /**
@@ -49,7 +48,7 @@ class CaixaTableTest extends TestCase
      */
     protected function tearDown(): void
     {
-        unset($this->Caixa);
+        unset($this->CaixaCaixaMatriz);
 
         parent::tearDown();
     }
@@ -58,7 +57,7 @@ class CaixaTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     * @uses \App\Model\Table\CaixaTable::validationDefault()
+     * @uses \App\Model\Table\CaixaCaixaMatrizTable::validationDefault()
      */
     public function testValidationDefault(): void
     {
@@ -69,7 +68,7 @@ class CaixaTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     * @uses \App\Model\Table\CaixaTable::buildRules()
+     * @uses \App\Model\Table\CaixaCaixaMatrizTable::buildRules()
      */
     public function testBuildRules(): void
     {

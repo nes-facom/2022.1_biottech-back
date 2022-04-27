@@ -15,16 +15,15 @@ class Saida extends AbstractMigration
     public function change()
     {
         $table = $this->table('saida');
-        $table->addColumn('ano_id', 'integer', ['null' => false])
-                ->addColumn('caixa_id', 'integer', ['null' => true])
+        $table->addColumn('caixa_id', 'integer', ['null' => true])
                 ->addColumn('data_saida', 'date', ['null' => false])
-                ->addColumn('tipo_ocorrencia', 'enum', [
+                ->addColumn('tipo_saida', 'enum', [
                     'values' => ['fornecimento', 'acasalamento', 'eutanasia', 'obito', 'controle_sanitário'], 'null' => false
                 ])
                 ->addColumn('usuario', 'string', ['limit' => 255, 'null' => true])
                 ->addColumn('num_animais', 'integer', ['null' => false])
                 ->addColumn('saida', 'enum', [
-                    'values' => ['u', 's'], 'null' => false
+                    'values' => ['ultima', 'sobra'], 'null' => false
                 ])
                 ->addColumn('sexo', 'enum', [
                     'values' => ['macho', 'femea'], 'null' => false
@@ -32,7 +31,6 @@ class Saida extends AbstractMigration
                 ->addColumn('sobra', 'integer', ['null' => false])
                 ->addColumn('observacoes', 'string', ['limit' => 255, 'null' => true])
                 ->addForeignKey('caixa_id', 'caixa', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-                ->addForeignKey('ano_id', 'ano', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->create();
     }
 }

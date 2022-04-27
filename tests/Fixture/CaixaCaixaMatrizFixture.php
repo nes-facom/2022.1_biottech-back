@@ -6,16 +6,16 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * CaixaFixture
+ * CaixaCaixaMatrizFixture
  */
-class CaixaFixture extends TestFixture
+class CaixaCaixaMatrizFixture extends TestFixture
 {
     /**
      * Table name
      *
      * @var string
      */
-    public $table = 'caixa';
+    public $table = 'caixa_caixa_matriz';
     /**
      * Init method
      *
@@ -26,13 +26,10 @@ class CaixaFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'linhagem_id' => 1,
-                'caixa_numero' => 'Lorem ipsum dolor sit amet',
-                'nascimento' => '2022-04-27',
+                'caixa_matriz_id' => 1,
+                'caixa_id' => 1,
                 'sexo' => 'Lorem ipsum dolor sit amet',
-                'num_animais' => 1,
-                'saida' => 1,
-                'ultima_saida' => '2022-04-27',
+                'peso' => 1.5,
             ],
         ];
         parent::init();

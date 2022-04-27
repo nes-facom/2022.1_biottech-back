@@ -55,10 +55,7 @@ class CreateUsers extends AbstractMigration {
             'null' => true
         ]);
         $table->create();
-        $table->addColumn('year', 'integer', [
-            'default' => null,
-            'null' => false,
-        ]);
+       
     }
 
 }
