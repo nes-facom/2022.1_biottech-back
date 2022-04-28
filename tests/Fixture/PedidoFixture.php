@@ -37,12 +37,12 @@ class PedidoFixture extends TestFixture
                 'linhagem_id' => 1,
                 'processo_sei' => 'Lorem ipsum dolor sit amet',
                 'equipe_executora' => 'Lorem ipsum dolor sit amet',
-                'data_solicitacao' => '2022-04-27',
+                'data_solicitacao' => '2022-04-28',
                 'titulo' => 'Lorem ipsum dolor sit amet',
                 'especificar' => 'Lorem ipsum dolor sit amet',
                 'exper' => 1,
                 'num_ceua' => 'Lorem ipsum dolor sit amet',
-                'vigencia_ceua' => '2022-04-27',
+                'vigencia_ceua' => '2022-04-28',
                 'num_aprovado' => 1,
                 'num_solicitado' => 1,
                 'adendo_1' => 1,
@@ -51,7 +51,6 @@ class PedidoFixture extends TestFixture
                 'idade' => 'Lorem ipsum dolor sit amet',
                 'peso' => 1.5,
                 'observacoes' => 'Lorem ipsum dolor sit amet',
-                'teste' => 1,
             ],
         ];
         parent::init();

@@ -34,7 +34,6 @@ use Cake\ORM\Entity;
  * @property string|null $idade
  * @property string|null $peso
  * @property string|null $observacoes
- * @property int|null $teste
  *
  * @property \App\Model\Entity\VinculoInstitucional $vinculo_institucional
  * @property \App\Model\Entity\Projeto $projeto
@@ -84,7 +83,6 @@ class Pedido extends Entity
         'idade' => true,
         'peso' => true,
         'observacoes' => true,
-        'teste' => true,
         'vinculo_institucional' => true,
         'projeto' => true,
         'especie' => true,

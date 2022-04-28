@@ -108,5 +108,19 @@ class PedidoService {
 
         return $saveObject;
     }
+    
+    public function savePedido($data) {
+        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Pedido');
+        $newEmptyTable = $table->newEmptyEntity();
+        
+        var_dump($newEmptyTable);
+        die();
+
+        $mapTable= $table->patchEntity($newEmptyTable, $data);
+
+        $saveObject = $table->save($mapTable);
+
+        return $saveObject;
+    }
 
 }

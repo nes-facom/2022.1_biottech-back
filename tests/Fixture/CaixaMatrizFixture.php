@@ -27,9 +27,9 @@ class CaixaMatrizFixture extends TestFixture
             [
                 'id' => 1,
                 'caixa_matriz_numero' => 'Lorem ipsum dolor sit amet',
-                'data_acasalamento' => '2022-04-27',
-                'saida_da_colonia' => '2022-04-27',
-                'data_obito' => '2022-04-27',
+                'data_acasalamento' => '2022-04-28',
+                'saida_da_colonia' => '2022-04-28',
+                'data_obito' => '2022-04-28',
             ],
         ];
         parent::init();

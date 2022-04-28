@@ -30,7 +30,7 @@ class PrevisaoFixture extends TestFixture
                 'num_previsao' => 1,
                 'retirada_num' => 'Lorem ipsum dolor sit amet',
                 'qtd_retirar' => 1,
-                'retirada_data' => '2022-04-27',
+                'retirada_data' => '2022-04-28',
                 'status' => 'Lorem ipsum dolor sit amet',
             ],
         ];
