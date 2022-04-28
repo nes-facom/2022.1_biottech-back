@@ -10,20 +10,22 @@ namespace App\Service;
 use Cake\ORM\TableRegistry;
 
 /**
- * Description of LinhagemService
+ * Description of PrevisaoService
  *
  * @author Leonardo
  */
-class LinhagemService {
-    
-    public function saveLinhagem($data) {
-        $table = TableRegistry::getTableLocator()->get('Linhagem');
+class PrevisaoService {
+
+    public function savePrevisao($data) {
+        $table = TableRegistry::getTableLocator()->get('Previsao');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
-
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        
         $saveObject = $table->save($mapTable);
 
+        
         return $saveObject;
     }
+
 }

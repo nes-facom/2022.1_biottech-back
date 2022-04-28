@@ -23,7 +23,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $data_solicitacao
  * @property string $titulo
  * @property string|null $especificar
- * @property int $exper
+ * @property string $exper
  * @property string $num_ceua
  * @property \Cake\I18n\FrozenDate $vigencia_ceua
  * @property int $num_aprovado

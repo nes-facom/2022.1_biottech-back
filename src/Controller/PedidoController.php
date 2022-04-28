@@ -314,7 +314,7 @@ class PedidoController extends AppController {
                 $response = $this->response
                         ->withType('application/json')
                         ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
+                        ->withStringBody(json_encode([]));
                 return $response;
             } else {
                 $response = $this->response

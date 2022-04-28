@@ -166,7 +166,7 @@ class PedidoTable extends Table
             ->allowEmptyString('especificar');
 
         $validator
-            ->integer('exper')
+            ->scalar('exper')
             ->requirePresence('exper', 'create')
             ->notEmptyString('exper');
 

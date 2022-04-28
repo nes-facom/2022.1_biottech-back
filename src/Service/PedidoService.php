@@ -33,10 +33,10 @@ class PedidoService {
     }
 
     public function saveNivelProjeto($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('NivelProjeto');
+        $table = TableRegistry::getTableLocator()->get('NivelProjeto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 
@@ -44,10 +44,10 @@ class PedidoService {
     }
 
     public function saveLinhaPesquisa($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('LinhaPesquisa');
+        $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 
@@ -55,10 +55,10 @@ class PedidoService {
     }
 
     public function saveFinalidade($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Finalidade');
+        $table = TableRegistry::getTableLocator()->get('Finalidade');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 
@@ -66,57 +66,54 @@ class PedidoService {
     }
 
     public function saveLaboratorio($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Laboratorio');
+        $table = TableRegistry::getTableLocator()->get('Laboratorio');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 
         return $saveObject;
     }
-    
-     public function saveVinculoInstitucional($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('VinculoInstitucional');
+
+    public function saveVinculoInstitucional($data) {
+        $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 
         return $saveObject;
     }
-    
+
     public function saveProjeto($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Projeto');
+        $table = TableRegistry::getTableLocator()->get('Projeto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 
         return $saveObject;
     }
-    
-     public function saveEspecie($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Especie');
+
+    public function saveEspecie($data) {
+        $table = TableRegistry::getTableLocator()->get('Especie');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 
         return $saveObject;
     }
-    
+
     public function savePedido($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Pedido');
+        $table = TableRegistry::getTableLocator()->get('Pedido');
         $newEmptyTable = $table->newEmptyEntity();
-        
-        var_dump($newEmptyTable);
-        die();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $saveObject = $table->save($mapTable);
 

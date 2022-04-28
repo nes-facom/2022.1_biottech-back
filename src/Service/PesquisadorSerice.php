@@ -23,10 +23,10 @@ class PesquisadorSerice {
         }
 
 
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Pesquisador');
+        $table = TableRegistry::getTableLocator()->get('Pesquisador');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $tableTelefone = \Cake\ORM\TableRegistry::getTableLocator()->get('Telefones');
+        $tableTelefone = TableRegistry::getTableLocator()->get('Telefones');
         $newEmptyTableTelefone = $tableTelefone->newEmptyEntity();
 
         $newEmptyTable->nome = $data['nome'];

@@ -40,7 +40,7 @@ class PedidoFixture extends TestFixture
                 'data_solicitacao' => '2022-04-28',
                 'titulo' => 'Lorem ipsum dolor sit amet',
                 'especificar' => 'Lorem ipsum dolor sit amet',
-                'exper' => 1,
+                'exper' => 'Lorem ipsum dolor sit amet',
                 'num_ceua' => 'Lorem ipsum dolor sit amet',
                 'vigencia_ceua' => '2022-04-28',
                 'num_aprovado' => 1,

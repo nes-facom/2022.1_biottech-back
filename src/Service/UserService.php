@@ -20,7 +20,7 @@ use Cake\I18n\FrozenTime;
 class UserService {
 
     public function saveUser($data) {
-        $table = \Cake\ORM\TableRegistry::getTableLocator()->get('Users');
+        $table = TableRegistry::getTableLocator()->get('Users');
         $user = $table->newEmptyEntity();
 
         $user->name = $data['name'];
