@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * Caixa Model
  *
  * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsTo $Linhagem
+ * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsTo $CaixaMatriz
  * @property \App\Model\Table\SaidaTable&\Cake\ORM\Association\HasMany $Saida
  * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsToMany $CaixaMatriz
  *
@@ -48,6 +49,9 @@ class CaixaTable extends Table
         $this->belongsTo('Linhagem', [
             'foreignKey' => 'linhagem_id',
         ]);
+        $this->belongsTo('CaixaMatriz', [
+            'foreignKey' => 'caixa_matriz_id',
+        ]);
         $this->hasMany('Saida', [
             'foreignKey' => 'caixa_id',
         ]);
@@ -69,6 +73,10 @@ class CaixaTable extends Table
         $validator
             ->integer('linhagem_id')
             ->allowEmptyString('linhagem_id');
+
+        $validator
+            ->integer('caixa_matriz_id')
+            ->allowEmptyString('caixa_matriz_id');
 
         $validator
             ->scalar('caixa_numero')
@@ -93,14 +101,12 @@ class CaixaTable extends Table
             ->notEmptyString('num_animais');
 
         $validator
-            ->integer('saida')
-            ->requirePresence('saida', 'create')
-            ->notEmptyString('saida');
+            ->integer('qtd_saida')
+            ->allowEmptyString('qtd_saida');
 
         $validator
             ->date('ultima_saida')
-            ->requirePresence('ultima_saida', 'create')
-            ->notEmptyDate('ultima_saida');
+            ->allowEmptyDate('ultima_saida');
 
         return $validator;
     }
@@ -116,6 +122,7 @@ class CaixaTable extends Table
     {
         $rules->add($rules->isUnique(['caixa_numero']), ['errorField' => 'caixa_numero']);
         $rules->add($rules->existsIn('linhagem_id', 'Linhagem'), ['errorField' => 'linhagem_id']);
+        $rules->add($rules->existsIn('caixa_matriz_id', 'CaixaMatriz'), ['errorField' => 'caixa_matriz_id']);
 
         return $rules;
     }

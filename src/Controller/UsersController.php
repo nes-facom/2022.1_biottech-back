@@ -63,11 +63,7 @@ class UsersController extends AppController {
             $this->set(compact('json'));
             $this->viewBuilder()->setOption('serialize', 'json');
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -85,11 +81,7 @@ class UsersController extends AppController {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
 
         //seta os métodos aceitos
@@ -102,20 +94,10 @@ class UsersController extends AppController {
             $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
             $id = $identity->getOriginalData()['id'];
             $responseGetAll = $service->getAllUsers($active, $id);
-            
 
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(200)
-                    ->withStringBody(json_encode($responseGetAll));
-
-            return $response;
+            return $this->Util->convertToJson(200, $responseGetAll);
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -123,10 +105,7 @@ class UsersController extends AppController {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401);
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
 
         //seta os métodos aceitos
@@ -138,17 +117,9 @@ class UsersController extends AppController {
 
             $id = $this->request->getQuery('id');
 
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(200)
-                    ->withStringBody(json_encode($service->getUser($id)));
-            return $response;
+            return $this->Util->convertToJson(200, $service->getUser($id));
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -157,11 +128,7 @@ class UsersController extends AppController {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
 
         //seta os métodos aceitos
@@ -174,24 +141,12 @@ class UsersController extends AppController {
             $data = $this->request->getParsedBody();
 
             if ($service->saveUser($data)) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(201, []);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -200,11 +155,7 @@ class UsersController extends AppController {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
 
         //seta os métodos aceitos
@@ -220,24 +171,12 @@ class UsersController extends AppController {
             $user = $service->updateUser($id, $data);
 
             if ($user != null) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(200)
-                        ->withStringBody(json_encode($user));
-                return $response;
+                return $this->Util->convertToJson(200, $user);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -258,24 +197,12 @@ class UsersController extends AppController {
             $user = $service->updateUserPassword($id, $data);
 
             if ($user) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(200)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(200, []);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -284,11 +211,7 @@ class UsersController extends AppController {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
 
         //seta os métodos aceitos
@@ -303,24 +226,12 @@ class UsersController extends AppController {
             $user = $service->generateNewPassword($id);
 
             if ($user != null) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(200)
-                        ->withStringBody(json_encode($user));
-                return $response;
+                return $this->Util->convertToJson(200, $user);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -329,11 +240,7 @@ class UsersController extends AppController {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
 
         //seta os métodos aceitos
@@ -347,23 +254,12 @@ class UsersController extends AppController {
             $user = $service->updateActiveAndDisable($id, $active);
 
             if ($user != null) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(200)
-                        ->withStringBody(json_encode($user));
-                return $response;
+                return $this->Util->convertToJson(200, $user);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
@@ -383,28 +279,15 @@ class UsersController extends AppController {
             $id = $identity->getOriginalData()['id'];
 
             $user = $service->updateUserAvatar($id, $data);
-            
-            
 
             if ($user != null) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(200)
-                        ->withStringBody(json_encode($user));
-                return $response;
+
+                return $this->Util->convertToJson(200, $user);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 

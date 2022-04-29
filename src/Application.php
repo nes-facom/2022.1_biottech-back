@@ -40,6 +40,8 @@ use App\Service\UserService;
 use App\Service\LinhagemService;
 use App\Service\PesquisadorSerice;
 use App\Service\PrevisaoService;
+use App\Service\SalaService;
+use App\Service\CaixaService;
 
 /**
  * Application setup class.
@@ -57,6 +59,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $container->add(LinhagemService::class);
         $container->add(PesquisadorSerice::class);
         $container->add(PrevisaoService::class);
+        $container->add(SalaService::class);
+        $container->add(CaixaService::class);
     }
 
     /**

@@ -43,9 +43,11 @@ class PesquisadorSerice {
             foreach ($data['telefones'] as $row) {
 
                 $newEmptyTableTelefone->pesquisador_id = $savePesquisador->id;
-                $newEmptyTableTelefone->telefone = $row['telefone'];
+                $newEmptyTableTelefone->telefone = $row;
 
                 $tableTelefone->save($newEmptyTableTelefone);
+                
+                $newEmptyTableTelefone = $tableTelefone->newEmptyEntity();
             }
 
             return true;

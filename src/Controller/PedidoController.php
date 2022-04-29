@@ -28,33 +28,16 @@ class PedidoController extends AppController {
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
             $responseGetAll = $service->getAllPedidos();
-            
-            
 
-            //paginação
-            /* $this->set('pedidos', $this->paginate($responseGetAll));
-              $this->viewBuilder()->setOption('serialize', ['pedidos']);
-
-              return; */
-
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(200)
-                    ->withStringBody(json_encode($responseGetAll));
-
-            return $response;
+            return $this->Util->convertToJson(200, $responseGetAll);
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
-     public function addNivelProjeto(PedidoService $service) {
 
-         //seta os métodos aceitos
+    public function addNivelProjeto(PedidoService $service) {
+
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -63,33 +46,20 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->saveNivelProjeto($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
-                return $response;
+                return $this->Util->convertToJson(201, $newSave);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
+
     public function addLinhaPesquisa(PedidoService $service) {
 
-         //seta os métodos aceitos
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -98,33 +68,20 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->saveLinhaPesquisa($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
-                return $response;
+                return $this->Util->convertToJson(201, $newSave);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
+
     public function addFinalidade(PedidoService $service) {
 
-         //seta os métodos aceitos
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -133,33 +90,20 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->saveFinalidade($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
-                return $response;
+                return $this->Util->convertToJson(201, $newSave);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
-     public function addLaboratorio(PedidoService $service) {
 
-         //seta os métodos aceitos
+    public function addLaboratorio(PedidoService $service) {
+
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -168,33 +112,20 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->saveLaboratorio($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
-                return $response;
+                return $this->Util->convertToJson(201, $newSave);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
+
     public function addVinculoInstitucional(PedidoService $service) {
 
-         //seta os métodos aceitos
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -203,33 +134,20 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->saveVinculoInstitucional($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
-                return $response;
+                return $this->Util->convertToJson(201, $newSave);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
+
     public function addProjeto(PedidoService $service) {
 
-         //seta os métodos aceitos
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -238,33 +156,20 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->saveProjeto($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
-                return $response;
+                return $this->Util->convertToJson(201, $newSave);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
+
     public function addEspecie(PedidoService $service) {
 
-         //seta os métodos aceitos
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -273,33 +178,20 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->saveEspecie($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode($newSave));
-                return $response;
+                return $this->Util->convertToJson(201, $newSave);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
+
     public function addPedido(PedidoService $service) {
 
-         //seta os métodos aceitos
+        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
         //verifica se o token é valido
@@ -308,30 +200,15 @@ class PedidoController extends AppController {
 
             $data = $this->request->getParsedBody();
             $newSave = $service->savePedido($data);
-            
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(201, []);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
-    
 
 }

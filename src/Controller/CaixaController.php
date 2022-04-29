@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\LinhagemService;
+use App\Service\CaixaService;
 
 /**
- * Linhagem Controller
+ * Caixa Controller
  *
- * @property \App\Model\Table\LinhagemTable $Linhagem
- * @method \App\Model\Entity\Linhagem[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\CaixaTable $Caixa
+ * @method \App\Model\Entity\Caixa[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class LinhagemController extends AppController {
+class CaixaController extends AppController {
 
     public function initialize(): void {
         parent::initialize();
     }
 
-    public function addLinhagem(LinhagemService $service) {
+    public function addCaixa(CaixaService $service) {
 
         //seta os métodos aceitos
         $this->request->allowMethod(['post']);
@@ -28,12 +28,12 @@ class LinhagemController extends AppController {
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveLinhagem($data);
+            $newSave = $service->saveCaixa($data);
 
             if ($newSave) {
-                return $this->Util->convertToJson(201, $newSave);
+                return $this->Util->convertToJson(201, []);
             } else {
-                return $this->Util->convertToJson(400, []);
+               return $this->Util->convertToJson(400, []);
             }
         } else {
             return $this->Util->convertToJson(401, []);

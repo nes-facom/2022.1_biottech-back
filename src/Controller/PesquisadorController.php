@@ -30,24 +30,12 @@ class PesquisadorController extends AppController {
             $newSave = $service->savePesquisador($data);
 
             if ($newSave) {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(201)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                 return $this->Util->convertToJson(201, []);
             } else {
-                $response = $this->response
-                        ->withType('application/json')
-                        ->withStatus(400)
-                        ->withStringBody(json_encode([]));
-                return $response;
+                 return $this->Util->convertToJson(400, []);
             }
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+             return $this->Util->convertToJson(401, []);
         }
     }
     

@@ -10,15 +10,17 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int|null $linhagem_id
+ * @property int|null $caixa_matriz_id
  * @property string $caixa_numero
  * @property \Cake\I18n\FrozenDate $nascimento
  * @property string $sexo
  * @property int $num_animais
- * @property \Cake\I18n\FrozenDate $ultima_saida
+ * @property int|null $qtd_saida
+ * @property \Cake\I18n\FrozenDate|null $ultima_saida
  *
- * @property \App\Model\Entity\Saida[] $saida
  * @property \App\Model\Entity\Linhagem $linhagem
  * @property \App\Model\Entity\CaixaMatriz[] $caixa_matriz
+ * @property \App\Model\Entity\Saida[] $saida
  */
 class Caixa extends Entity
 {
@@ -33,13 +35,15 @@ class Caixa extends Entity
      */
     protected $_accessible = [
         'linhagem_id' => true,
+        'caixa_matriz_id' => true,
         'caixa_numero' => true,
         'nascimento' => true,
         'sexo' => true,
         'num_animais' => true,
-        'saida' => true,
+        'qtd_saida' => true,
         'ultima_saida' => true,
         'linhagem' => true,
         'caixa_matriz' => true,
+        'saida' => true,
     ];
 }

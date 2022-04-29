@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
 /**
  * CaixaMatriz Model
  *
+ * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\HasMany $Caixa
  * @property \App\Model\Table\PartoTable&\Cake\ORM\Association\HasMany $Parto
  * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\BelongsToMany $Caixa
  *
@@ -44,6 +45,9 @@ class CaixaMatrizTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->hasMany('Caixa', [
+            'foreignKey' => 'caixa_matriz_id',
+        ]);
         $this->hasMany('Parto', [
             'foreignKey' => 'caixa_matriz_id',
         ]);

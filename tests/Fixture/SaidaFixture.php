@@ -27,7 +27,7 @@ class SaidaFixture extends TestFixture
             [
                 'id' => 1,
                 'caixa_id' => 1,
-                'data_saida' => '2022-04-28',
+                'data_saida' => '2022-04-29',
                 'tipo_saida' => 'Lorem ipsum dolor sit amet',
                 'usuario' => 'Lorem ipsum dolor sit amet',
                 'num_animais' => 1,

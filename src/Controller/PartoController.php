@@ -27,13 +27,9 @@ class PartoController extends AppController {
                     ->withStatus(200)
                     ->withStringBody(json_encode($responseGetAll));
 
-            return $response;
+            return $this->Util->convertToJson(200, $responseGetAll);
         } else {
-            $response = $this->response
-                    ->withType('application/json')
-                    ->withStatus(401)
-                    ->withStringBody(json_encode([]));
-            return $response;
+            return $this->Util->convertToJson(401, []);
         }
     }
 
