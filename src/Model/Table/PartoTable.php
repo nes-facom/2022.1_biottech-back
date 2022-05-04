@@ -63,7 +63,8 @@ class PartoTable extends Table
         $validator
             ->integer('numero_parto')
             ->requirePresence('numero_parto', 'create')
-            ->notEmptyString('numero_parto');
+            ->notEmptyString('numero_parto')
+            ->add('numero_parto', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->date('data_parto')
@@ -116,6 +117,7 @@ class PartoTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
+        $rules->add($rules->isUnique(['numero_parto']), ['errorField' => 'numero_parto']);
         $rules->add($rules->existsIn('caixa_matriz_id', 'CaixaMatriz'), ['errorField' => 'caixa_matriz_id']);
 
         return $rules;

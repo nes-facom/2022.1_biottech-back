@@ -94,6 +94,10 @@ class PrevisaoTable extends Table
             ->requirePresence('status', 'create')
             ->notEmptyString('status');
 
+        $validator
+            ->integer('totalRetirado')
+            ->notEmptyString('totalRetirado');
+
         return $validator;
     }
 

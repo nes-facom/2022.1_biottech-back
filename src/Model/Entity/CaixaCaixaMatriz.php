@@ -11,7 +11,6 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int $caixa_matriz_id
  * @property int $caixa_id
- * @property string $sexo
  * @property string $peso
  *
  * @property \App\Model\Entity\CaixaMatriz $caixa_matriz
@@ -31,7 +30,6 @@ class CaixaCaixaMatriz extends Entity
     protected $_accessible = [
         'caixa_matriz_id' => true,
         'caixa_id' => true,
-        'sexo' => true,
         'peso' => true,
         'caixa_matriz' => true,
         'caixa' => true,

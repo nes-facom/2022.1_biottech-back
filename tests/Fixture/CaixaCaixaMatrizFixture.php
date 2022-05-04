@@ -28,7 +28,6 @@ class CaixaCaixaMatrizFixture extends TestFixture
                 'id' => 1,
                 'caixa_matriz_id' => 1,
                 'caixa_id' => 1,
-                'sexo' => 'Lorem ipsum dolor sit amet',
                 'peso' => 1.5,
             ],
         ];

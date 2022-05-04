@@ -2,9 +2,6 @@
 
 namespace App\Service;
 
-
-use Cake\Datasource\ConnectionManager;
-use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
 class PedidoService
@@ -13,6 +10,13 @@ class PedidoService
     public function getAllPedidos()
     {
         $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');
+
+        $previsaoTable = TableRegistry::getTableLocator()->get('Previsao')->find();
+
+        $saidaTable = TableRegistry::getTableLocator()->get('Saida')->find();
+
+        $previsaoSaidaTable = TableRegistry::getTableLocator()->get('PrevisaoSaida')->find();
+
 
         /*$query = $pedidoTable->find('all', ['contain' => ['VinculoInstitucional', 'Projeto', 'Especie', 'LinhaPesquisa'
             , 'NivelProjeto', 'Laboratorio', 'Finalidade', 'Pesquisador', 'Linhagem', 'Previsao']]);*/
@@ -104,8 +108,22 @@ class PedidoService
                     'nome_vinculo_institucional'
                 ]
             ]
-        ])->contain(['Previsao']);
+        ])->contain(['Previsao' => [
+            'fields' => [
+                'pedido_id',
+                'retirada_data',
+                'totalRetirado' => $previsaoTable->func()->sum('totalRetirado')
+            ]
+        ]]);
 
+        /*->contain(['Previsao' => [
+               'fields' => [
+                   'pedido_id',
+                   'retirada_num',
+                   'retirada_data',
+                   'nice' => $previsaoTable->func()->sum('retirada_num')
+               ]
+           ]]);*/
 
 
         return $query;

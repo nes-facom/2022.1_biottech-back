@@ -15,6 +15,7 @@ use Cake\ORM\Entity;
  * @property int $qtd_retirar
  * @property \Cake\I18n\FrozenDate $retirada_data
  * @property string $status
+ * @property int $totalRetirado
  *
  * @property \App\Model\Entity\Pedido $pedido
  * @property \App\Model\Entity\Saida[] $saida
@@ -37,6 +38,7 @@ class Previsao extends Entity
         'qtd_retirar' => true,
         'retirada_data' => true,
         'status' => true,
+        'totalRetirado' => true,
         'pedido' => true,
         'saida' => true,
     ];

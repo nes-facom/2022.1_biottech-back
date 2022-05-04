@@ -21,6 +21,7 @@ class Previsao extends AbstractMigration {
                 ->addColumn('qtd_retirar', 'integer', ['null' => false])
                 ->addColumn('retirada_data', 'date', ['null' => false])
                 ->addColumn('status', 'string', ['limit' => 255, 'null' => false])
+                ->addColumn('totalRetirado', 'integer', ['null' => false, 'default' => 0])
                 ->addForeignKey('pedido_id', 'pedido', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addIndex(['num_previsao'], ['unique' => true])
                 ->create();

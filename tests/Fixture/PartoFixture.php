@@ -28,7 +28,7 @@ class PartoFixture extends TestFixture
                 'id' => 1,
                 'caixa_matriz_id' => 1,
                 'numero_parto' => 1,
-                'data_parto' => '2022-04-29',
+                'data_parto' => '2022-05-04',
                 'num_macho' => 1,
                 'num_femea' => 1,
                 'des_macho' => 1,
