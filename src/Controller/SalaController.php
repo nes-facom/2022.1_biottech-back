@@ -12,14 +12,16 @@ use App\Service\SalaService;
  * @property \App\Model\Table\SalaTable $Sala
  * @method \App\Model\Entity\Sala[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class SalaController extends AppController {
+class SalaController extends AppController
+{
 
-    public function initialize(): void {
+    public function initialize(): void
+    {
         parent::initialize();
     }
 
-    public function addSala(SalaService $service) {
-
+    public function addSala(SalaService $service)
+    {
         //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
@@ -28,20 +30,16 @@ class SalaController extends AppController {
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveSala($data);
+            $service->saveSala($data);
 
-            if ($newSave) {
-                return $this->Util->convertToJson(201, []);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(201, []);
         } else {
             return $this->Util->convertToJson(401, []);
         }
     }
 
-    public function addTemperaturaUmidade(SalaService $service) {
-
+    public function addTemperaturaUmidade(SalaService $service)
+    {
         //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
@@ -50,13 +48,10 @@ class SalaController extends AppController {
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveTemperaturaUmidade($data);
+            $service->saveTemperaturaUmidade($data);
 
-            if ($newSave) {
-                return $this->Util->convertToJson(201, []);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(201, []);
+
         } else {
             return $this->Util->convertToJson(401, []);
         }

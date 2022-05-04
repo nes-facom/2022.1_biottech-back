@@ -13,21 +13,11 @@ namespace App\Utility;
  * @author Leonardo
  */
 class UserNewPasswordRequestBody {
-  
+
     public $newPassword;
-    
+
     public function __construct($newPassword) {
         $this->newPassword = $newPassword;
     }
-    
-    public function getNewPassword() {
-        return $this->newPassword;
-    }
-
-    public function setNewPassword($newPassword): void {
-        $this->newPassword = $newPassword;
-    }
-
-
 
 }

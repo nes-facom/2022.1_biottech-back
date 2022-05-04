@@ -7,6 +7,8 @@
 
 namespace App\Service;
 
+use Cake\Datasource\ConnectionManager;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -14,14 +16,14 @@ use Cake\ORM\TableRegistry;
  *
  * @author Leonardo
  */
-class SalaService {
+class SalaService
+{
 
-    public function saveSala($data) {
-
+    public function saveSala($data)
+    {
         if (empty($data['linhagens'])) {
-            return false;
+            throw new BadRequestException();
         }
-
 
         $table = TableRegistry::getTableLocator()->get('Sala');
         $newEmptyTable = $table->newEmptyEntity();
@@ -31,36 +33,36 @@ class SalaService {
 
         $newEmptyTable->num_sala = $data['num_sala'];
 
-        $saveSala = $table->save($newEmptyTable);
+        $connection = ConnectionManager::get('default');
 
-        if ($saveSala) {
+
+        $connection->transactional(function () use ($table, $newEmptyTable, $data, $tableSalaLinhagem, $newEmptyTableSalaLinhagem) {
+
+            $saveSala = $table->saveOrFail($newEmptyTable, ['atomic' => false]);
+
             foreach ($data['linhagens'] as $row) {
-          
+
 
                 $newEmptyTableSalaLinhagem->sala_id = $saveSala->id;
                 $newEmptyTableSalaLinhagem->linhagem_id = $row;
 
-                $tableSalaLinhagem->save($newEmptyTableSalaLinhagem);
-                
+                $tableSalaLinhagem->saveOrFail($newEmptyTableSalaLinhagem, ['atomic' => false]);
+
                 $newEmptyTableSalaLinhagem = $tableSalaLinhagem->newEmptyEntity();
             }
 
-            return true;
-        } else {
-            return false;
-        }
+        });
+
     }
-    
-    public function saveTemperaturaUmidade($data) {
+
+    public function saveTemperaturaUmidade($data)
+    {
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-
-        $saveObject = $table->save($mapTable);
-
-        return $saveObject;
+        $table->saveOrFail($mapTable);
     }
 
 }

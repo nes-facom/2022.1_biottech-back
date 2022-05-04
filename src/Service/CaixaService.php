@@ -14,18 +14,17 @@ use Cake\ORM\TableRegistry;
  *
  * @author Leonardo
  */
-class CaixaService {
+class CaixaService
+{
 
-    public function saveCaixa($data) {
+    public function saveCaixa($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Caixa');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
-        
-      
-        $saveObject = $table->save($mapTable);
 
-        return $saveObject;
+        $table->save($mapTable);
     }
 
 }

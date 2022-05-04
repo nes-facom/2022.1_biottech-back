@@ -1,18 +1,17 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\CaixaService;
+use App\Service\SaidaService;
 
 /**
- * Caixa Controller
+ * Saida Controller
  *
- * @property \App\Model\Table\CaixaTable $Caixa
- * @method \App\Model\Entity\Caixa[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\SaidaTable $Saida
+ * @method \App\Model\Entity\Saida[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class CaixaController extends AppController
+class SaidaController extends AppController
 {
 
     public function initialize(): void
@@ -20,9 +19,8 @@ class CaixaController extends AppController
         parent::initialize();
     }
 
-    public function addCaixa(CaixaService $service)
+    public function addSaida(SaidaService $service)
     {
-
         //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
@@ -31,12 +29,12 @@ class CaixaController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->saveCaixa($data);
+            $service->saveSaida($data);
 
             return $this->Util->convertToJson(201, []);
+
         } else {
             return $this->Util->convertToJson(401, []);
         }
     }
-
 }

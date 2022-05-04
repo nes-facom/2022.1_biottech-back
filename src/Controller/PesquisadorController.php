@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\PesquisadorSerice;
+use App\Service\PesquisadorService;
 
 /**
  * Pesquisador Controller
@@ -12,12 +12,16 @@ use App\Service\PesquisadorSerice;
  * @property \App\Model\Table\PesquisadorTable $Pesquisador
  * @method \App\Model\Entity\Pesquisador[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class PesquisadorController extends AppController {
+class PesquisadorController extends AppController
+{
 
-    public function initialize(): void {
+    public function initialize(): void
+    {
         parent::initialize();
     }
-    public function addPesquisador(PesquisadorSerice $service) {
+
+    public function addPesquisador(PesquisadorService $service)
+    {
 
         //seta os métodos aceitos
         $this->request->allowMethod(['post']);
@@ -27,17 +31,14 @@ class PesquisadorController extends AppController {
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->savePesquisador($data);
+            $service->savePesquisador($data);
 
-            if ($newSave) {
-                 return $this->Util->convertToJson(201, []);
-            } else {
-                 return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(201, []);
+
         } else {
-             return $this->Util->convertToJson(401, []);
+            return $this->Util->convertToJson(401, []);
         }
     }
-    
+
 
 }

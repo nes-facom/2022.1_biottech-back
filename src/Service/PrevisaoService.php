@@ -21,11 +21,8 @@ class PrevisaoService {
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
-        
-        $saveObject = $table->save($mapTable);
 
-        
-        return $saveObject;
+        $table->saveOrFail($mapTable);
     }
 
 }

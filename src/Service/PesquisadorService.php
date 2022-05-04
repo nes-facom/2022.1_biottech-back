@@ -7,6 +7,7 @@
 
 namespace App\Service;
 
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -14,14 +15,14 @@ use Cake\ORM\TableRegistry;
  *
  * @author Leonardo
  */
-class PesquisadorSerice {
+class PesquisadorService
+{
 
-    public function savePesquisador($data) {
-
+    public function savePesquisador($data)
+    {
         if (empty($data['telefones'])) {
             return false;
         }
-
 
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
         $newEmptyTable = $table->newEmptyEntity();
@@ -37,23 +38,19 @@ class PesquisadorSerice {
         $newEmptyTable->email = $data['email'];
         $newEmptyTable->orientador = $data['orientador'];
 
-        $savePesquisador = $table->save($newEmptyTable);
+        $connection = ConnectionManager::get('default');
+        $connection->transactional(function () use ($table, $newEmptyTable, $data, $newEmptyTableTelefone, $tableTelefone) {
+            $savePesquisador = $table->saveOrFail($newEmptyTable, ['atomic' => false]);
 
-        if ($savePesquisador) {
             foreach ($data['telefones'] as $row) {
 
                 $newEmptyTableTelefone->pesquisador_id = $savePesquisador->id;
                 $newEmptyTableTelefone->telefone = $row;
 
-                $tableTelefone->save($newEmptyTableTelefone);
-                
+                $tableTelefone->saveOrFail($newEmptyTableTelefone, ['atomic' => false]);
+
                 $newEmptyTableTelefone = $tableTelefone->newEmptyEntity();
             }
-
-            return true;
-        } else {
-            return false;
-        }
+        });
     }
-
 }

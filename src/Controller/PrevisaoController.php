@@ -12,13 +12,16 @@ use App\Service\PrevisaoService;
  * @property \App\Model\Table\PrevisaoTable $Previsao
  * @method \App\Model\Entity\Previsao[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class PrevisaoController extends AppController {
+class PrevisaoController extends AppController
+{
 
-    public function initialize(): void {
+    public function initialize(): void
+    {
         parent::initialize();
     }
 
-    public function addPrevisao(PrevisaoService $service) {
+    public function addPrevisao(PrevisaoService $service)
+    {
 
         //seta os métodos aceitos
         $this->request->allowMethod(['post']);
@@ -28,13 +31,9 @@ class PrevisaoController extends AppController {
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->savePrevisao($data);
+            $service->savePrevisao($data);
 
-            if ($newSave) {
-                return $this->Util->convertToJson(201, []);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(201, []);
         } else {
             return $this->Util->convertToJson(401, []);
         }

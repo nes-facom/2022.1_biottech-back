@@ -17,9 +17,6 @@ class CaixaCaixaMatriz extends AbstractMigration
          $table = $this->table('caixa_caixa_matriz');
         $table->addColumn('caixa_matriz_id', 'integer')
                 ->addColumn('caixa_id', 'integer')
-                ->addColumn('sexo', 'enum', [
-                    'values' => ['macho', 'femea'], 'null' => false
-                ])
                 ->addColumn('peso', 'decimal', ['null' => false])
                 ->addForeignKey('caixa_matriz_id', 'caixa_matriz', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
                 ->addForeignKey('caixa_id', 'caixa', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])

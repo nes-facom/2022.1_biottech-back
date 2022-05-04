@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Service\CaixaMatrizService;
+use App\Service\SaidaService;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
@@ -38,10 +40,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use App\Service\PedidoService;
 use App\Service\UserService;
 use App\Service\LinhagemService;
-use App\Service\PesquisadorSerice;
+use App\Service\PesquisadorService;
 use App\Service\PrevisaoService;
 use App\Service\SalaService;
 use App\Service\CaixaService;
+use App\Service\PartoService;
 
 /**
  * Application setup class.
@@ -51,16 +54,19 @@ use App\Service\CaixaService;
  */
 class Application extends BaseApplication implements AuthenticationServiceProviderInterface {
 
-   
-    
+
+
     public function services(\Cake\Core\ContainerInterface $container): void {
         $container->add(PedidoService::class);
         $container->add(UserService::class);
         $container->add(LinhagemService::class);
-        $container->add(PesquisadorSerice::class);
+        $container->add(PesquisadorService::class);
         $container->add(PrevisaoService::class);
         $container->add(SalaService::class);
         $container->add(CaixaService::class);
+        $container->add(SaidaService::class);
+        $container->add(CaixaMatrizService::class);
+        $container->add(PartoService::class);
     }
 
     /**

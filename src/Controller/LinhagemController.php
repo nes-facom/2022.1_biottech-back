@@ -12,13 +12,16 @@ use App\Service\LinhagemService;
  * @property \App\Model\Table\LinhagemTable $Linhagem
  * @method \App\Model\Entity\Linhagem[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class LinhagemController extends AppController {
+class LinhagemController extends AppController
+{
 
-    public function initialize(): void {
+    public function initialize(): void
+    {
         parent::initialize();
     }
 
-    public function addLinhagem(LinhagemService $service) {
+    public function addLinhagem(LinhagemService $service)
+    {
 
         //seta os métodos aceitos
         $this->request->allowMethod(['post']);
@@ -30,11 +33,7 @@ class LinhagemController extends AppController {
             $data = $this->request->getParsedBody();
             $newSave = $service->saveLinhagem($data);
 
-            if ($newSave) {
-                return $this->Util->convertToJson(201, $newSave);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(201, $newSave);
         } else {
             return $this->Util->convertToJson(401, []);
         }

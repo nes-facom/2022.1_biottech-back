@@ -2,7 +2,7 @@
 
 namespace App\Test\TestCase\Service;
 
-use App\Service\PesquisadorSerice;
+use App\Service\PesquisadorService;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -10,7 +10,7 @@ class PesquisadorServiceTest extends TestCase
 {
     public function testSavePesquisador()
     {
-        $test = new PesquisadorSerice();
+        $test = new PesquisadorService();
 
         $data = [
             'nome' => base64_encode(random_bytes(10)),

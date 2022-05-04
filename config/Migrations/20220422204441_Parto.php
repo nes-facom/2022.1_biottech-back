@@ -26,6 +26,7 @@ class Parto extends AbstractMigration {
                 ->addColumn('qtd_gamba', 'integer', ['null' => false])
                 ->addColumn('qtd_outros', 'integer', ['null' => true])
                 ->addForeignKey('caixa_matriz_id', 'caixa_matriz', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+                ->addIndex(['numero_parto'], ['unique' => true])
                 ->create();
     }
 

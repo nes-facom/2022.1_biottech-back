@@ -15,15 +15,13 @@ use Cake\ORM\TableRegistry;
  * @author Leonardo
  */
 class LinhagemService {
-    
+
     public function saveLinhagem($data) {
         $table = TableRegistry::getTableLocator()->get('Linhagem');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable= $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
-
-        return $saveObject;
+        return $table->saveOrFail($mapTable);
     }
 }

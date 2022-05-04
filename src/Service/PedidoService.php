@@ -2,122 +2,208 @@
 
 namespace App\Service;
 
+
+use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
-class PedidoService {
+class PedidoService
+{
 
-    public function getAllPedidos() {
+    public function getAllPedidos()
+    {
+        $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');
 
-        // Prior to 3.6 use TableRegistry::get('Articles')
-        $pedidoTable = TableRegistry::getTableLocator()->get('Pedido')->find();
+        /*$query = $pedidoTable->find('all', ['contain' => ['VinculoInstitucional', 'Projeto', 'Especie', 'LinhaPesquisa'
+            , 'NivelProjeto', 'Laboratorio', 'Finalidade', 'Pesquisador', 'Linhagem', 'Previsao']]);*/
 
-        //$queryUser = $usersTable->all();
+        $query = $pedidoTable->find('all')->select(['id',
+            'processo_sei',
+            'equipe_executora',
+            'data_solicitacao',
+            'titulo',
+            'especificar',
+            'exper',
+            'num_ceua',
+            'vigencia_ceua',
+            'num_aprovado',
+            'num_solicitado',
+            'adendo_1',
+            'adendo_2',
+            'sexo',
+            'idade',
+            'peso',
+            'observacoes',
+            'saldoCEUA' => 'Pedido.num_aprovado - Pedido.num_solicitado + Pedido.adendo_1 + Pedido.adendo_2',
+        ])->contain([
+            'Linhagem' => [
+                'fields' => [
+                    'id',
+                    'nome_linhagem'
+                ]
+            ]
+        ])->contain([
+            'Pesquisador' => [
+                'fields' => [
+                    'id',
+                    'nome',
+                    'instituicao',
+                    'setor',
+                    'pos',
+                    'ramal',
+                    'email',
+                    'orientador'
+                ]
+            ]
+        ])->contain([
+            'Finalidade' => [
+                'fields' => [
+                    'id',
+                    'nome_finalidade'
+                ]
+            ]
+        ])->contain([
+            'Laboratorio' => [
+                'fields' => [
+                    'id',
+                    'nome_laboratorio'
+                ]
+            ]
+        ])->contain([
+            'NivelProjeto' => [
+                'fields' => [
+                    'id',
+                    'nome_nivel_projeto'
+                ]
+            ]
+        ])->contain([
+            'LinhaPesquisa' => [
+                'fields' => [
+                    'id',
+                    'nome_linha_pesquisa'
+                ]
+            ]
+        ])->contain([
+            'Especie' => [
+                'fields' => [
+                    'id',
+                    'nome_especie'
+                ]
+            ]
+        ])->contain([
+            'Projeto' => [
+                'fields' => [
+                    'id',
+                    'nome_projeto'
+                ]
+            ]
+        ])->contain([
+            'VinculoInstitucional' => [
+                'fields' => [
+                    'id',
+                    'nome_vinculo_institucional'
+                ]
+            ]
+        ])->contain(['Previsao']);
 
-
-        $query = $pedidoTable->find('all', ['contain' => ['VinculoInstitucional', 'Projeto', 'Especie', 'LinhaPesquisa'
-                , 'NivelProjeto', 'Laboratorio', 'Finalidade', 'Pesquisador', 'Linhagem', 'Previsao']]);
-
-        foreach ($query as $row) {
-
-            $row->{"saldoCEUA"} = ($row->num_aprovado - $row->num_solicitado) + $row->adendo_1 + $row->adendo_2;
-        }
-        //$query = $pedidoTable->find('all');
-        //$query =   $pedidoTable->all();
-
-        /* $query = $usersTable->all()->contains([
-          'Pesquisador'
-          ]); */
 
 
         return $query;
     }
 
-    public function saveNivelProjeto($data) {
+    public function saveNivelProjeto($data)
+    {
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $saveObject = $table->saveOrFail($mapTable);
 
         return $saveObject;
     }
 
-    public function saveLinhaPesquisa($data) {
+    public function saveLinhaPesquisa($data)
+    {
         $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $saveObject = $table->saveOrFail($mapTable);
 
         return $saveObject;
     }
 
-    public function saveFinalidade($data) {
+    public function saveFinalidade($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Finalidade');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $saveObject = $table->saveOrFail($mapTable);
 
         return $saveObject;
     }
 
-    public function saveLaboratorio($data) {
+    public function saveLaboratorio($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Laboratorio');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $saveObject = $table->saveOrFail($mapTable);
 
         return $saveObject;
     }
 
-    public function saveVinculoInstitucional($data) {
+    public function saveVinculoInstitucional($data)
+    {
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $saveObject = $table->saveOrFail($mapTable);
 
         return $saveObject;
     }
 
-    public function saveProjeto($data) {
+    public function saveProjeto($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Projeto');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $saveObject = $table->saveOrFail($mapTable);
 
         return $saveObject;
     }
 
-    public function saveEspecie($data) {
+    public function saveEspecie($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Especie');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $saveObject = $table->saveOrFail($mapTable);
 
         return $saveObject;
     }
 
-    public function savePedido($data) {
+    public function savePedido($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Pedido');
         $newEmptyTable = $table->newEmptyEntity();
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->save($mapTable);
+        $table->saveOrFail($mapTable, ['atomic' => false]);
 
-        return $saveObject;
+        $table->saveOrFail($mapTable);
     }
-
 }
