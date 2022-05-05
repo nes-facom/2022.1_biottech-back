@@ -16,6 +16,8 @@ class SaidaService
         $tablePrevisaoSaida = TableRegistry::getTableLocator()->get('PrevisaoSaida');
         $newEmptyTablePrevisaoSaida = $tablePrevisaoSaida->newEmptyEntity();
 
+        $tablePrevisao = TableRegistry::getTableLocator()->get('Previsao');
+
         $newEmptyTableSaida->caixa_id = $data['caixa_id'];
         $newEmptyTableSaida->data_saida = $data['data_saida'];
         $newEmptyTableSaida->tipo_saida = $data['tipo_saida'];
@@ -29,11 +31,16 @@ class SaidaService
 
         $connection = ConnectionManager::get('default');
 
-        $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida) {
+        $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida,$tablePrevisao) {
             $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => false]);
 
             if ($data['tipo_saida'] == 'fornecimento') {
-                $newEmptyTablePrevisaoSaida->previsao_id = $data['previsao_id'];;
+
+                $newEmptyTablePrevisao = $tablePrevisao->find()->where(['id' => $data['previsao_id']])->first();
+                $newEmptyTablePrevisao->totalRetirado = $newEmptyTablePrevisao->totalRetirado + $saveSaida->num_animais;
+                $tablePrevisao->saveOrFail($newEmptyTablePrevisao);
+
+                $newEmptyTablePrevisaoSaida->previsao_id = $data['previsao_id'];
 
                 $newEmptyTablePrevisaoSaida->saida_id = $saveSaida->id;
 
