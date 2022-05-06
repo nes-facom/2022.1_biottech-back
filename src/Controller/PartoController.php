@@ -72,9 +72,6 @@ class PartoController extends AppController
         if ($result->isValid()) {
             $responseGetAll = $service->getNascDesma();
 
-            var_dump($responseGetAll);
-            die();
-
             $this->set('partos', $this->paginate($responseGetAll));
             $this->viewBuilder()->setOption('serialize', ['partos']);
         } else {

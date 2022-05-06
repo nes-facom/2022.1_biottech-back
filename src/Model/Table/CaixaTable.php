@@ -14,7 +14,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsTo $Linhagem
  * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsTo $CaixaMatriz
  * @property \App\Model\Table\SaidaTable&\Cake\ORM\Association\HasMany $Saida
- * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsToMany $CaixaMatriz
  *
  * @method \App\Model\Entity\Caixa newEmptyEntity()
  * @method \App\Model\Entity\Caixa newEntity(array $data, array $options = [])
@@ -55,11 +54,7 @@ class CaixaTable extends Table
         $this->hasMany('Saida', [
             'foreignKey' => 'caixa_id',
         ]);
-        $this->belongsToMany('CaixaMatriz', [
-            'foreignKey' => 'caixa_id',
-            'targetForeignKey' => 'caixa_matriz_id',
-            'joinTable' => 'caixa_caixa_matriz',
-        ]);
+
     }
 
     /**

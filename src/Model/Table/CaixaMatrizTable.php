@@ -13,7 +13,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\HasMany $Caixa
  * @property \App\Model\Table\PartoTable&\Cake\ORM\Association\HasMany $Parto
- * @property \App\Model\Table\CaixaTable&\Cake\ORM\Association\BelongsToMany $Caixa
  *
  * @method \App\Model\Entity\CaixaMatriz newEmptyEntity()
  * @method \App\Model\Entity\CaixaMatriz newEntity(array $data, array $options = [])

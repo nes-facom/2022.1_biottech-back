@@ -40,4 +40,22 @@ class SaidaController extends AppController
             return $this->Util->convertToJson(401, []);
         }
     }
+
+
+    public function getSaidaTable(SaidaService $service)
+    {
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $responseGetAll = $service->getSaida();
+
+            $this->set('saida', $this->paginate($responseGetAll));
+            $this->viewBuilder()->setOption('serialize', ['saida']);
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
 }

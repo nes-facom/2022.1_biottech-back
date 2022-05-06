@@ -7,6 +7,7 @@
 
 namespace App\Service;
 
+use App\Model\Entity\Caixa;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
@@ -28,10 +29,38 @@ class CaixaService
         $table->save($mapTable);
     }
 
-    public function getEntradaDados(): ?Query
+    public function getEntradaDados(): Query
     {
+        $table = TableRegistry::getTableLocator()->get('Caixa');
 
-        return null;
+
+        return $table->find('all')->select(['id',
+            'caixa_numero',
+            'nascimento',
+            'sexo',
+            'num_animais',
+            'qtd_saida',
+            'ultima_saida',
+            'sobra' => 'num_animais - qtd_saida',
+            'idade_atual' => 'DATEDIFF(CURRENT_DATE(), nascimento)',
+            'ultima_saida_semana' => 'WEEK(ultima_saida, 0)',
+            'dias_na_colonia' => 'DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))',
+            'semanas_na_colonia' => 'FLOOR(DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))/ 7)'
+        ])->contain([
+            'CaixaMatriz' => [
+                'foreignKey' => 'caixa_matriz_id',
+                'fields' => [
+                    'id',
+                    'caixa_matriz_numero',
+                ]
+            ]
+        ])->contain([
+            'Linhagem' => [
+                'fields' => [
+                    'nome_linhagem'
+                ]
+            ]
+        ]);
     }
 
 }

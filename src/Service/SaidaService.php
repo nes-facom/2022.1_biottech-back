@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use phpDocumentor\Reflection\Types\Void_;
 
@@ -105,6 +106,20 @@ class SaidaService
             }
 
         });
+
+    }
+
+    public function getSaida(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Saida');
+
+        return $table->find('all')->contain([
+            'Caixa' => [
+                'fields' => [
+                    'caixa_numero'
+                ]
+            ]
+        ]);
 
     }
 
