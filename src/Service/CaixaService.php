@@ -7,6 +7,7 @@
 
 namespace App\Service;
 
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -25,6 +26,12 @@ class CaixaService
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $table->save($mapTable);
+    }
+
+    public function getEntradaDados(): ?Query
+    {
+
+        return null;
     }
 
 }

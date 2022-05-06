@@ -2,26 +2,29 @@
 
 namespace App\Service;
 
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
 class PedidoService
 {
 
-    public function getAllPedidos()
+    /**
+     * By default all the associations on this table will be hydrated. You can
+     * limit which associations are built, or include deeper associations
+     * using the options parameter:
+     * @return Query
+     * @throws \Exception
+     */
+    public function getAllPedidos(): Query
     {
         $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');
 
         $previsaoTable = TableRegistry::getTableLocator()->get('Previsao')->find();
 
-        $saidaTable = TableRegistry::getTableLocator()->get('Saida')->find();
-
-        $previsaoSaidaTable = TableRegistry::getTableLocator()->get('PrevisaoSaida')->find();
-
-
         /*$query = $pedidoTable->find('all', ['contain' => ['VinculoInstitucional', 'Projeto', 'Especie', 'LinhaPesquisa'
             , 'NivelProjeto', 'Laboratorio', 'Finalidade', 'Pesquisador', 'Linhagem', 'Previsao']]);*/
 
-        $query = $pedidoTable->find('all')->select(['id',
+        return $pedidoTable->find('all')->select(['id',
             'processo_sei',
             'equipe_executora',
             'data_solicitacao',
@@ -115,18 +118,6 @@ class PedidoService
                 'totalRetirado' => $previsaoTable->func()->sum('totalRetirado')
             ]
         ]]);
-
-        /*->contain(['Previsao' => [
-               'fields' => [
-                   'pedido_id',
-                   'retirada_num',
-                   'retirada_data',
-                   'nice' => $previsaoTable->func()->sum('retirada_num')
-               ]
-           ]]);*/
-
-
-        return $query;
     }
 
     public function saveNivelProjeto($data)

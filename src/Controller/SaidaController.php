@@ -19,6 +19,9 @@ class SaidaController extends AppController
         parent::initialize();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function addSaida(SaidaService $service)
     {
         //seta os métodos aceitos

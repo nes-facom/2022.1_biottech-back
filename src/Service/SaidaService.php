@@ -4,10 +4,67 @@ namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
+use phpDocumentor\Reflection\Types\Void_;
 
 class SaidaService
 {
 
+    /**
+     * By default all the associations on this table will be hydrated. You can
+     * limit which associations are built, or include deeper associations
+     * using the options parameter:
+     *
+     * ```
+     * $article = $this->Articles->newEntity(
+     *   $this->request->getData(),
+     *   ['associated' => ['Tags', 'Comments.Users']]
+     * );
+     * ```
+     *
+     * You can limit fields that will be present in the constructed entity by
+     * passing the `fields` option, which is also accepted for associations:
+     *
+     * ```
+     * $article = $this->Articles->newEntity($this->request->getData(), [
+     *  'fields' => ['title', 'body', 'tags', 'comments'],
+     *  'associated' => ['Tags', 'Comments.Users' => ['fields' => 'username']]
+     * ]
+     * );
+     * ```
+     *
+     * The `fields` option lets remove or restrict input data from ending up in
+     * the entity. If you'd like to relax the entity's default accessible fields,
+     * you can use the `accessibleFields` option:
+     *
+     * ```
+     * $article = $this->Articles->newEntity(
+     *   $this->request->getData(),
+     *   ['accessibleFields' => ['protected_field' => true]]
+     * );
+     * ```
+     *
+     * By default, the data is validated before being passed to the new entity. In
+     * the case of invalid fields, those will not be present in the resulting object.
+     * The `validate` option can be used to disable validation on the passed data:
+     *
+     * ```
+     * $article = $this->Articles->newEntity(
+     *   $this->request->getData(),
+     *   ['validate' => false]
+     * );
+     * ```
+     *
+     * You can also pass the name of the validator to use in the `validate` option.
+     * If `null` is passed to the first param of this function, no validation will
+     * be performed.
+     *
+     * You can use the `Model.beforeMarshal` event to modify request data
+     * before it is converted into entities.
+     *
+     * @param array $data The data to build an entity with.
+     * @return Void_
+     * @throws \Exception
+     */
     public function saveSaida($data)
     {
         $tableSaida = TableRegistry::getTableLocator()->get('Saida');
@@ -31,7 +88,7 @@ class SaidaService
 
         $connection = ConnectionManager::get('default');
 
-        $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida,$tablePrevisao) {
+        $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida, $tablePrevisao) {
             $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => false]);
 
             if ($data['tipo_saida'] == 'fornecimento') {

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
 class CaixaMatrizService
@@ -47,6 +48,73 @@ class CaixaMatrizService
         });
 
 
+    }
+
+    public function getProgamacaoAcasalamento(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Caixamatriz');
+
+        return $table->find('all')->select(['id',
+            'caixa_matriz_numero',
+            'data_acasalamento',
+            'saida_da_colonia',
+        ])->contain([
+            'Caixa' => [
+                'fields' => [
+                    'id',
+                    'caixa_numero',
+                    'nascimento'
+                ]
+            ]
+        ]);
+
+    }
+
+    public function getMatrizes(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Caixamatriz');
+
+        return $table->find('all')->select(['id',
+            'caixa_matriz_numero',
+            'data_acasalamento',
+            'saida_da_colonia',
+            'data_obito',
+        ])->contain([
+            'Parto' => [
+                'fields' => [
+                    'id',
+                    'caixa_matriz_id',
+                    'numero_parto',
+                    'data_parto',
+                    'num_macho',
+                    'num_femea',
+                    'des_macho',
+                    'des_femea',
+                    'qtd_canib',
+                    'qtd_gamba',
+                    'qtd_outros'
+                ]
+            ]
+        ])->contain([
+            'Caixa' => [
+                'fields' => [
+                    'id',
+                    'linhagem_id',
+                    'caixa_matriz_id',
+                    'caixa_numero',
+                    'nascimento',
+                    'sexo',
+                    'num_animais',
+                    'qtd_saida',
+                    'ultima_saida',
+                ],
+                'Linhagem' => [
+                    'fields' => [
+                        'nome_linhagem'
+                    ]
+                ]
+            ]
+        ]);
     }
 
 }

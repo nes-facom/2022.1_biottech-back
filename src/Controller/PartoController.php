@@ -15,6 +15,11 @@ use App\Service\PartoService;
  */
 class PartoController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
+    }
 
     public function getAllPartos()
     {
@@ -52,6 +57,26 @@ class PartoController extends AppController
 
             return $this->Util->convertToJson(201, []);
 
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
+    public function getNascDesmaTable(PartoService $service)
+    {
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $responseGetAll = $service->getNascDesma();
+
+            var_dump($responseGetAll);
+            die();
+
+            $this->set('partos', $this->paginate($responseGetAll));
+            $this->viewBuilder()->setOption('serialize', ['partos']);
         } else {
             return $this->Util->convertToJson(401, []);
         }

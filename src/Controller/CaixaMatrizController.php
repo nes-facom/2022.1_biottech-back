@@ -13,6 +13,13 @@ use App\Service\CaixaMatrizService;
  */
 class CaixaMatrizController extends AppController
 {
+
+    public function initialize(): void
+    {
+        parent::initialize();
+       $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
+    }
+
     public function addCaixaMatriz(CaixaMatrizService $service)
     {
         //seta os métodos aceitos
@@ -26,6 +33,42 @@ class CaixaMatrizController extends AppController
             $service->saveCaixaMatriz($data);
 
             return $this->Util->convertToJson(201, []);
+
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
+    public function getProgamacaoAcasalamentoTable(CaixaMatrizService $service)
+    {
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $responseGetAll = $service->getProgamacaoAcasalamento();
+
+            $this->set('progamacaoAcasalamento', $this->paginate($responseGetAll));
+            $this->viewBuilder()->setOption('serialize', ['progamacaoAcasalamento']);
+
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
+    public function getMatrizesTable(CaixaMatrizService $service)
+    {
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $responseGetAll = $service->getMatrizes();
+
+            $this->set('matrizes', $this->paginate($responseGetAll));
+            $this->viewBuilder()->setOption('serialize', ['matrizes']);
 
         } else {
             return $this->Util->convertToJson(401, []);
