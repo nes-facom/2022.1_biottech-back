@@ -20,6 +20,7 @@ namespace App;
 
 use App\Service\CaixaMatrizService;
 use App\Service\SaidaService;
+use App\Service\TemperaturaUmidadeService;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
@@ -55,7 +56,6 @@ use App\Service\PartoService;
 class Application extends BaseApplication implements AuthenticationServiceProviderInterface {
 
 
-
     public function services(\Cake\Core\ContainerInterface $container): void {
         $container->add(PedidoService::class);
         $container->add(UserService::class);
@@ -67,6 +67,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $container->add(SaidaService::class);
         $container->add(CaixaMatrizService::class);
         $container->add(PartoService::class);
+        $container->add(TemperaturaUmidadeService::class);
     }
 
     /**

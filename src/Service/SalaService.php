@@ -9,6 +9,7 @@ namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\BadRequestException;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -63,6 +64,14 @@ class SalaService
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
         $table->saveOrFail($mapTable);
+    }
+
+    public function getTemperaturaUmidade(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
+
+        return $table->find('all')->contain(['Sala']);
+
     }
 
 }

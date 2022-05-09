@@ -57,4 +57,21 @@ class SalaController extends AppController
         }
     }
 
+    public function getTemperaturaUmidadeTable(SalaService $service)
+    {
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $responseGetAll = $service->getTemperaturaUmidade();
+
+            $this->set('saida', $this->paginate($responseGetAll));
+            $this->viewBuilder()->setOption('serialize', ['saida']);
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
 }

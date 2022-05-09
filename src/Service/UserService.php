@@ -9,6 +9,7 @@ namespace App\Service;
 
 
 use App\Utility\UserNewPasswordRequestBody;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenTime;
 
@@ -17,10 +18,19 @@ use Cake\I18n\FrozenTime;
  *
  * @author Leonardo
  */
-class UserService {
+class UserService
+{
 
-    public function saveUser($data) {
+    public function saveUser($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Users');
+
+        $usernameExits = $table->find('all')->where(['username' => $data['username']])->first();
+
+        if ($usernameExits != null) {
+            throw new BadRequestException('Já existe um usuário cadastrado com esse e-mail.');
+        }
+
         $user = $table->newEmptyEntity();
 
         $user->name = $data['name'];
@@ -36,27 +46,30 @@ class UserService {
         } else {
             return false;
         }
+
     }
 
-    public function getAllUsers($active, $idCurrent) {
+    public function getAllUsers($active, $idCurrent)
+    {
 
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
         $query = $usersTable->where(['active' => $active, 'id !=' => $idCurrent]);
 
-        
+
         foreach ($query as $row) {
             unset($row["created"]);
             unset($row["active"]);
             unset($row["modified"]);
-            unset($row["avatar"]);     
-   
+            unset($row["avatar"]);
+
         }
 
         return $query;
     }
 
-    public function getUser($id) {
+    public function getUser($id)
+    {
 
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
@@ -65,7 +78,8 @@ class UserService {
         return $user;
     }
 
-    public function updateUser($id, $data) {
+    public function updateUser($id, $data)
+    {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
@@ -82,7 +96,8 @@ class UserService {
         }
     }
 
-    public function updateUserPassword($id, $data) {
+    public function updateUserPassword($id, $data)
+    {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
@@ -97,7 +112,8 @@ class UserService {
         }
     }
 
-    public function updateUserAvatar($id, $data) {
+    public function updateUserAvatar($id, $data)
+    {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
@@ -113,7 +129,8 @@ class UserService {
         }
     }
 
-    public function generateNewPassword($id) {
+    public function generateNewPassword($id)
+    {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
@@ -136,7 +153,8 @@ class UserService {
         }
     }
 
-    public function updateActiveAndDisable($id, $active) {
+    public function updateActiveAndDisable($id, $active)
+    {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 

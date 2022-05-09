@@ -2,8 +2,10 @@
 
 namespace App\Service;
 
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
+use Exception;
 
 class PedidoService
 {
@@ -122,14 +124,24 @@ class PedidoService
 
     public function saveNivelProjeto($data)
     {
+
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if ($table->find('all')->where(['nome_nivel_projeto' => $data['nome_nivel_projeto']])->first() != null) {
+            throw new BadRequestException('Já existe um Nivel Projeto cadastrado com esse nome.');
+        }
 
-        $saveObject = $table->saveOrFail($mapTable);
+        try {
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        return $saveObject;
+            $saveObject = $table->saveOrFail($mapTable);
+
+            return $saveObject;
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function saveLinhaPesquisa($data)

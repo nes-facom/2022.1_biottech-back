@@ -11,7 +11,8 @@ use Cake\Http\Response;
 /**
  * Util component
  */
-class UtilComponent extends Component {
+class UtilComponent extends Component
+{
 
     public $components = array('RequestHandler');
 
@@ -22,12 +23,25 @@ class UtilComponent extends Component {
      */
     protected $_defaultConfig = [];
 
-    public function convertToJson($status, $data) {
+    public function convertToJson($status, $data)
+    {
+
+        if ($status == 400) {
+            $data = [
+                'message' => 'Desculpe, estamos passando por problemas técnicos, tente novamente mais tarde ou entre em contato com o suporte.'
+            ];
+            $response = new Response();
+            return $response->withType('application/json')
+                ->withStatus($status)
+                ->withStringBody(json_encode($data));
+        }
 
         $response = new Response();
         return $response->withType('application/json')
-                        ->withStatus($status)
-                        ->withStringBody(json_encode($data));
+            ->withStatus($status)
+            ->withStringBody(json_encode($data));
+
+
     }
 
 }
