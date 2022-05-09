@@ -21,7 +21,7 @@ class PartoService
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $table->saveOrFail($mapTable);
+        $table->saveOrFail($mapTable, ['atomic' => true]);
 
     }
 

@@ -32,27 +32,37 @@ class SalaService
         $tableSalaLinhagem = TableRegistry::getTableLocator()->get('SalaLinhagem');
         $newEmptyTableSalaLinhagem = $tableSalaLinhagem->newEmptyEntity();
 
-        $newEmptyTable->num_sala = $data['num_sala'];
+        if ($table->find('all')->where(['num_sala' => $data['num_sala']])->first() != null) {
+            throw new BadRequestException('Já existe uma Sala com esse número.');
+        }
 
-        $connection = ConnectionManager::get('default');
+        try {
+
+            $newEmptyTable->num_sala = $data['num_sala'];
+
+            $connection = ConnectionManager::get('default');
 
 
-        $connection->transactional(function () use ($table, $newEmptyTable, $data, $tableSalaLinhagem, $newEmptyTableSalaLinhagem) {
+            $connection->transactional(function () use ($table, $newEmptyTable, $data, $tableSalaLinhagem, $newEmptyTableSalaLinhagem) {
 
-            $saveSala = $table->saveOrFail($newEmptyTable, ['atomic' => false]);
+                $saveSala = $table->saveOrFail($newEmptyTable, ['atomic' => true]);
 
-            foreach ($data['linhagens'] as $row) {
+                foreach ($data['linhagens'] as $row) {
 
 
-                $newEmptyTableSalaLinhagem->sala_id = $saveSala->id;
-                $newEmptyTableSalaLinhagem->linhagem_id = $row;
+                    $newEmptyTableSalaLinhagem->sala_id = $saveSala->id;
+                    $newEmptyTableSalaLinhagem->linhagem_id = $row;
 
-                $tableSalaLinhagem->saveOrFail($newEmptyTableSalaLinhagem, ['atomic' => false]);
+                    $tableSalaLinhagem->saveOrFail($newEmptyTableSalaLinhagem, ['atomic' => true]);
 
-                $newEmptyTableSalaLinhagem = $tableSalaLinhagem->newEmptyEntity();
-            }
+                    $newEmptyTableSalaLinhagem = $tableSalaLinhagem->newEmptyEntity();
+                }
 
-        });
+            });
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
 
     }
 
@@ -63,7 +73,13 @@ class SalaService
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $table->saveOrFail($mapTable);
+        try {
+
+            $table->saveOrFail($mapTable, ['atomic' => true]);
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function getTemperaturaUmidade(): Query

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
@@ -20,32 +21,42 @@ class CaixaMatrizService
 
         $tableCaixa = TableRegistry::getTableLocator()->get('Caixa')->find();
 
-        $newEmptyTableCaixaMatriz->caixa_matriz_numero = $data['caixa_matriz_numero'];
-        $newEmptyTableCaixaMatriz->data_acasalamento = $data['data_acasalamento'];
-        $newEmptyTableCaixaMatriz->saida_da_colonia = $data['saida_da_colonia'];
-        $newEmptyTableCaixaMatriz->data_obito = $data['data_obito'];
+        if ($tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->first() != null) {
+            throw new BadRequestException('Já existe uma Caixa Matriz com esse número.');
+        }
 
-        $connection = ConnectionManager::get('default');
+        try {
 
-        $connection->transactional(function () use ($tableCaixaMatriz, $newEmptyTableCaixaMatriz, $data, $tableCaixaCaixaMatriz, $newEmptyTableCaixaCaixaMatriz, $tableCaixa) {
+            $newEmptyTableCaixaMatriz->caixa_matriz_numero = $data['caixa_matriz_numero'];
+            $newEmptyTableCaixaMatriz->data_acasalamento = $data['data_acasalamento'];
+            $newEmptyTableCaixaMatriz->saida_da_colonia = $data['saida_da_colonia'];
+            $newEmptyTableCaixaMatriz->data_obito = $data['data_obito'];
 
-            $saveCaixaMatriz = $tableCaixaMatriz->saveOrFail($newEmptyTableCaixaMatriz, ['atomic' => false]);
+            $connection = ConnectionManager::get('default');
 
-            foreach ($data['caixas'] as $row) {
+            $connection->transactional(function () use ($tableCaixaMatriz, $newEmptyTableCaixaMatriz, $data, $tableCaixaCaixaMatriz, $newEmptyTableCaixaCaixaMatriz, $tableCaixa) {
 
-                $newEmptyTableCaixaCaixaMatriz->caixa_matriz_id = $saveCaixaMatriz->id;
+                $saveCaixaMatriz = $tableCaixaMatriz->saveOrFail($newEmptyTableCaixaMatriz, ['atomic' => true]);
 
-                $newEmptyTableCaixaCaixaMatriz->caixa_id = $tableCaixa->where(['caixa_numero' => $row['caixa_numero']])->first()->id;
+                foreach ($data['caixas'] as $row) {
 
-                $newEmptyTableCaixaCaixaMatriz->peso = $row["peso"];
+                    $newEmptyTableCaixaCaixaMatriz->caixa_matriz_id = $saveCaixaMatriz->id;
 
-                $tableCaixaCaixaMatriz->saveOrFail($newEmptyTableCaixaCaixaMatriz, ['atomic' => false]);
+                    $newEmptyTableCaixaCaixaMatriz->caixa_id = $tableCaixa->where(['caixa_numero' => $row['caixa_numero']])->first()->id;
 
-                $newEmptyTableCaixaCaixaMatriz = $tableCaixaCaixaMatriz->newEmptyEntity();
-                $tableCaixa = TableRegistry::getTableLocator()->get('Caixa')->find();
-            }
+                    $newEmptyTableCaixaCaixaMatriz->peso = $row["peso"];
 
-        });
+                    $tableCaixaCaixaMatriz->saveOrFail($newEmptyTableCaixaCaixaMatriz, ['atomic' => true]);
+
+                    $newEmptyTableCaixaCaixaMatriz = $tableCaixaCaixaMatriz->newEmptyEntity();
+                    $tableCaixa = TableRegistry::getTableLocator()->get('Caixa')->find();
+                }
+
+            });
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        };
 
 
     }

@@ -8,6 +8,7 @@
 namespace App\Service;
 
 use App\Model\Entity\Caixa;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
@@ -26,7 +27,15 @@ class CaixaService
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $table->save($mapTable);
+        if ($table->find('all')->where(['caixa_numero' => $data['caixa_numero']])->first() != null) {
+            throw new BadRequestException('Já existe uma Caixa com esse número.');
+        }
+
+        try {
+            $table->saveOrFail($mapTable, ['atomic' => true]);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function getEntradaDados(): Query

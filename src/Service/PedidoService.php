@@ -135,7 +135,7 @@ class PedidoService
         try {
             $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-            $saveObject = $table->saveOrFail($mapTable);
+            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
 
             return $saveObject;
 
@@ -149,11 +149,21 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if ($table->find('all')->where(['nome_linha_pesquisa' => $data['nome_linha_pesquisa']])->first() != null) {
+            throw new BadRequestException('Já existe uma Linha de Pesquisa cadastrada com esse nome.');
+        }
 
-        $saveObject = $table->saveOrFail($mapTable);
+        try {
 
-        return $saveObject;
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
+
+            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
+
+            return $saveObject;
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function saveFinalidade($data)
@@ -161,35 +171,66 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Finalidade');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $saveObject = $table->saveOrFail($mapTable);
+        if ($table->find('all')->where(['nome_finalidade' => $data['nome_finalidade']])->first() != null) {
+            throw new BadRequestException('Já existe uma Finalidade cadastrada com esse nome.');
+        }
 
-        return $saveObject;
+        try {
+
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
+
+            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
+
+            return $saveObject;
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function saveLaboratorio($data)
     {
+
         $table = TableRegistry::getTableLocator()->get('Laboratorio');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if ($table->find('all')->where(['nome_laboratorio' => $data['nome_laboratorio']])->first() != null) {
+            throw new BadRequestException('Já existe um Laboratório  cadastrada com esse nome.');
+        }
 
-        $saveObject = $table->saveOrFail($mapTable);
+        try {
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        return $saveObject;
+            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
+
+            return $saveObject;
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function saveVinculoInstitucional($data)
     {
+
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if ($table->find('all')->where(['nome_vinculo_institucional' => $data['nome_vinculo_institucional']])->first() != null) {
+            throw new BadRequestException('Já existe um Vinculo Institucional cadastrado com esse nome.');
+        }
 
-        $saveObject = $table->saveOrFail($mapTable);
+        try {
 
-        return $saveObject;
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
+
+            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
+
+            return $saveObject;
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function saveProjeto($data)
@@ -197,11 +238,21 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Projeto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if ($table->find('all')->where(['nome_projeto' => $data['nome_projeto']])->first() != null) {
+            throw new BadRequestException('Já existe um Projeto cadastrado com esse nome.');
+        }
 
-        $saveObject = $table->saveOrFail($mapTable);
+        try {
 
-        return $saveObject;
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
+
+            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
+
+            return $saveObject;
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function saveEspecie($data)
@@ -209,11 +260,21 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Especie');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if ($table->find('all')->where(['nome_especie' => $data['nome_especie']])->first() != null) {
+            throw new BadRequestException('Já existe um Projeto cadastrado com esse nome.');
+        }
 
-        $saveObject = $table->saveOrFail($mapTable);
+        try {
 
-        return $saveObject;
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
+
+            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
+
+            return $saveObject;
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function savePedido($data)
@@ -223,8 +284,11 @@ class PedidoService
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $table->saveOrFail($mapTable, ['atomic' => false]);
+        try {
+            $table->saveOrFail($mapTable, ['atomic' => true]);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
 
-        $table->saveOrFail($mapTable);
     }
 }

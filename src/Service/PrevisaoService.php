@@ -7,6 +7,7 @@
 
 namespace App\Service;
 
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 
@@ -25,7 +26,15 @@ class PrevisaoService
 
         $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        $table->saveOrFail($mapTable);
+        if ($table->find('all')->where(['num_previsao' => $data['num_previsao']])->first() != null) {
+            throw new BadRequestException('Já existe uma Previsão com esse número.');
+        }
+
+        try {
+            $table->saveOrFail($mapTable, ['atomic' => true]);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function getPrevisao(): Query

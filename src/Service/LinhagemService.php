@@ -7,6 +7,7 @@
 
 namespace App\Service;
 
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -14,14 +15,24 @@ use Cake\ORM\TableRegistry;
  *
  * @author Leonardo
  */
-class LinhagemService {
+class LinhagemService
+{
 
-    public function saveLinhagem($data) {
+    public function saveLinhagem($data)
+    {
         $table = TableRegistry::getTableLocator()->get('Linhagem');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable= $table->patchEntity($newEmptyTable, $data);
+        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        return $table->saveOrFail($mapTable);
+        if ($table->find('all')->where(['nome_linhagem' => $data['nome_linhagem']])->first() != null) {
+            throw new BadRequestException('Já existe uma Linhagem com esse nome.');
+        }
+        try {
+            return $table->saveOrFail($mapTable, ['atomic' => true]);
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 }

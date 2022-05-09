@@ -40,5 +40,22 @@ class PesquisadorController extends AppController
         }
     }
 
+    public function getPesquisadorTable(PesquisadorService $service)
+    {
+        //seta os métodos aceitos
+        $this->request->allowMethod(['get']);
+
+        //verifica se o token é valido
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $responseGetAll = $service->getPesquisador();
+
+            $this->set('saida', $this->paginate($responseGetAll));
+            $this->viewBuilder()->setOption('serialize', ['saida']);
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
 
 }

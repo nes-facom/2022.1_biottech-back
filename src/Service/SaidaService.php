@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use phpDocumentor\Reflection\Types\Void_;
@@ -76,36 +77,42 @@ class SaidaService
 
         $tablePrevisao = TableRegistry::getTableLocator()->get('Previsao');
 
-        $newEmptyTableSaida->caixa_id = $data['caixa_id'];
-        $newEmptyTableSaida->data_saida = $data['data_saida'];
-        $newEmptyTableSaida->tipo_saida = $data['tipo_saida'];
-        $newEmptyTableSaida->usuario = $data['usuario'];
-        $newEmptyTableSaida->num_animais = $data['num_animais'];
-        $newEmptyTableSaida->saida = $data['saida'];
-        $newEmptyTableSaida->sexo = $data['sexo'];
-        $newEmptyTableSaida->sobra = $data['sobra'];
-        $newEmptyTableSaida->observacoes = $data['observacoes'];
+        try {
+
+            $newEmptyTableSaida->caixa_id = $data['caixa_id'];
+            $newEmptyTableSaida->data_saida = $data['data_saida'];
+            $newEmptyTableSaida->tipo_saida = $data['tipo_saida'];
+            $newEmptyTableSaida->usuario = $data['usuario'];
+            $newEmptyTableSaida->num_animais = $data['num_animais'];
+            $newEmptyTableSaida->saida = $data['saida'];
+            $newEmptyTableSaida->sexo = $data['sexo'];
+            $newEmptyTableSaida->sobra = $data['sobra'];
+            $newEmptyTableSaida->observacoes = $data['observacoes'];
 
 
-        $connection = ConnectionManager::get('default');
+            $connection = ConnectionManager::get('default');
 
-        $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida, $tablePrevisao) {
-            $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => false]);
+            $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida, $tablePrevisao) {
+                $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => true]);
 
-            if ($data['tipo_saida'] == 'fornecimento') {
+                if ($data['tipo_saida'] == 'fornecimento') {
 
-                $newEmptyTablePrevisao = $tablePrevisao->find()->where(['id' => $data['previsao_id']])->first();
-                $newEmptyTablePrevisao->totalRetirado = $newEmptyTablePrevisao->totalRetirado + $saveSaida->num_animais;
-                $tablePrevisao->saveOrFail($newEmptyTablePrevisao);
+                    $newEmptyTablePrevisao = $tablePrevisao->find()->where(['id' => $data['previsao_id']])->first();
+                    $newEmptyTablePrevisao->totalRetirado = $newEmptyTablePrevisao->totalRetirado + $saveSaida->num_animais;
+                    $tablePrevisao->saveOrFail($newEmptyTablePrevisao);
 
-                $newEmptyTablePrevisaoSaida->previsao_id = $data['previsao_id'];
+                    $newEmptyTablePrevisaoSaida->previsao_id = $data['previsao_id'];
 
-                $newEmptyTablePrevisaoSaida->saida_id = $saveSaida->id;
+                    $newEmptyTablePrevisaoSaida->saida_id = $saveSaida->id;
 
-                $tablePrevisaoSaida->saveOrFail($newEmptyTablePrevisaoSaida, ['atomic' => false]);
-            }
+                    $tablePrevisaoSaida->saveOrFail($newEmptyTablePrevisaoSaida, ['atomic' => true]);
+                }
 
-        });
+            });
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
 
     }
 
