@@ -9,6 +9,7 @@ namespace App\Service;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
+use Exception;
 
 /**
  * Description of LinhagemService

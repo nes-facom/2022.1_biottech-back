@@ -6,6 +6,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
+use Exception;
 use phpDocumentor\Reflection\Types\Void_;
 
 class SaidaService

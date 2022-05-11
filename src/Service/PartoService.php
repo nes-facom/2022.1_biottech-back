@@ -3,8 +3,10 @@
 
 namespace App\Service;
 
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
+use Exception;
 
 /**
  * Description of PartoService
@@ -19,9 +21,18 @@ class PartoService
         $table = TableRegistry::getTableLocator()->get('Parto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if ($table->find('all')->where(['numero_parto' => $data['numero_parto']])->first() != null) {
+            throw new BadRequestException('Já existe um Parto cadastrado com esse número.');
+        }
 
-        $table->saveOrFail($mapTable, ['atomic' => true]);
+        try {
+            $mapTable = $table->patchEntity($newEmptyTable, $data);
+
+            $table->saveOrFail($mapTable, ['atomic' => true]);
+
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
 
     }
 
