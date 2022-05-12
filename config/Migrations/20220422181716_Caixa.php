@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class Caixa extends AbstractMigration {
+class Caixa extends AbstractMigration
+{
 
     /**
      * Change Method.
@@ -13,21 +14,23 @@ class Caixa extends AbstractMigration {
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
      * @return void
      */
-    public function change() {
+    public function change()
+    {
         $table = $this->table('caixa');
         $table->addColumn('linhagem_id', 'integer', ['null' => true])
-                ->addColumn('caixa_matriz_id', 'integer', ['null' => true])
-                ->addColumn('caixa_numero', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('nascimento', 'date', ['null' => false])
-                ->addColumn('sexo', 'enum', [
-                    'values' => ['macho', 'femea'], 'null' => false
-                ])
-                ->addColumn('num_animais', 'integer', ['null' => false])
-                ->addColumn('qtd_saida', 'integer', ['null' => true])
-                ->addColumn('ultima_saida', 'date', ['null' => true])
-                ->addForeignKey('linhagem_id', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
-                ->addIndex(['caixa_numero'], ['unique' => true])
-                ->create();
+            ->addColumn('caixa_matriz_id', 'integer', ['null' => true])
+            ->addColumn('caixa_numero', 'string', ['limit' => 255, 'null' => false])
+            ->addColumn('nascimento', 'date', ['null' => false])
+            ->addColumn('sexo', 'enum', [
+                'values' => ['macho', 'femea'], 'null' => false
+            ])
+            ->addColumn('num_animais', 'integer', ['null' => false])
+            ->addColumn('qtd_saida', 'integer', ['null' => true])
+            ->addColumn('ultima_saida', 'date', ['null' => true])
+            ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addForeignKey('linhagem_id', 'linhagem', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+            ->addIndex(['caixa_numero'], ['unique' => true])
+            ->create();
     }
 
 }

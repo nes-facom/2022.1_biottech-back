@@ -37,9 +37,6 @@ class UserService
         $user->username = $data['username'];
         $user->password = $data['password'];
         $user->type = $data['type'];
-        $user->active = true;
-        $user->created = FrozenTime::now();
-        $user->modified = FrozenTime::now();
 
         if ($table->save($user)) {
             return true;
@@ -87,7 +84,6 @@ class UserService
 
         $user->name = $data['name'];
         $user->type = $data['type'];
-        $user->modified = FrozenTime::now();
 
         if ($table->save($user)) {
             return $user;
@@ -104,7 +100,6 @@ class UserService
         $user = $usersTable->where(['id' => $id])->first();
 
         $user->password = $data['password'];
-        $user->modified = FrozenTime::now();
         if ($table->save($user)) {
             return true;
         } else {
@@ -120,7 +115,6 @@ class UserService
         $user = $usersTable->where(['id' => $id])->first();
 
         $user->avatar = $data['avatar'];
-        $user->modified = FrozenTime::now();
 
         if ($table->save($user)) {
             return $user;
@@ -144,7 +138,6 @@ class UserService
         }
 
         $user->password = $randomString;
-        $user->modified = FrozenTime::now();
 
         if ($table->save($user)) {
             return new UserNewPasswordRequestBody($randomString);
@@ -161,7 +154,6 @@ class UserService
         $user = $usersTable->where(['id' => $id])->first();
 
         $user->active = $active;
-        $user->modified = FrozenTime::now();
 
         if ($table->save($user)) {
             return $user;

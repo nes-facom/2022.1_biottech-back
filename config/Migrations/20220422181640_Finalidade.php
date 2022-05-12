@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class Finalidade extends AbstractMigration {
+class Finalidade extends AbstractMigration
+{
 
     /**
      * Change Method.
@@ -13,11 +14,13 @@ class Finalidade extends AbstractMigration {
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
      * @return void
      */
-    public function change() {
+    public function change()
+    {
         $table = $this->table('finalidade');
         $table->addColumn('nome_finalidade', 'string', ['limit' => 255, 'null' => false])
-        ->addIndex(['nome_finalidade'], ['unique' => true])          
-        ->create();
+            ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addIndex(['nome_finalidade'], ['unique' => true])
+            ->create();
     }
 
 }

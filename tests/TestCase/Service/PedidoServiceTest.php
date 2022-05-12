@@ -49,7 +49,7 @@ class PedidoServiceTest extends TestCase
         ];
         $testSave = $test->saveFinalidade($data);
 
-        $this->assertNotFalse($testSave);
+        $this->assertNotEquals($testSave , \Exception::class);
     }
 
     public function testSaveLaboratorio()
@@ -136,5 +136,16 @@ class PedidoServiceTest extends TestCase
 
         $this->assertNotFalse($testSave);
     }
+
+    public function testGetAllPedidos()
+    {
+        $test = new PedidoService();
+
+        $testSave = $test->getAllPedidos();
+
+        $this->assertNotEquals($testSave->firstOrFail(), \Exception::class);
+    }
+
+
 
 }

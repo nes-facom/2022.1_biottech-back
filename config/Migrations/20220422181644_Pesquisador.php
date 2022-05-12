@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class Pesquisador extends AbstractMigration {
+class Pesquisador extends AbstractMigration
+{
 
     /**
      * Change Method.
@@ -13,17 +14,19 @@ class Pesquisador extends AbstractMigration {
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
      * @return void
      */
-    public function change() {
+    public function change()
+    {
         $table = $this->table('pesquisador');
         $table->addColumn('nome', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('instituicao', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('setor', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('pos', 'string', ['limit' => 255, 'null' => true])
-                ->addColumn('ramal', 'string', ['limit' => 255, 'null' => true])
-                ->addColumn('email', 'string', ['limit' => 255, 'null' => false])
-                ->addColumn('orientador', 'boolean', ['null' => false])
-                ->addIndex(['email'], ['unique' => true])  
-                ->create();
+            ->addColumn('instituicao', 'string', ['limit' => 255, 'null' => false])
+            ->addColumn('setor', 'string', ['limit' => 255, 'null' => false])
+            ->addColumn('pos', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('ramal', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('email', 'string', ['limit' => 255, 'null' => false])
+            ->addColumn('orientador', 'boolean', ['null' => false])
+            ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addIndex(['email'], ['unique' => true])
+            ->create();
     }
 
 }

@@ -18,33 +18,25 @@ class CreateUsers extends AbstractMigration {
         $table->addColumn('name', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => false
         ]);
         $table->addColumn('username', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => false
         ]);
         $table->addColumn('password', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => false
         ]);
         $table->addColumn('type', 'integer', [
             'default' => null,
-            'null' => false,
+            'null' => false
         ]);
         $table->addColumn('active', 'boolean', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('created', 'datetime', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('modified', 'datetime', [
-            'default' => null,
-            'null' => false,
+            'default' => true,
+            'null' => false
         ]);
         $table->addColumn('avatar', 'enum', [
             'values' => ['avatar1', 'avatar2', 'avatar3',
@@ -55,7 +47,7 @@ class CreateUsers extends AbstractMigration {
             'null' => true
         ]);
         $table->create();
-       
+
     }
 
 }

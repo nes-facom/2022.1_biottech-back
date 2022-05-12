@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CaixaMatriz extends AbstractMigration {
+class CaixaMatriz extends AbstractMigration
+{
 
     /**
      * Change Method.
@@ -13,14 +14,16 @@ class CaixaMatriz extends AbstractMigration {
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
      * @return void
      */
-    public function change() {
+    public function change()
+    {
         $table = $this->table('caixa_matriz');
-        $table->addColumn('caixa_matriz_numero', 'string', ['limit' => 255, 'null' => false])      
-                ->addColumn('data_acasalamento', 'date', ['null' => false])            
-                ->addColumn('saida_da_colonia', 'date', ['null' => true])
-                ->addColumn('data_obito', 'date', ['null' => true])
-                ->addIndex(['caixa_matriz_numero'], ['unique' => true])
-                ->create();
+        $table->addColumn('caixa_matriz_numero', 'string', ['limit' => 255, 'null' => false])
+            ->addColumn('data_acasalamento', 'date', ['null' => false])
+            ->addColumn('saida_da_colonia', 'date', ['null' => true])
+            ->addColumn('data_obito', 'date', ['null' => true])
+            ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addIndex(['caixa_matriz_numero'], ['unique' => true])
+            ->create();
     }
 
 }
