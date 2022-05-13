@@ -33,6 +33,7 @@ class PesquisadorFixture extends TestFixture
                 'ramal' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
                 'orientador' => 1,
+                'active' => 1,
             ],
         ];
         parent::init();

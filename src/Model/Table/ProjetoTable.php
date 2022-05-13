@@ -63,6 +63,10 @@ class ProjetoTable extends Table
             ->notEmptyString('nome_projeto')
             ->add('nome_projeto', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

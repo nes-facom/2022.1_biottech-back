@@ -6,15 +6,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * NivelProjeto Entity
+ * SubLinhaPesquisa Entity
  *
  * @property int $id
- * @property string $nome_nivel_projeto
+ * @property string $nome_sub_linha_pesquisa
  * @property bool $active
  *
- * @property \App\Model\Entity\Pedido[] $pedido
+ * @property \App\Model\Entity\LinhaPesquisa[] $linha_pesquisa
  */
-class NivelProjeto extends Entity
+class SubLinhaPesquisa extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -26,8 +26,8 @@ class NivelProjeto extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'nome_nivel_projeto' => true,
+        'nome_sub_linha_pesquisa' => true,
         'active' => true,
-        'pedido' => true,
+        'linha_pesquisa' => true,
     ];
 }

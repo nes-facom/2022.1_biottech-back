@@ -27,7 +27,7 @@ class SaidaFixture extends TestFixture
             [
                 'id' => 1,
                 'caixa_id' => 1,
-                'data_saida' => '2022-05-05',
+                'data_saida' => '2022-05-12',
                 'tipo_saida' => 'Lorem ipsum dolor sit amet',
                 'usuario' => 'Lorem ipsum dolor sit amet',
                 'num_animais' => 1,
@@ -35,6 +35,7 @@ class SaidaFixture extends TestFixture
                 'sexo' => 'Lorem ipsum dolor sit amet',
                 'sobra' => 1,
                 'observacoes' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

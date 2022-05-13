@@ -27,6 +27,7 @@ class VinculoInstitucionalFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_vinculo_institucional' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

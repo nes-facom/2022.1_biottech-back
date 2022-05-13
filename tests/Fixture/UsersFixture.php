@@ -25,8 +25,6 @@ class UsersFixture extends TestFixture
                 'password' => 'Lorem ipsum dolor sit amet',
                 'type' => 1,
                 'active' => 1,
-                'created' => '2022-05-05 03:06:40',
-                'modified' => '2022-05-05 03:06:40',
                 'avatar' => 'Lorem ipsum dolor sit amet',
             ],
         ];

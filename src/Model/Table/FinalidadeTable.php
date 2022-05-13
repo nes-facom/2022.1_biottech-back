@@ -63,6 +63,10 @@ class FinalidadeTable extends Table
             ->notEmptyString('nome_finalidade')
             ->add('nome_finalidade', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

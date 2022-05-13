@@ -218,6 +218,10 @@ class PedidoTable extends Table
             ->maxLength('observacoes', 255)
             ->allowEmptyString('observacoes');
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

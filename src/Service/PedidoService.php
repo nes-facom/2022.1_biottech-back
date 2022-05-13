@@ -19,6 +19,11 @@ class PedidoService
      */
     public function getAllPedidos(): Query
     {
+
+        $findInTable = [
+            'LOWER(nome_linha_pesquisa) LIKE' => strtolower("%prod%")
+        ];
+
         $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');
 
         $previsaoTable = TableRegistry::getTableLocator()->get('Previsao')->find();
@@ -119,7 +124,8 @@ class PedidoService
                 'retirada_data',
                 'totalRetirado' => $previsaoTable->func()->sum('totalRetirado')
             ]
-        ]]);
+        ]])->where($findInTable);
+        //->where(['LOWER(processo_sei) LIKE' => "LOWER(%" . "45354" . "%)" ])
     }
 
     public function saveNivelProjeto($data)

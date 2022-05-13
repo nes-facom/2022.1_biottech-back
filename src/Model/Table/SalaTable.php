@@ -68,6 +68,10 @@ class SalaTable extends Table
             ->notEmptyString('num_sala')
             ->add('num_sala', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

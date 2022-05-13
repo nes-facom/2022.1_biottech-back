@@ -27,6 +27,7 @@ class NivelProjetoFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_nivel_projeto' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

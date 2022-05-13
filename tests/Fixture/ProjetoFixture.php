@@ -27,6 +27,7 @@ class ProjetoFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_projeto' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

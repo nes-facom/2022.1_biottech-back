@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $num_sala
+ * @property bool $active
  *
  * @property \App\Model\Entity\TemperaturaUmidade[] $temperatura_umidade
  * @property \App\Model\Entity\Linhagem[] $linhagem
@@ -27,6 +28,7 @@ class Sala extends Entity
      */
     protected $_accessible = [
         'num_sala' => true,
+        'active' => true,
         'temperatura_umidade' => true,
         'linhagem' => true,
     ];

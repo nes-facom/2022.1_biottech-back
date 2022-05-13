@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  * @property string $sexo
  * @property int $sobra
  * @property string|null $observacoes
+ * @property bool $active
  *
  * @property \App\Model\Entity\Caixa $caixa
  * @property \App\Model\Entity\Previsao[] $previsao
@@ -43,6 +44,7 @@ class Saida extends Entity
         'sexo' => true,
         'sobra' => true,
         'observacoes' => true,
+        'active' => true,
         'caixa' => true,
         'previsao' => true,
     ];

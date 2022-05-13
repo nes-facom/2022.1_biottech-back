@@ -63,6 +63,10 @@ class EspecieTable extends Table
             ->notEmptyString('nome_especie')
             ->add('nome_especie', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

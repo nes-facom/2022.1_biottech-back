@@ -99,6 +99,10 @@ class PesquisadorTable extends Table
             ->requirePresence('orientador', 'create')
             ->notEmptyString('orientador');
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

@@ -98,6 +98,10 @@ class PrevisaoTable extends Table
             ->integer('totalRetirado')
             ->notEmptyString('totalRetirado');
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

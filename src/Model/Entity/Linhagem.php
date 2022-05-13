@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $nome_linhagem
+ * @property bool $active
  *
  * @property \App\Model\Entity\Caixa[] $caixa
  * @property \App\Model\Entity\Pedido[] $pedido
@@ -28,6 +29,7 @@ class Linhagem extends Entity
      */
     protected $_accessible = [
         'nome_linhagem' => true,
+        'active' => true,
         'caixa' => true,
         'pedido' => true,
         'sala' => true,

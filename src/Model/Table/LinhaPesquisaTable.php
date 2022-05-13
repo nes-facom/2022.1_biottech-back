@@ -63,6 +63,10 @@ class LinhaPesquisaTable extends Table
             ->notEmptyString('nome_linha_pesquisa')
             ->add('nome_linha_pesquisa', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

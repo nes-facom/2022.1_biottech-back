@@ -17,6 +17,7 @@ use Cake\ORM\Entity;
  * @property int $num_animais
  * @property int|null $qtd_saida
  * @property \Cake\I18n\FrozenDate|null $ultima_saida
+ * @property bool $active
  *
  * @property \App\Model\Entity\Linhagem $linhagem
  * @property \App\Model\Entity\CaixaMatriz[] $caixa_matriz
@@ -42,6 +43,7 @@ class Caixa extends Entity
         'num_animais' => true,
         'qtd_saida' => true,
         'ultima_saida' => true,
+        'active' => true,
         'linhagem' => true,
         'caixa_matriz' => true,
         'saida' => true,

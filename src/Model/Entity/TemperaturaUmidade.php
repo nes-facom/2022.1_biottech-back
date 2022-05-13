@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property string|null $temp_vespertino
  * @property string|null $ur_vespertino
  * @property string|null $observacoes
+ * @property bool $active
  *
  * @property \App\Model\Entity\Sala $sala
  */
@@ -38,6 +39,7 @@ class TemperaturaUmidade extends Entity
         'temp_vespertino' => true,
         'ur_vespertino' => true,
         'observacoes' => true,
+        'active' => true,
         'sala' => true,
     ];
 }

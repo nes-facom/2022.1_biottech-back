@@ -27,6 +27,7 @@ class EspecieFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_especie' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

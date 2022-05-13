@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $nome_linha_pesquisa
+ * @property bool $active
  *
  * @property \App\Model\Entity\Pedido[] $pedido
  */
@@ -26,6 +27,7 @@ class LinhaPesquisa extends Entity
      */
     protected $_accessible = [
         'nome_linha_pesquisa' => true,
+        'active' => true,
         'pedido' => true,
     ];
 }

@@ -105,6 +105,10 @@ class PartoTable extends Table
             ->integer('qtd_outros')
             ->allowEmptyString('qtd_outros');
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

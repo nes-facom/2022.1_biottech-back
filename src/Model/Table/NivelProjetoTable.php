@@ -63,6 +63,10 @@ class NivelProjetoTable extends Table
             ->notEmptyString('nome_nivel_projeto')
             ->add('nome_nivel_projeto', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

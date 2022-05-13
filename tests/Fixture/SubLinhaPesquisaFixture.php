@@ -6,16 +6,16 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * AnoFixture
+ * SubLinhaPesquisaFixture
  */
-class AnoFixture extends TestFixture
+class SubLinhaPesquisaFixture extends TestFixture
 {
     /**
      * Table name
      *
      * @var string
      */
-    public $table = 'ano';
+    public $table = 'sub_linha_pesquisa';
     /**
      * Init method
      *
@@ -26,7 +26,8 @@ class AnoFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'ano' => 1,
+                'nome_sub_linha_pesquisa' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

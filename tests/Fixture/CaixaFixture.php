@@ -29,11 +29,12 @@ class CaixaFixture extends TestFixture
                 'linhagem_id' => 1,
                 'caixa_matriz_id' => 1,
                 'caixa_numero' => 'Lorem ipsum dolor sit amet',
-                'nascimento' => '2022-05-05',
+                'nascimento' => '2022-05-12',
                 'sexo' => 'Lorem ipsum dolor sit amet',
                 'num_animais' => 1,
                 'qtd_saida' => 1,
-                'ultima_saida' => '2022-05-05',
+                'ultima_saida' => '2022-05-12',
+                'active' => 1,
             ],
         ];
         parent::init();

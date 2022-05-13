@@ -27,6 +27,7 @@ class SalaFixture extends TestFixture
             [
                 'id' => 1,
                 'num_sala' => 1,
+                'active' => 1,
             ],
         ];
         parent::init();

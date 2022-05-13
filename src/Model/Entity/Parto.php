@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
  * @property int $qtd_canib
  * @property int $qtd_gamba
  * @property int|null $qtd_outros
+ * @property bool $active
  *
  * @property \App\Model\Entity\CaixaMatriz $caixa_matriz
  */
@@ -44,6 +45,7 @@ class Parto extends Entity
         'qtd_canib' => true,
         'qtd_gamba' => true,
         'qtd_outros' => true,
+        'active' => true,
         'caixa_matriz' => true,
     ];
 }

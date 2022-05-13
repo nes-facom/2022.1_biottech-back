@@ -27,6 +27,7 @@ class LaboratorioFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_laboratorio' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

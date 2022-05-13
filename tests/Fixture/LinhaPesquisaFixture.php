@@ -27,6 +27,7 @@ class LinhaPesquisaFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_linha_pesquisa' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

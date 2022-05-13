@@ -27,6 +27,7 @@ class LinhagemFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_linhagem' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

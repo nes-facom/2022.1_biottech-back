@@ -63,6 +63,10 @@ class LaboratorioTable extends Table
             ->notEmptyString('nome_laboratorio')
             ->add('nome_laboratorio', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

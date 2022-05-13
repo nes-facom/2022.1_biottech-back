@@ -27,6 +27,7 @@ class FinalidadeFixture extends TestFixture
             [
                 'id' => 1,
                 'nome_finalidade' => 'Lorem ipsum dolor sit amet',
+                'active' => 1,
             ],
         ];
         parent::init();

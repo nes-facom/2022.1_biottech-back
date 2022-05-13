@@ -73,6 +73,10 @@ class LinhagemTable extends Table
             ->notEmptyString('nome_linhagem')
             ->add('nome_linhagem', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

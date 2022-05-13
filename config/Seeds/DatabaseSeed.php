@@ -67,9 +67,56 @@ class DatabaseSeed extends AbstractSeed
         $table = $this->table('nivel_projeto');
         $table->insert($nivelProjeto)->save();
 
+        //add Sub Linha De Pesquisa
+        $subLinhaPesquisa = [
+            [
+                'nome_sub_linha_pesquisa' => 'Saúde e Desenvolvimento na Região Centro-Oeste'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Química'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Psicologia'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Doenças Infecciosas e Parasitárias'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Ciências Veterinárias'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Ciências Farmacêuticas'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Ciências do Movimento'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Ciência Animal'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Biotecnologia'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Bioquímica e Biologia Molecular'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Biologia Animal'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Biotecnologia e Biodiversidade'
+            ],
+            [
+                'nome_sub_linha_pesquisa' => 'Ciência dos Materiais'
+            ]
+
+        ];
+
+        $table = $this->table('sub_linha_pesquisa');
+        $table->insert($subLinhaPesquisa)->save();
+
 
         //add Linha de Pesquisa
-        $linhaPesquisa= [
+        $linhaPesquisa = [
             [
                 'nome_linha_pesquisa' => 'A Biodiversidade do pantanal e cerrado e suas relações e aplicações na saúde'
             ],
@@ -116,6 +163,12 @@ class DatabaseSeed extends AbstractSeed
                 'nome_linha_pesquisa' => 'Carcinogênese experimental e estudos do câncer na Região Centro-Oeste'
             ],
             [
+                'nome_linha_pesquisa' => 'Ciência e Tecnologia de Produtos de Origem Animal e Avaliação Econômica e Gestão de Sistemas Agropecuários'
+            ],
+            [
+                'nome_linha_pesquisa' => 'Ciência, Tecnologia e Inovação para Sustentabilidade da Região Centro Oeste'
+            ],
+            [
                 'nome_linha_pesquisa' => 'Clínica e epidemiologia das doenças infecciosas e parasitárias'
             ],
             [
@@ -123,6 +176,9 @@ class DatabaseSeed extends AbstractSeed
             ],
             [
                 'nome_linha_pesquisa' => 'Cultivo celular, terapia e engenharia tecidual'
+            ],
+            [
+                'nome_linha_pesquisa' => 'Desenvolvimento de Produtos, Processos e Serviços Biotecnológicos'
             ],
             [
                 'nome_linha_pesquisa' => 'Desenvolvimento de Metodologias Analíticas'
@@ -176,6 +232,9 @@ class DatabaseSeed extends AbstractSeed
                 'nome_linha_pesquisa' => 'Investigação de Atividades Biológicas de Produtos Naturais e Sintéticos'
             ],
             [
+                'nome_linha_pesquisa' => 'Marcadores moleculares, estudos epidemiológicos e pré-clínicos'
+            ],
+            [
                 'nome_linha_pesquisa' => 'Materiais Aplicados à Saúde'
             ],
             [
@@ -186,6 +245,9 @@ class DatabaseSeed extends AbstractSeed
             ],
             [
                 'nome_linha_pesquisa' => 'Mediadores celulares'
+            ],
+            [
+                'nome_linha_pesquisa' => 'Melhoramento Genético e Reprodução Animal'
             ],
             [
                 'nome_linha_pesquisa' => 'Mestrado em Farmácia'
@@ -221,7 +283,16 @@ class DatabaseSeed extends AbstractSeed
                 'nome_linha_pesquisa' => 'Produtos naturais e inflamação'
             ],
             [
+                'nome_linha_pesquisa' => 'Prospecção, síntese, controle de qualidade e desenvolvimento tecnológico de produtos de interesse farmacêutico'
+            ],
+            [
+                'nome_linha_pesquisa' => 'Prospecção, síntese, controle de qualidade, tecnologia farmacêutica e toxicologia'
+            ],
+            [
                 'nome_linha_pesquisa' => 'Psicologia e Processos Comportamentais'
+            ],
+            [
+                'nome_linha_pesquisa' => 'Psicologia e Processos Psicossociais'
             ],
             [
                 'nome_linha_pesquisa' => 'Química de Produtos Naturais'
@@ -248,6 +319,9 @@ class DatabaseSeed extends AbstractSeed
                 'nome_linha_pesquisa' => 'Reprodução e conservação de material genético'
             ],
             [
+                'nome_linha_pesquisa' => 'Reprodução e Melhoramento Animal'
+            ],
+            [
                 'nome_linha_pesquisa' => 'Respostas ao Exercício e Saúde Humana'
             ],
             [
@@ -267,7 +341,7 @@ class DatabaseSeed extends AbstractSeed
             ]
         ];
 
-        $table = $this->table('linha-pesquisa');
+        $table = $this->table('linha_pesquisa');
         $table->insert($linhaPesquisa)->save();
 
 
@@ -293,9 +367,6 @@ class DatabaseSeed extends AbstractSeed
             ],
             [
                 'nome_finalidade' => 'Teste com Extratos'
-            ],
-            [
-                'nome_finalidade' => 'Teste de Nutrição'
             ],
             [
                 'nome_finalidade' => 'Teste de Nutrição'

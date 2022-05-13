@@ -14,6 +14,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsTo $Linhagem
  * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsTo $CaixaMatriz
  * @property \App\Model\Table\SaidaTable&\Cake\ORM\Association\HasMany $Saida
+ * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsToMany $CaixaMatriz
  *
  * @method \App\Model\Entity\Caixa newEmptyEntity()
  * @method \App\Model\Entity\Caixa newEntity(array $data, array $options = [])
@@ -54,7 +55,6 @@ class CaixaTable extends Table
         $this->hasMany('Saida', [
             'foreignKey' => 'caixa_id',
         ]);
-
     }
 
     /**
@@ -102,6 +102,10 @@ class CaixaTable extends Table
         $validator
             ->date('ultima_saida')
             ->allowEmptyDate('ultima_saida');
+
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
 
         return $validator;
     }

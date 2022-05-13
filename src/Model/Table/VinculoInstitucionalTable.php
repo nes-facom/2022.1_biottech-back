@@ -63,6 +63,10 @@ class VinculoInstitucionalTable extends Table
             ->notEmptyString('nome_vinculo_institucional')
             ->add('nome_vinculo_institucional', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->boolean('active')
+            ->notEmptyString('active');
+
         return $validator;
     }
 

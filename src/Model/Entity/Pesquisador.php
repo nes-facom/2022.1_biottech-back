@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property string|null $ramal
  * @property string $email
  * @property bool $orientador
+ * @property bool $active
  *
  * @property \App\Model\Entity\Pedido[] $pedido
  * @property \App\Model\Entity\Telefone[] $telefones
@@ -39,6 +40,7 @@ class Pesquisador extends Entity
         'ramal' => true,
         'email' => true,
         'orientador' => true,
+        'active' => true,
         'pedido' => true,
         'telefones' => true,
     ];
