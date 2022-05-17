@@ -17,7 +17,7 @@ class PedidoService
      * @return Query
      * @throws \Exception
      */
-    public function getAllPedidos(): Query
+    public function getAllPedidos()
     {
 
         $findInTable = [
@@ -125,176 +125,193 @@ class PedidoService
                 'totalRetirado' => $previsaoTable->func()->sum('totalRetirado')
             ]
         ]])->where($findInTable);
-        //->where(['LOWER(processo_sei) LIKE' => "LOWER(%" . "45354" . "%)" ])
     }
 
-    public function saveNivelProjeto($data)
+    public function saveNivelProjetoAndUpdate($data, $id)
     {
-
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
         $newEmptyTable = $table->newEmptyEntity();
+
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_nivel_projeto'])) {
+            throw new BadRequestException('O Nome do projeto não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_nivel_projeto' => $data['nome_nivel_projeto']])->first() != null) {
             throw new BadRequestException('Já existe um Nivel Projeto cadastrado com esse nome.');
         }
 
-        try {
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
-
-            return $saveObject;
-
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
-    public function saveLinhaPesquisa($data)
+    public function saveLinhaPesquisaAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
         $newEmptyTable = $table->newEmptyEntity();
+
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_linha_pesquisa'])) {
+            throw new BadRequestException('O Nome da Linha de Pesquisa não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_linha_pesquisa' => $data['nome_linha_pesquisa']])->first() != null) {
             throw new BadRequestException('Já existe uma Linha de Pesquisa cadastrada com esse nome.');
         }
 
-        try {
-
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
-
-            return $saveObject;
-
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
-    public function saveFinalidade($data)
+    public function saveFinalidadeAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Finalidade');
         $newEmptyTable = $table->newEmptyEntity();
 
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_finalidade'])) {
+            throw new BadRequestException('O Nome da Finalidade não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_finalidade' => $data['nome_finalidade']])->first() != null) {
             throw new BadRequestException('Já existe uma Finalidade cadastrada com esse nome.');
         }
 
-        try {
-
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
-
-            return $saveObject;
-
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
-    public function saveLaboratorio($data)
+    public function saveLaboratorioAndUpdate($data, $id)
     {
-
         $table = TableRegistry::getTableLocator()->get('Laboratorio');
         $newEmptyTable = $table->newEmptyEntity();
+
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_laboratorio'])) {
+            throw new BadRequestException('O Nome do Laboratório não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_laboratorio' => $data['nome_laboratorio']])->first() != null) {
             throw new BadRequestException('Já existe um Laboratório  cadastrada com esse nome.');
         }
 
-        try {
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
-
-            return $saveObject;
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
-    public function saveVinculoInstitucional($data)
+    public function saveVinculoInstitucionalAndUpdate($data, $id)
     {
-
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
         $newEmptyTable = $table->newEmptyEntity();
+
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_vinculo_institucional'])) {
+            throw new BadRequestException('O Nome do Vínculo Institucional não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_vinculo_institucional' => $data['nome_vinculo_institucional']])->first() != null) {
             throw new BadRequestException('Já existe um Vinculo Institucional cadastrado com esse nome.');
         }
 
-        try {
-
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
-
-            return $saveObject;
-
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
-    public function saveProjeto($data)
+    public function saveProjetoAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Projeto');
         $newEmptyTable = $table->newEmptyEntity();
+
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_projeto'])) {
+            throw new BadRequestException('O Nome do Projeto não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_projeto' => $data['nome_projeto']])->first() != null) {
             throw new BadRequestException('Já existe um Projeto cadastrado com esse nome.');
         }
 
-        try {
-
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
-
-            return $saveObject;
-
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
-    public function saveEspecie($data)
+    public function saveEspecieAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Especie');
         $newEmptyTable = $table->newEmptyEntity();
+
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_especie'])) {
+            throw new BadRequestException('O Nome da Espécie não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_especie' => $data['nome_especie']])->first() != null) {
             throw new BadRequestException('Já existe um Projeto cadastrado com esse nome.');
         }
 
-        try {
-
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $saveObject = $table->saveOrFail($mapTable, ['atomic' => true]);
-
-            return $saveObject;
-
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
-    public function savePedido($data)
+    public function savePedidoAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Pedido');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
 
         try {
-            $table->saveOrFail($mapTable, ['atomic' => true]);
+            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
-
     }
 }

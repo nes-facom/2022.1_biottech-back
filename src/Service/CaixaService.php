@@ -26,14 +26,12 @@ class CaixaService
         $table = TableRegistry::getTableLocator()->get('Caixa');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
-
         if ($table->find('all')->where(['caixa_numero' => $data['caixa_numero']])->first() != null) {
             throw new BadRequestException('Já existe uma Caixa com esse número.');
         }
 
         try {
-            $table->saveOrFail($mapTable, ['atomic' => true]);
+            $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }

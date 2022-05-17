@@ -16,20 +16,25 @@ use Exception;
 class PartoService
 {
 
-    public function saveParto($data)
+    public function savePartoAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Parto');
         $newEmptyTable = $table->newEmptyEntity();
+
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
 
         if ($table->find('all')->where(['numero_parto' => $data['numero_parto']])->first() != null) {
             throw new BadRequestException('Já existe um Parto cadastrado com esse número.');
         }
 
         try {
-            $mapTable = $table->patchEntity($newEmptyTable, $data);
-
-            $table->saveOrFail($mapTable, ['atomic' => true]);
-
+            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }

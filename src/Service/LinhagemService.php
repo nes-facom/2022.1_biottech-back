@@ -19,21 +19,28 @@ use Exception;
 class LinhagemService
 {
 
-    public function saveLinhagem($data)
+    public function saveLinhagemAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Linhagem');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
+
+        if (!isset($data['nome_linhagem'])) {
+            throw new BadRequestException('O Nome da Linhagem não pode ser nulo.');
+        }
 
         if ($table->find('all')->where(['nome_linhagem' => $data['nome_linhagem']])->first() != null) {
             throw new BadRequestException('Já existe uma Linhagem com esse nome.');
         }
-        try {
-            return $table->saveOrFail($mapTable, ['atomic' => true]);
 
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($table->patchEntity($newEmptyTable , $data), ['atomic' => true]);
+
     }
 }

@@ -49,7 +49,7 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveNivelProjeto($data);
+            $newSave = $service->saveNivelProjetoAndUpdate($data);
 
             return $this->Util->convertToJson(201, $newSave);
         } else {
@@ -67,7 +67,7 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveLinhaPesquisa($data);
+            $newSave = $service->saveLinhaPesquisaAndUpdate($data);
 
 
             return $this->Util->convertToJson(201, $newSave);
@@ -87,7 +87,7 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveFinalidade($data);
+            $newSave = $service->saveFinalidadeAndUpdate($data);
 
             return $this->Util->convertToJson(201, $newSave);
 
@@ -106,7 +106,7 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveLaboratorio($data);
+            $newSave = $service->saveLaboratorioAndUpdate($data);
 
             return $this->Util->convertToJson(201, $newSave);
 
@@ -125,7 +125,7 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveVinculoInstitucional($data);
+            $newSave = $service->saveVinculoInstitucionalAndUpdate($data);
 
             return $this->Util->convertToJson(201, $newSave);
         } else {
@@ -143,7 +143,7 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveProjeto($data);
+            $newSave = $service->saveProjetoAndUpdate($data);
 
             return $this->Util->convertToJson(201, $newSave);
 
@@ -162,7 +162,7 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveEspecie($data);
+            $newSave = $service->saveEspecieAndUpdate($data);
 
             return $this->Util->convertToJson(201, $newSave);
 
@@ -181,9 +181,9 @@ class PedidoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->savePedido($data);
+            $newSave = $service->savePedidoAndUpdate($data);
 
-            return $this->Util->convertToJson(201, []);
+            return $this->Util->convertToJson(201, $newSave);
 
         } else {
             return $this->Util->convertToJson(401, []);

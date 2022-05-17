@@ -53,9 +53,9 @@ class PartoController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->saveParto($data);
+            $newSaveParto = $service->savePartoAndUpdate($data);
 
-            return $this->Util->convertToJson(201, []);
+            return $this->Util->convertToJson(201, $newSaveParto);
 
         } else {
             return $this->Util->convertToJson(401, []);

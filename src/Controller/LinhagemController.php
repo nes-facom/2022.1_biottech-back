@@ -22,16 +22,13 @@ class LinhagemController extends AppController
 
     public function addLinhagem(LinhagemService $service)
     {
-
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSave = $service->saveLinhagem($data);
+            $newSave = $service->saveLinhagemAndUpdate($data, null);
 
             return $this->Util->convertToJson(201, $newSave);
         } else {
@@ -39,4 +36,20 @@ class LinhagemController extends AppController
         }
     }
 
+    public function editLinhagem(LinhagemService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+
+            $id = $this->request->getQuery('id');
+            $data = $this->request->getParsedBody();
+            $newSave = $service->saveLinhagemAndUpdate($data, $id);
+
+            return $this->Util->convertToJson(201, $newSave);
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
 }

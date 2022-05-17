@@ -345,6 +345,271 @@ class DatabaseSeed extends AbstractSeed
         $table->insert($linhaPesquisa)->save();
 
 
+        //add sub_linha_pesquisa_linha_pesquisa
+        $subLinhaPesquisaLinhaPesquisa = [
+
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 1
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 9
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 46
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 15
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 48
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 66
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 20
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 52
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 27
+            ],
+            [
+                'sub_linha_pesquisa_id' => 1,
+                'linha_pesquisa_id' => 69
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 22
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 26
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 29
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 34
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 47
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 60
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 61
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 62
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 64
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 65
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 70
+            ],
+            [
+                'sub_linha_pesquisa_id' => 2,
+                'linha_pesquisa_id' => 71
+            ],
+            [
+                'sub_linha_pesquisa_id' => 3,
+                'linha_pesquisa_id' => 58
+            ],
+            [
+                'sub_linha_pesquisa_id' => 3,
+                'linha_pesquisa_id' => 59
+            ],
+            [
+                'sub_linha_pesquisa_id' => 4,
+                'linha_pesquisa_id' => 4
+            ],
+            [
+                'sub_linha_pesquisa_id' => 4,
+                'linha_pesquisa_id' => 6
+            ],
+            [
+                'sub_linha_pesquisa_id' => 4,
+                'linha_pesquisa_id' => 18
+            ],
+            [
+                'sub_linha_pesquisa_id' => 4,
+                'linha_pesquisa_id' => 30
+            ],
+            [
+                'sub_linha_pesquisa_id' => 4,
+                'linha_pesquisa_id' => 25
+            ],
+            [
+                'sub_linha_pesquisa_id' => 5,
+                'linha_pesquisa_id' => 19
+            ],
+            [
+                'sub_linha_pesquisa_id' => 5,
+                'linha_pesquisa_id' => 28
+            ],
+            [
+                'sub_linha_pesquisa_id' => 5,
+                'linha_pesquisa_id' => 67
+            ],
+            [
+                'sub_linha_pesquisa_id' => 5,
+                'linha_pesquisa_id' => 24
+            ],
+            [
+                'sub_linha_pesquisa_id' => 6,
+                'linha_pesquisa_id' => 37
+            ],
+            [
+                'sub_linha_pesquisa_id' => 6,
+                'linha_pesquisa_id' => 56
+            ],
+            [
+                'sub_linha_pesquisa_id' => 6,
+                'linha_pesquisa_id' => 39
+            ],
+            [
+                'sub_linha_pesquisa_id' => 6,
+                'linha_pesquisa_id' => 57
+            ],
+            [
+                'sub_linha_pesquisa_id' => 6,
+                'linha_pesquisa_id' => 38
+            ],
+            [
+                'sub_linha_pesquisa_id' => 6,
+                'linha_pesquisa_id' => 55
+            ],
+            [
+                'sub_linha_pesquisa_id' => 6,
+                'linha_pesquisa_id' => 50
+            ],
+            [
+                'sub_linha_pesquisa_id' => 7,
+                'linha_pesquisa_id' => 5
+            ],
+            [
+                'sub_linha_pesquisa_id' => 7,
+                'linha_pesquisa_id' => 53
+            ],
+            [
+                'sub_linha_pesquisa_id' => 8,
+                'linha_pesquisa_id' => 44
+            ],
+            [
+                'sub_linha_pesquisa_id' => 8,
+                'linha_pesquisa_id' => 3
+            ],
+            [
+                'sub_linha_pesquisa_id' => 8,
+                'linha_pesquisa_id' => 54
+            ],
+            [
+                'sub_linha_pesquisa_id' => 8,
+                'linha_pesquisa_id' => 33
+            ],
+            [
+                'sub_linha_pesquisa_id' => 8,
+                'linha_pesquisa_id' => 16
+            ],
+            [
+                'sub_linha_pesquisa_id' => 8,
+                'linha_pesquisa_id' => 3
+            ],
+            [
+                'sub_linha_pesquisa_id' => 8,
+                'linha_pesquisa_id' => 68
+            ],
+            [
+                'sub_linha_pesquisa_id' => 9,
+                'linha_pesquisa_id' => 13
+            ],
+            [
+                'sub_linha_pesquisa_id' => 9,
+                'linha_pesquisa_id' => 12
+            ],
+            [
+                'sub_linha_pesquisa_id' => 10,
+                'linha_pesquisa_id' => 10
+            ],
+            [
+                'sub_linha_pesquisa_id' => 10,
+                'linha_pesquisa_id' => 11
+            ],
+            [
+                'sub_linha_pesquisa_id' => 10,
+                'linha_pesquisa_id' => 35
+            ],
+            [
+                'sub_linha_pesquisa_id' => 10,
+                'linha_pesquisa_id' => 43
+            ],
+            [
+                'sub_linha_pesquisa_id' => 11,
+                'linha_pesquisa_id' => 72
+            ],
+            [
+                'sub_linha_pesquisa_id' => 11,
+                'linha_pesquisa_id' => 36
+            ],
+            [
+                'sub_linha_pesquisa_id' => 11,
+                'linha_pesquisa_id' => 74
+            ],
+            [
+                'sub_linha_pesquisa_id' => 12,
+                'linha_pesquisa_id' => 17
+            ],
+            [
+                'sub_linha_pesquisa_id' => 12,
+                'linha_pesquisa_id' => 21
+            ],
+            [
+                'sub_linha_pesquisa_id' => 13,
+                'linha_pesquisa_id' => 40
+            ],
+            [
+                'sub_linha_pesquisa_id' => 13,
+                'linha_pesquisa_id' => 41
+            ],
+            [
+                'sub_linha_pesquisa_id' => 13,
+                'linha_pesquisa_id' => 42
+            ],
+            [
+                'sub_linha_pesquisa_id' => 13,
+                'linha_pesquisa_id' => 73
+            ]
+        ];
+
+        $table = $this->table('sub_linha_pesquisa_linha_pesquisa');
+        $table->insert($subLinhaPesquisaLinhaPesquisa)->save();
+
+
         //add Finalidade
         $finalidade = [
             [
@@ -475,6 +740,279 @@ class DatabaseSeed extends AbstractSeed
 
         $table = $this->table('laboratorio');
         $table->insert($laboratorio)->save();
+
+
+        //add Vinculo Institucional
+        $vinculoInstitucional = [
+            [
+                'nome_vinculo_institucional' => 'Aula Graduação Psicologia'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Aula Prática'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Aula Pratica Psicologia'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Biologia Animal'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Biologia Vegetal'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Bioquímica e Biologia Molecular'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Bioquímica e Saúde'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Biotecnologia'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Biotecnologia e Biodiversidade'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Ciencia Animal'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Ciência dos Materiais'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Ciências da Saúde'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Ciências Farmacêuticas'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Ciências Veterinárias '
+            ],
+            [
+                'nome_vinculo_institucional' => 'Cirurgia Geral'
+            ],
+            [
+                'nome_vinculo_institucional' => 'CNPQ'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Doenças Infecciosas e Parasitárias '
+            ],
+            [
+                'nome_vinculo_institucional' => 'Farmácia'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Fármacia e Biologia Animal'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Graduação'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Inbio Projeto de Pesquisa'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Mestrado em odontologia'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Nutrição Experimental'
+            ],
+            [
+                'nome_vinculo_institucional' => 'PNPD Institucional'
+            ],
+            [
+                'nome_vinculo_institucional' => 'PPI'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Psicologia'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Quimica'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Residência Médica'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Residência Multiprofissional'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Retirada Externa'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Saúde Coletiva e Produtos Naturais'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Saúde e Desenvolvimento'
+            ],
+            [
+                'nome_vinculo_institucional' => 'TCC'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Tcc Curso de Alimentos'
+            ],
+            [
+                'nome_vinculo_institucional' => 'TCC FAMED'
+            ],
+            [
+                'nome_vinculo_institucional' => 'TCC nutrição'
+            ],
+            [
+                'nome_vinculo_institucional' => 'UFGD'
+            ],
+            [
+                'nome_vinculo_institucional' => 'UFMS'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Uniderp'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Unigran'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Pesquisa em Energia e Materiais'
+            ],
+            [
+                'nome_vinculo_institucional' => 'Embrapa'
+            ],
+        ];
+
+        $table = $this->table('vinculo_institucional');
+        $table->insert($vinculoInstitucional)->save();
+
+
+        //add Projeto
+        $projeto= [
+            [
+                'nome_projeto' => 'Ensino'
+            ],
+            [
+                'nome_projeto' => 'Extensão'
+            ],
+            [
+                'nome_projeto' => 'Outros'
+            ],
+            [
+                'nome_projeto' => 'Pesquisa'
+            ],
+        ];
+
+        $table = $this->table('projeto');
+        $table->insert($projeto)->save();
+
+
+        //add Especie
+        $especie = [
+            [
+                'nome_especie' => 'Meriones unguiculatus'// sem
+            ],
+            [
+                'nome_especie' => 'Mesocricetus auratus' // GOLDEN
+            ],
+            [
+                'nome_especie' => 'Monodelphis domestica' // sem
+            ],
+            [
+                'nome_especie' => 'Mus musculus'
+            ],
+            [
+                'nome_especie' => 'Rattus norvegicus' // WISTAR
+            ]
+        ];
+
+        $table = $this->table('especie');
+        $table->insert($especie)->save();
+
+
+        //add Linhagem
+        $linhagem = [
+            [
+                'nome_linhagem' => 'BALB/c'
+            ],
+            [
+                'nome_linhagem' => 'BLACK C57/BL6'
+            ],
+            [
+                'nome_linhagem' => 'GOLDEN'
+            ],
+            [
+                'nome_linhagem' => 'Hamster'
+            ],
+            [
+                'nome_linhagem' => 'HRS/J'
+            ],
+            [
+                'nome_linhagem' => 'SWISS'
+            ],
+            [
+                'nome_linhagem' => 'WISTAR'
+            ],
+            [
+                'nome_linhagem' => 'NOD'
+            ],
+            [
+                'nome_linhagem' => 'NUDE'
+            ],
+            [
+                'nome_linhagem' => 'NSG'
+            ],
+            [
+                'nome_linhagem' => 'GFP'
+            ],
+            [
+                'nome_linhagem' => 'HAIRLESS'
+            ],
+            [
+                'nome_linhagem' => 'C57BL/6'
+            ]
+
+        ];
+
+        $table = $this->table('linhagem');
+        $table->insert($linhagem)->save();
+
+
+        //add Especie Linhagem
+        $especieLinhagem = [
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 6
+            ],
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 1
+            ],
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 13
+            ],
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 12
+            ],
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 9
+            ],
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 8
+            ],
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 10
+            ],
+            [
+                'especie_id' => 4,
+                'linhagem_id' => 11
+            ],
+            [
+                'especie_id' => 2,
+                'linhagem_id' => 3
+            ],
+            [
+                'especie_id' => 5,
+                'linhagem_id' => 7
+            ]
+        ];
+
+        $table = $this->table('especie_linhagem');
+        $table->insert($especieLinhagem)->save();
 
     }
 }

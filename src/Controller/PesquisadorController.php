@@ -22,18 +22,31 @@ class PesquisadorController extends AppController
 
     public function addPesquisador(PesquisadorService $service)
     {
-
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
+        if ($this->Authentication->getResult()->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->savePesquisador($data);
+            $newSavePesquisador = $service->savePesquisadorUpdate($data, null);
 
-            return $this->Util->convertToJson(201, []);
+            return $this->Util->convertToJson(201, $newSavePesquisador);
+
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
+    public function editPesquisador(PesquisadorService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        if ($this->Authentication->getResult()->isValid()) {
+
+            $id = $this->request->getQuery('id');
+            $data = $this->request->getParsedBody();
+            $newUpdatePesquisador = $service->savePesquisadorUpdate($data, $id);
+
+            return $this->Util->convertToJson(201, $newUpdatePesquisador);
 
         } else {
             return $this->Util->convertToJson(401, []);
@@ -48,7 +61,7 @@ class PesquisadorController extends AppController
         //verifica se o token é valido
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
-            $responseGetAll = $service->getPesquisador();
+            $responseGetAll = $service->getAllPesquisadores();
 
             $this->set('saida', $this->paginate($responseGetAll));
             $this->viewBuilder()->setOption('serialize', ['saida']);

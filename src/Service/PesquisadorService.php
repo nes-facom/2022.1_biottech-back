@@ -21,7 +21,7 @@ use Exception;
 class PesquisadorService
 {
 
-    public function savePesquisador($data)
+    public function savePesquisadorUpdate($data, $id)
     {
         if (empty($data['telefones'])) {
             throw new BadRequestException('É obrigatório pelo menos um telefone.');
@@ -29,12 +29,29 @@ class PesquisadorService
 
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
         $newEmptyTable = $table->newEmptyEntity();
-
         $tableTelefone = TableRegistry::getTableLocator()->get('Telefones');
         $newEmptyTableTelefone = $tableTelefone->newEmptyEntity();
 
-        if ($table->find('all')->where(['email' => $data['email']])->first() != null) {
-            throw new BadRequestException('Já existe um Pesquisador com esse nome.');
+        if (isset($id)) {
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('ID não encontrado.');
+            }
+
+            if ($table->find('all')->where(['id' => $id])->first()->email != $data['email']) {
+                if ($table->find('all')->where(['email' => $data['email']])->first() != null) {
+                    throw new BadRequestException('Já existe um Pesquisador com esse email.');
+                }
+            }
+
+            foreach ($tableTelefone->find()->select('id')->where(['pesquisador_id' => $newEmptyTable['id']]) as $row) {
+                $tableTelefone->deleteOrFail($row);
+            }
+        } else {
+            if ($table->find('all')->where(['email' => $data['email']])->first() != null) {
+                throw new BadRequestException('Já existe um Pesquisador com esse email.');
+            }
         }
 
         $newEmptyTable->nome = $data['nome'];
@@ -47,7 +64,7 @@ class PesquisadorService
 
         try {
             $connection = ConnectionManager::get('default');
-            $connection->transactional(function () use ($table, $newEmptyTable, $data, $newEmptyTableTelefone, $tableTelefone) {
+            return $connection->transactional(function () use ($table, $newEmptyTable, $data, $newEmptyTableTelefone, $tableTelefone) {
                 $savePesquisador = $table->saveOrFail($newEmptyTable, ['atomic' => true]);
 
                 foreach ($data['telefones'] as $row) {
@@ -59,6 +76,8 @@ class PesquisadorService
 
                     $newEmptyTableTelefone = $tableTelefone->newEmptyEntity();
                 }
+
+                return $table->find('all')->where(['id' => $savePesquisador->id])->first();
             });
 
         } catch (Exception $e) {
@@ -67,11 +86,9 @@ class PesquisadorService
     }
 
 
-    public function getPesquisador(): Query
+    public function getAllPesquisadores(): Query
     {
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
-
-        //return $table->find('all')->contain(['Pesquisador']);
 
         return $table->find('all')->contain(['Telefones']);
 

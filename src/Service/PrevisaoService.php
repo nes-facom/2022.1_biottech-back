@@ -20,19 +20,33 @@ use Exception;
 class PrevisaoService
 {
 
-    public function savePrevisao($data)
+    public function savePrevisaoAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Previsao');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
 
-        if ($table->find('all')->where(['num_previsao' => $data['num_previsao']])->first() != null) {
-            throw new BadRequestException('Já existe uma Previsão com esse número.');
+        if (isset($id)) {
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('ID não encontrado.');
+            }
+
+            if ($table->find('all')->where(['id' => $id])->first()->num_previsao != $data['num_previsao']) {
+                if ($table->find('all')->where(['num_previsao' => $data['num_previsao']])->first() != null) {
+                    throw new BadRequestException('Já existe uma Previsão com esse número.');
+                }
+            }
+
+        } else {
+            if ($table->find('all')->where(['num_previsao' => $data['num_previsao']])->first() != null) {
+                throw new BadRequestException('Já existe uma Previsão com esse número.');
+            }
         }
 
         try {
-            $table->saveOrFail($mapTable, ['atomic' => true]);
+            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
@@ -42,8 +56,6 @@ class PrevisaoService
     {
         $table = TableRegistry::getTableLocator()->get('Previsao');
         $saidaTable = TableRegistry::getTableLocator()->get('Saida')->find();
-
-        //return $table->find('all')->contain(['Pesquisador']);
 
         return $table->find('all')->select(['id',
             'pedido_id',
