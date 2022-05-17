@@ -30,9 +30,9 @@ class CaixaMatrizController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->saveCaixaMatriz($data);
+            $newSaveCaixaMatriz =  $service->saveCaixaMatrizAndUpdate($data, null);
 
-            return $this->Util->convertToJson(201, []);
+            return $this->Util->convertToJson(201, $newSaveCaixaMatriz);
 
         } else {
             return $this->Util->convertToJson(401, []);

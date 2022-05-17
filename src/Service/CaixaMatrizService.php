@@ -11,7 +11,7 @@ use Exception;
 class CaixaMatrizService
 {
 
-    public function saveCaixaMatriz($data)
+    public function saveCaixaMatrizAndUpdate($data, $id)
     {
 
         $tableCaixaMatriz = TableRegistry::getTableLocator()->get('CaixaMatriz');
@@ -22,9 +22,28 @@ class CaixaMatrizService
 
         $tableCaixa = TableRegistry::getTableLocator()->get('Caixa')->find();
 
-        if ($tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->first() != null) {
-            throw new BadRequestException('Já existe uma Caixa Matriz com esse número.');
+        if (isset($id)) {
+            try {
+                $newEmptyTable = $tableCaixaMatriz->find()->where(['id' => $id])->where()->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('ID não encontrado.');
+            }
+
+            if (!!($tableCaixaMatriz->find('all')->where(['id' => $id])->first()->caixa_matriz_numero <=> $data['caixa_matriz_numero'])) {
+                if ($tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->first() != null) {
+                    throw new BadRequestException('Já existe uma Caixa Matriz com esse núemero.');
+                }
+            }
+
+            foreach ($tableCaixaCaixaMatriz->find()->select('id')->where(['caixa_matriz_id' => $newEmptyTable['id']]) as $row) {
+                $tableCaixaCaixaMatriz->deleteOrFail($row);
+            }
+        } else {
+            if ($tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->first() != null) {
+                throw new BadRequestException('Já existe uma Caixa Matriz com esse número.');
+            }
         }
+
 
         try {
 
@@ -35,9 +54,10 @@ class CaixaMatrizService
 
             $connection = ConnectionManager::get('default');
 
-            $connection->transactional(function () use ($tableCaixaMatriz, $newEmptyTableCaixaMatriz, $data, $tableCaixaCaixaMatriz, $newEmptyTableCaixaCaixaMatriz, $tableCaixa) {
+            return $connection->transactional(function () use ($tableCaixaMatriz, $newEmptyTableCaixaMatriz, $data, $tableCaixaCaixaMatriz, $newEmptyTableCaixaCaixaMatriz, $tableCaixa) {
 
                 $saveCaixaMatriz = $tableCaixaMatriz->saveOrFail($newEmptyTableCaixaMatriz, ['atomic' => true]);
+
 
                 foreach ($data['caixas'] as $row) {
 
@@ -52,6 +72,8 @@ class CaixaMatrizService
                     $newEmptyTableCaixaCaixaMatriz = $tableCaixaCaixaMatriz->newEmptyEntity();
                     $tableCaixa = TableRegistry::getTableLocator()->get('Caixa')->find();
                 }
+
+                return $saveCaixaMatriz;
 
             });
 

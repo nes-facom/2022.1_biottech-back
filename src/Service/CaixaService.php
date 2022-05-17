@@ -21,17 +21,32 @@ use Exception;
 class CaixaService
 {
 
-    public function saveCaixa($data)
+    public function saveCaixaAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Caixa');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if ($table->find('all')->where(['caixa_numero' => $data['caixa_numero']])->first() != null) {
-            throw new BadRequestException('Já existe uma Caixa com esse número.');
+        if (isset($id)) {
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('ID não encontrado.');
+            }
+
+            if (!!($table->find('all')->where(['id' => $id])->first()->caixa_numero <=> $data['caixa_numero'])) {
+                if ($table->find('all')->where(['caixa_numero' => $data['caixa_numero']])->first() != null) {
+                    throw new BadRequestException('Já existe uma Caixa com esse número.');
+                }
+            }
+
+        } else {
+            if ($table->find('all')->where(['caixa_numero' => $data['caixa_numero']])->first() != null) {
+                throw new BadRequestException('Já existe uma Caixa com esse número.');
+            }
         }
 
         try {
-            $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }

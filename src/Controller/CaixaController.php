@@ -32,9 +32,26 @@ class CaixaController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->saveCaixa($data);
+            $service->saveCaixaAndUpdate($data, null);
 
             return $this->Util->convertToJson(201, []);
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
+    public function editCaixa(CaixaService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        if ($this->Authentication->getResult()->isValid()) {
+
+            $id = $this->request->getQuery('id');
+            $data = $this->request->getParsedBody();
+            $newUpdatePesquisador = $service->saveCaixaAndUpdate($data, $id);
+
+            return $this->Util->convertToJson(201, $newUpdatePesquisador);
+
         } else {
             return $this->Util->convertToJson(401, []);
         }
