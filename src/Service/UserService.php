@@ -7,12 +7,11 @@
 
 namespace App\Service;
 
-
-use App\Utility\UserNewPasswordRequestBody;
 use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenTime;
 use Exception;
+use function PHPUnit\Framework\isEmpty;
 
 /**
  * Description of UserService
@@ -99,12 +98,14 @@ class UserService
         } catch (Exception $e) {
             throw new BadRequestException('Usuário não encontrado.');
         }
-        $user->password = $data['password'];
-        if ($table->save($user)) {
-            return true;
-        } else {
-            return false;
+
+        if (empty($data['password']) || !is_string($data['password'])) {
+            throw new BadRequestException('Senha com formato incorreto.');
         }
+
+        $user->password = $data['password'];
+
+        return $table->saveOrFail($user);
     }
 
     public function updateUserAvatar($id, $data)
@@ -119,11 +120,8 @@ class UserService
 
         $user->avatar = $data['avatar'];
 
-        try {
-            return $table->saveOrFail($user);
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        return $table->saveOrFail($user);
+
     }
 
     public function generateNewPassword($id)
@@ -145,12 +143,8 @@ class UserService
 
         $user->password = $randomString;
 
-        try {
-            $table->saveOrFail($user);
-            return new UserNewPasswordRequestBody($randomString);
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
+        $table->saveOrFail($user)->password;
+        return $randomString;
     }
 
     public function updateActiveAndDisable($id, $active)

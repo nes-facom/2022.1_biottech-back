@@ -194,13 +194,10 @@ class UsersController extends AppController
             $data = $this->request->getParsedBody();
             $id = $identity->getOriginalData()['id'];
 
-            $user = $service->updateUserPassword($id, $data);
+            $service->updateUserPassword($id, $data);
 
-            if ($user) {
-                return $this->Util->convertToJson(200, []);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(200, []);
+
         } else {
             return $this->Util->convertToJson(401, []);
         }
