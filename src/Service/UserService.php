@@ -67,7 +67,6 @@ class UserService
         } catch (Exception $e) {
             throw new BadRequestException('Usuário não encontrado.');
         }
-
     }
 
     public function updateUser($id, $data)
