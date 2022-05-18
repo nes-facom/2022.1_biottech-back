@@ -12,6 +12,7 @@ use App\Utility\UserNewPasswordRequestBody;
 use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\FrozenTime;
+use Exception;
 
 /**
  * Description of UserService
@@ -25,9 +26,7 @@ class UserService
     {
         $table = TableRegistry::getTableLocator()->get('Users');
 
-        $usernameExits = $table->find('all')->where(['username' => $data['username']])->first();
-
-        if ($usernameExits != null) {
+        if ($table->find('all')->where(['username' => $data['username']])->first() != null) {
             throw new BadRequestException('Já existe um usuário cadastrado com esse e-mail.');
         }
 
@@ -38,28 +37,22 @@ class UserService
         $user->password = $data['password'];
         $user->type = $data['type'];
 
-        if ($table->save($user)) {
-            return true;
-        } else {
-            return false;
+        try {
+            return $table->saveOrFail($user);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
-
     }
 
     public function getAllUsers($active, $idCurrent)
     {
-
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
         $query = $usersTable->where(['active' => $active, 'id !=' => $idCurrent]);
 
-
         foreach ($query as $row) {
-            unset($row["created"]);
             unset($row["active"]);
-            unset($row["modified"]);
             unset($row["avatar"]);
-
         }
 
         return $query;
@@ -67,12 +60,14 @@ class UserService
 
     public function getUser($id)
     {
-
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
-        $user = $usersTable->where(['id' => $id])->first();
+        try {
+            return $usersTable->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Usuário não encontrado.');
+        }
 
-        return $user;
     }
 
     public function updateUser($id, $data)
@@ -80,15 +75,19 @@ class UserService
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
-        $user = $usersTable->where(['id' => $id])->first();
+        try {
+            $user = $usersTable->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Usuário não encontrado.');
+        }
 
         $user->name = $data['name'];
         $user->type = $data['type'];
 
-        if ($table->save($user)) {
-            return $user;
-        } else {
-            return null;
+        try {
+            return $table->saveOrFail($user);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
     }
 
@@ -96,9 +95,11 @@ class UserService
     {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
-
-        $user = $usersTable->where(['id' => $id])->first();
-
+        try {
+            $user = $usersTable->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Usuário não encontrado.');
+        }
         $user->password = $data['password'];
         if ($table->save($user)) {
             return true;
@@ -111,15 +112,18 @@ class UserService
     {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
-
-        $user = $usersTable->where(['id' => $id])->first();
+        try {
+            $user = $usersTable->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Usuário não encontrado.');
+        }
 
         $user->avatar = $data['avatar'];
 
-        if ($table->save($user)) {
-            return $user;
-        } else {
-            return false;
+        try {
+            return $table->saveOrFail($user);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
     }
 
@@ -127,8 +131,11 @@ class UserService
     {
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
-
-        $user = $usersTable->where(['id' => $id])->first();
+        try {
+            $user = $usersTable->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Usuário não encontrado.');
+        }
 
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -139,10 +146,11 @@ class UserService
 
         $user->password = $randomString;
 
-        if ($table->save($user)) {
+        try {
+            $table->saveOrFail($user);
             return new UserNewPasswordRequestBody($randomString);
-        } else {
-            return null;
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
     }
 
@@ -151,14 +159,18 @@ class UserService
         $table = TableRegistry::getTableLocator()->get('Users');
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
-        $user = $usersTable->where(['id' => $id])->first();
+        try {
+            $user = $usersTable->where(['id' => $id])->first();
+        } catch (Exception $e) {
+            throw new BadRequestException('Usuário não encontrado.');
+        }
 
         $user->active = $active;
 
-        if ($table->save($user)) {
-            return $user;
-        } else {
-            return null;
+        try {
+            return $table->saveOrFail($user);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
     }
 

@@ -17,7 +17,7 @@ class CaixaMatrizController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-       $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
+        $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
     }
 
     public function addCaixaMatriz(CaixaMatrizService $service)
@@ -30,7 +30,24 @@ class CaixaMatrizController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $newSaveCaixaMatriz =  $service->saveCaixaMatrizAndUpdate($data, null);
+            $newSaveCaixaMatriz = $service->saveCaixaMatrizAndUpdate($data, null);
+
+            return $this->Util->convertToJson(201, $newSaveCaixaMatriz);
+
+        } else {
+            return $this->Util->convertToJson(401, []);
+        }
+    }
+
+    public function editCaixaMatriz(CaixaMatrizService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        if ($this->Authentication->getResult()->isValid()) {
+
+            $id = $this->request->getQuery('id');
+            $data = $this->request->getParsedBody();
+            $newSaveCaixaMatriz = $service->saveCaixaMatrizAndUpdate($data, $id);
 
             return $this->Util->convertToJson(201, $newSaveCaixaMatriz);
 

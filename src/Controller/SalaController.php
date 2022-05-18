@@ -30,7 +30,7 @@ class SalaController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->saveSala($data);
+            $service->saveSalaAndUpdate($data, null);
 
             return $this->Util->convertToJson(201, []);
         } else {
@@ -48,10 +48,9 @@ class SalaController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->saveTemperaturaUmidade($data);
+            $newSaveTemperaturaUmidade = $service->saveTemperaturaUmidadeAndUpdate($data, null);
 
-            return $this->Util->convertToJson(201, []);
-
+            return $this->Util->convertToJson(201, $newSaveTemperaturaUmidade);
         } else {
             return $this->Util->convertToJson(401, []);
         }
@@ -65,7 +64,7 @@ class SalaController extends AppController
         //verifica se o token é valido
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
-            $responseGetAll = $service->getTemperaturaUmidade();
+            $responseGetAll = $service->getAllTemperaturaUmidade();
 
             $this->set('saida', $this->paginate($responseGetAll));
             $this->viewBuilder()->setOption('serialize', ['saida']);

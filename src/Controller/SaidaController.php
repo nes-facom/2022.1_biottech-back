@@ -32,9 +32,9 @@ class SaidaController extends AppController
         if ($result->isValid()) {
 
             $data = $this->request->getParsedBody();
-            $service->saveSaida($data);
+            $newSaveSaida = $service->saveSaidaAndUpdate($data, null);
 
-            return $this->Util->convertToJson(201, []);
+            return $this->Util->convertToJson(201, $newSaveSaida);
 
         } else {
             return $this->Util->convertToJson(401, []);

@@ -24,18 +24,18 @@ class CaixaMatrizService
 
         if (isset($id)) {
             try {
-                $newEmptyTable = $tableCaixaMatriz->find()->where(['id' => $id])->where()->firstOrFail();
+                $newEmptyTableCaixaMatriz = $tableCaixaMatriz->find()->where(['id' => $id])->where()->firstOrFail();
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
 
-            if (!!($tableCaixaMatriz->find('all')->where(['id' => $id])->first()->caixa_matriz_numero <=> $data['caixa_matriz_numero'])) {
+            if ($tableCaixaMatriz->find('all')->where(['id' => $id])->first()->caixa_matriz_numero != $data['caixa_matriz_numero']) {
                 if ($tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->first() != null) {
                     throw new BadRequestException('Já existe uma Caixa Matriz com esse núemero.');
                 }
             }
 
-            foreach ($tableCaixaCaixaMatriz->find()->select('id')->where(['caixa_matriz_id' => $newEmptyTable['id']]) as $row) {
+            foreach ($tableCaixaCaixaMatriz->find()->select('id')->where(['caixa_matriz_id' => $newEmptyTableCaixaMatriz['id']]) as $row) {
                 $tableCaixaCaixaMatriz->deleteOrFail($row);
             }
         } else {
@@ -43,7 +43,6 @@ class CaixaMatrizService
                 throw new BadRequestException('Já existe uma Caixa Matriz com esse número.');
             }
         }
-
 
         try {
 
@@ -57,7 +56,6 @@ class CaixaMatrizService
             return $connection->transactional(function () use ($tableCaixaMatriz, $newEmptyTableCaixaMatriz, $data, $tableCaixaCaixaMatriz, $newEmptyTableCaixaCaixaMatriz, $tableCaixa) {
 
                 $saveCaixaMatriz = $tableCaixaMatriz->saveOrFail($newEmptyTableCaixaMatriz, ['atomic' => true]);
-
 
                 foreach ($data['caixas'] as $row) {
 

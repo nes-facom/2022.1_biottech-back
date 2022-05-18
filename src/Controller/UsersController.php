@@ -14,19 +14,23 @@ use App\Service\UserService;
  *
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  */
-class UsersController extends AppController {
+class UsersController extends AppController
+{
 
-    public function initialize(): void {
+    public function initialize(): void
+    {
         parent::initialize();
     }
 
-    public function beforeFilter(EventInterface $event) {
+    public function beforeFilter(EventInterface $event)
+    {
         parent::beforeFilter($event);
 
         $this->Authentication->allowUnauthenticated(['login']);
     }
 
-    public function login() {
+    public function login()
+    {
         $this->request->allowMethod(['post']);
 
         $result = $this->Authentication->getResult();
@@ -50,7 +54,8 @@ class UsersController extends AppController {
         $this->viewBuilder()->setOption('serialize', 'json');
     }
 
-    public function getCurrentUser() {
+    public function getCurrentUser()
+    {
         //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
@@ -67,7 +72,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         $json = [];
 
         $this->Authentication->logout();
@@ -76,7 +82,8 @@ class UsersController extends AppController {
         $this->viewBuilder()->setOption('serialize', 'json');
     }
 
-    public function getAllUsers(UserService $service) {
+    public function getAllUsers(UserService $service)
+    {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -101,7 +108,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function getUser(UserService $service) {
+    public function getUser(UserService $service)
+    {
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
@@ -123,34 +131,28 @@ class UsersController extends AppController {
         }
     }
 
-    public function save(UserService $service) {
-
-        //verificar se é admin e está ativo
+    public function save(UserService $service)
+    {
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             return $this->Util->convertToJson(401, []);
         }
 
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
+        if ($this->Authentication->getResult()->isValid()) {
             $data = $this->request->getParsedBody();
+            $newSaveUser = $service->saveUser($data);
 
-            if ($service->saveUser($data)) {
-                return $this->Util->convertToJson(201, []);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(201, $newSaveUser);
+
         } else {
             return $this->Util->convertToJson(401, []);
         }
     }
 
-    public function update(UserService $service) {
+    public function update(UserService $service)
+    {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -170,17 +172,15 @@ class UsersController extends AppController {
 
             $user = $service->updateUser($id, $data);
 
-            if ($user != null) {
-                return $this->Util->convertToJson(200, $user);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(200, $user);
+
         } else {
             return $this->Util->convertToJson(401, []);
         }
     }
 
-    public function updatePassword(UserService $service) {
+    public function updatePassword(UserService $service)
+    {
 
         $identity = $this->Authentication->getIdentity();
 
@@ -206,7 +206,8 @@ class UsersController extends AppController {
         }
     }
 
-    public function newPassword(UserService $service) {
+    public function newPassword(UserService $service)
+    {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -225,17 +226,15 @@ class UsersController extends AppController {
 
             $user = $service->generateNewPassword($id);
 
-            if ($user != null) {
-                return $this->Util->convertToJson(200, $user);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(200, $user);
+
         } else {
             return $this->Util->convertToJson(401, []);
         }
     }
 
-    public function activeAndDisable(UserService $service) {
+    public function activeAndDisable(UserService $service)
+    {
 
         //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
@@ -253,18 +252,14 @@ class UsersController extends AppController {
             $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
             $user = $service->updateActiveAndDisable($id, $active);
 
-            if ($user != null) {
-                return $this->Util->convertToJson(200, $user);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(200, $user);
         } else {
             return $this->Util->convertToJson(401, []);
         }
     }
 
-    public function updateAvatar(UserService $service) {
-
+    public function updateAvatar(UserService $service)
+    {
         $identity = $this->Authentication->getIdentity();
 
         //seta os métodos aceitos
@@ -280,12 +275,7 @@ class UsersController extends AppController {
 
             $user = $service->updateUserAvatar($id, $data);
 
-            if ($user != null) {
-
-                return $this->Util->convertToJson(200, $user);
-            } else {
-                return $this->Util->convertToJson(400, []);
-            }
+            return $this->Util->convertToJson(200, $user);
         } else {
             return $this->Util->convertToJson(401, []);
         }

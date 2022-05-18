@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Model\Entity\Saida;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
@@ -68,7 +69,7 @@ class SaidaService
      * @return Void_
      * @throws \Exception
      */
-    public function saveSaida($data)
+    public function saveSaidaAndUpdate($data, $id)
     {
         $tableSaida = TableRegistry::getTableLocator()->get('Saida');
         $newEmptyTableSaida = $tableSaida->newEmptyEntity();
@@ -78,8 +79,19 @@ class SaidaService
 
         $tablePrevisao = TableRegistry::getTableLocator()->get('Previsao');
 
-        try {
+        if (isset($id)) {
+            try {
+                $newEmptyTableSaida = $tableSaida->find()->where(['id' => $id])->where()->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('ID não encontrado.');
+            }
 
+            foreach ($tablePrevisaoSaida->find()->select('id')->where(['saida_id' => $newEmptyTableSaida['id']]) as $row) {
+                $tablePrevisaoSaida->deleteOrFail($row);
+            }
+        }
+
+        try {
             $newEmptyTableSaida->caixa_id = $data['caixa_id'];
             $newEmptyTableSaida->data_saida = $data['data_saida'];
             $newEmptyTableSaida->tipo_saida = $data['tipo_saida'];
@@ -93,11 +105,10 @@ class SaidaService
 
             $connection = ConnectionManager::get('default');
 
-            $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida, $tablePrevisao) {
+            return $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida, $tablePrevisao) {
                 $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => true]);
 
                 if ($data['tipo_saida'] == 'fornecimento') {
-
                     $newEmptyTablePrevisao = $tablePrevisao->find()->where(['id' => $data['previsao_id']])->first();
                     $newEmptyTablePrevisao->totalRetirado = $newEmptyTablePrevisao->totalRetirado + $saveSaida->num_animais;
                     $tablePrevisao->saveOrFail($newEmptyTablePrevisao);
@@ -108,7 +119,7 @@ class SaidaService
 
                     $tablePrevisaoSaida->saveOrFail($newEmptyTablePrevisaoSaida, ['atomic' => true]);
                 }
-
+                return $saveSaida;
             });
 
         } catch (Exception $e) {

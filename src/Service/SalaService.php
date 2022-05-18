@@ -20,8 +20,7 @@ use Exception;
  */
 class SalaService
 {
-
-    public function saveSala($data)
+    public function saveSalaAndUpdate($data, $id)
     {
         if (empty($data['linhagens'])) {
             throw new BadRequestException();
@@ -33,24 +32,38 @@ class SalaService
         $tableSalaLinhagem = TableRegistry::getTableLocator()->get('SalaLinhagem');
         $newEmptyTableSalaLinhagem = $tableSalaLinhagem->newEmptyEntity();
 
-        if ($table->find('all')->where(['num_sala' => $data['num_sala']])->first() != null) {
-            throw new BadRequestException('Já existe uma Sala com esse número.');
+        if (isset($id)) {
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('ID não encontrado.');
+            }
+
+            if ($table->find('all')->where(['id' => $id])->first()->num_sala != $data['num_sala']) {
+                if ($table->find('all')->where(['num_sala' => $data['num_sala']])->first() != null) {
+                    throw new BadRequestException('Já existe uma Sala com esse número.');
+                }
+            }
+
+            foreach ($tableSalaLinhagem->find()->select('id')->where(['sala_id' => $newEmptyTable['id']]) as $row) {
+                $tableSalaLinhagem->deleteOrFail($row);
+            }
+        } else {
+            if ($table->find('all')->where(['num_sala' => $data['num_sala']])->first() != null) {
+                throw new BadRequestException('Já existe uma Sala com esse número.');
+            }
         }
 
-        try {
 
+        try {
             $newEmptyTable->num_sala = $data['num_sala'];
 
             $connection = ConnectionManager::get('default');
-
-
-            $connection->transactional(function () use ($table, $newEmptyTable, $data, $tableSalaLinhagem, $newEmptyTableSalaLinhagem) {
+            return $connection->transactional(function () use ($table, $newEmptyTable, $data, $tableSalaLinhagem, $newEmptyTableSalaLinhagem) {
 
                 $saveSala = $table->saveOrFail($newEmptyTable, ['atomic' => true]);
 
                 foreach ($data['linhagens'] as $row) {
-
-
                     $newEmptyTableSalaLinhagem->sala_id = $saveSala->id;
                     $newEmptyTableSalaLinhagem->linhagem_id = $row;
 
@@ -58,37 +71,45 @@ class SalaService
 
                     $newEmptyTableSalaLinhagem = $tableSalaLinhagem->newEmptyEntity();
                 }
-
+                return $saveSala;
             });
-
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
-
     }
 
-    public function saveTemperaturaUmidade($data)
+    public function saveTemperaturaUmidadeAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
         $newEmptyTable = $table->newEmptyEntity();
 
-        $mapTable = $table->patchEntity($newEmptyTable, $data);
+        if(isset($id)){
+            try {
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+            }catch (Exception $e){
+                throw new BadRequestException('ID não encontrado.');
+            }
+        }
 
         try {
-
-            $table->saveOrFail($mapTable, ['atomic' => true]);
-
+           return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
     }
 
-    public function getTemperaturaUmidade(): Query
+    public function getAllTemperaturaUmidade(): Query
     {
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
 
         return $table->find('all')->contain(['Sala']);
+    }
 
+    public function getAllSala(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Sala');
+
+        return $table->find('all');
     }
 
 }

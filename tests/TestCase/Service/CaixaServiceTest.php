@@ -49,7 +49,7 @@ class CaixaServiceTest extends TestCase
 
         $data = [
             "linhagem_id" => 2,
-            "caixa_numero" => base64_encode(random_bytes(10)),
+            "caixa_numero" => "1",
             "nascimento" => "2022-03-25",
             "sexo" => "femea",
             "num_animais" => rand(20, 30)

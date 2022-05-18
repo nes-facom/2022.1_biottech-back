@@ -31,104 +31,100 @@ class CaixaMatrizServiceTest extends TestCase
             ]
         ];
 
-
         $this->assertTrue($test->saveCaixaMatrizAndUpdate($data, null) instanceof CaixaMatriz);
 
         $this->expectException(BadRequestException::class);
         $test->saveCaixaMatrizAndUpdate($data, null);
     }
 
-    public function testSavePesquisadorWithTelefoneEqualsNull()
+
+    public function testSaveCaixaMatrizWithWrongAttribute()
     {
-        $test = new PesquisadorService();
+        $test = new CaixaMatrizService();
 
         $data = [
-            'nome' => base64_encode(random_bytes(10)),
-            'instituicao' => base64_encode(random_bytes(10)),
-            'setor' => base64_encode(random_bytes(10)),
-            'pos' => base64_encode(random_bytes(10)),
-            'ramal' => base64_encode(random_bytes(10)),
-            'email' => base64_encode(random_bytes(10)),
-            'orientador' => true,
-            'telefones' => []
-        ];
-
-        $this->expectException(BadRequestException::class);
-        $test->savePesquisadorUpdate($data, null);
-    }
-
-    public function testSavePesquisadorWithWrongAttribute()
-    {
-        $test = new PesquisadorService();
-
-        $data = [
-            'nome' => base64_encode(random_bytes(10)),
-            'instituicao' => base64_encode(random_bytes(10)),
-            'setor' => base64_encode(random_bytes(10)),
-            'pos' => base64_encode(random_bytes(10)),
-            'ramal' => base64_encode(random_bytes(10)),
-            'email' => base64_encode(random_bytes(10)),
-            'orientador' => 25,
-            'telefones' => [
-                '67959595',
-                '5165161'
+            "caixa_matriz_numero" => base64_encode(random_bytes(10)),
+            "data_acasalamento" =>  "2022-03-21",
+            "saida_da_colonia" => "2022-03-21",
+            "data_obito" => "2022-03-25",
+            "caixas" => [
+                [
+                    "caixa_numero" => "1",
+                    "peso" => "afasfasfasf"
+                ],
+                [
+                    "caixa_numero" => "2",
+                    "peso" => 10
+                ]
             ]
         ];
 
         $this->expectException(BadRequestException::class);
-        $test->savePesquisadorUpdate($data, null);
+        $test->saveCaixaMatrizAndUpdate($data, null);
     }
 
-    public function testEditPesquisador()
+    public function testEditCaixaMatriz()
     {
-        $test = new PesquisadorService();
+        $test = new CaixaMatrizService();
 
         $data = [
-            'nome' => base64_encode(random_bytes(10)),
-            'instituicao' => base64_encode(random_bytes(10)),
-            'setor' => base64_encode(random_bytes(10)),
-            'pos' => base64_encode(random_bytes(10)),
-            'ramal' => base64_encode(random_bytes(10)),
-            'email' => 'leo@gmail.com',
-            'orientador' => true,
-            'telefones' => [
-                '67959595',
-                '5165161'
+            "caixa_matriz_numero" => base64_encode(random_bytes(10)),
+            "data_acasalamento" =>  "2022-04-21",
+            "saida_da_colonia" => "2022-03-21",
+            "data_obito" => "2022-03-25",
+            "caixas" => [
+                [
+                    "caixa_numero" => "1",
+                    "peso" => 10
+                ],
+                [
+                    "caixa_numero" => "2",
+                    "peso" => 10
+                ]
             ]
         ];
 
-        $this->assertTrue($test->savePesquisadorUpdate($data, 1) instanceof Pesquisador);
+        $this->assertTrue($test->saveCaixaMatrizAndUpdate($data, 1) instanceof CaixaMatriz);
+
+        $this->assertTrue($test->saveCaixaMatrizAndUpdate($data, 1) instanceof CaixaMatriz);
     }
 
     public function testEditPesquisadorIdNotFound()
     {
-        $test = new PesquisadorService();
+        $test = new CaixaMatrizService();
 
         $data = [
-            'nome' => base64_encode(random_bytes(10)),
-            'instituicao' => base64_encode(random_bytes(10)),
-            'setor' => base64_encode(random_bytes(10)),
-            'pos' => base64_encode(random_bytes(10)),
-            'ramal' => base64_encode(random_bytes(10)),
-            'email' => 'leo@gmail.com',
-            'orientador' => true,
-            'telefones' => [
-                '67959595',
-                '5165161'
+            "caixa_matriz_numero" => base64_encode(random_bytes(10)),
+            "data_acasalamento" =>  "2022-04-21",
+            "saida_da_colonia" => "2022-03-21",
+            "data_obito" => "2022-03-25",
+            "caixas" => [
+                [
+                    "caixa_numero" => "1",
+                    "peso" => 10
+                ],
+                [
+                    "caixa_numero" => "2",
+                    "peso" => 10
+                ]
             ]
         ];
 
         $this->expectException(BadRequestException::class);
-        $test->savePesquisadorUpdate($data, 1000000000);
+        $test->saveCaixaMatrizAndUpdate($data, 1000000000);
     }
 
-    public function testGetAllPesquisadores()
+    public function testGetAllCaixaMatriz()
     {
-        $test = new PesquisadorService();
+        $test = new CaixaMatrizService();
 
-        $testGet = $test->getAllPesquisadores();
+        $testGet = $test->getProgamacaoAcasalamento();
 
-        $this->assertTrue($testGet->firstOrFail() instanceof Pesquisador);
+        $this->assertTrue($testGet->firstOrFail() instanceof CaixaMatriz);
+
+        $testGet = $test->getMatrizes();
+
+        $this->assertTrue($testGet->firstOrFail() instanceof CaixaMatriz);
     }
 
 }
