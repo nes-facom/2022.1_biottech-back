@@ -31,7 +31,7 @@ class CaixaMatrizService
 
             if ($tableCaixaMatriz->find('all')->where(['id' => $id])->first()->caixa_matriz_numero != $data['caixa_matriz_numero']) {
                 if ($tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->first() != null) {
-                    throw new BadRequestException('Já existe uma Caixa Matriz com esse núemero.');
+                    throw new BadRequestException('Já existe uma Caixa Matriz com esse número.');
                 }
             }
 
@@ -99,7 +99,6 @@ class CaixaMatrizService
                 ]
             ]
         ]);
-
     }
 
     public function getMatrizes(): Query

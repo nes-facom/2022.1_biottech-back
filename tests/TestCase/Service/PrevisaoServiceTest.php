@@ -15,13 +15,13 @@ class PrevisaoServiceTest extends TestCase
         $test = new PrevisaoService();
 
         $data = [
-                "pedido_id" => 1,
-                "num_previsao" => rand(1000, 1000000000),
-                "retirada_num" => rand(1, 10),
-                "qtd_retirar" => rand(1, 10),
-                "retirada_data" => "2022-03-25",
-                "status" => "status"
-            ];
+            "pedido_id" => 1,
+            "num_previsao" => rand(1000, 1000000000),
+            "retirada_num" => rand(1, 10),
+            "qtd_retirar" => rand(1, 10),
+            "retirada_data" => "2022-03-25",
+            "status" => "status"
+        ];
 
         $this->assertTrue($test->savePrevisaoAndUpdate($data, null) instanceof Previsao);
 
@@ -62,6 +62,23 @@ class PrevisaoServiceTest extends TestCase
         $this->assertTrue($test->savePrevisaoAndUpdate($data, 1) instanceof Previsao);
 
         $this->assertTrue($test->savePrevisaoAndUpdate($data, 1) instanceof Previsao);
+    }
+
+    public function testEditPrevisaoWithWrongNumber()
+    {
+        $test = new PrevisaoService();
+
+        $data = [
+            "pedido_id" => 1,
+            "num_previsao" => 2,
+            "retirada_num" => rand(1, 10),
+            "qtd_retirar" => rand(1, 10),
+            "retirada_data" => "2022-03-25",
+            "status" => "status"
+        ];
+
+        $this->expectException(BadRequestException::class);
+        $test->savePrevisaoAndUpdate($data, 1);
     }
 
     public function testEditPrevisaoIdNotFound()

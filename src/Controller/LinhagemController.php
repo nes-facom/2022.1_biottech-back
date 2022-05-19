@@ -24,32 +24,14 @@ class LinhagemController extends AppController
     {
         $this->request->allowMethod(['post']);
 
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
+        return $this->Util->convertToJson(201, $service->saveLinhagemAndUpdate($this->request->getParsedBody(), null));
 
-            $data = $this->request->getParsedBody();
-            $newSave = $service->saveLinhagemAndUpdate($data, null);
-
-            return $this->Util->convertToJson(201, $newSave);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
     }
 
     public function editLinhagem(LinhagemService $service)
     {
         $this->request->allowMethod(['put']);
 
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $id = $this->request->getQuery('id');
-            $data = $this->request->getParsedBody();
-            $newSave = $service->saveLinhagemAndUpdate($data, $id);
-
-            return $this->Util->convertToJson(201, $newSave);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveLinhagemAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 }

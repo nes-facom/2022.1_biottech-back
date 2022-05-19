@@ -24,51 +24,21 @@ class PesquisadorController extends AppController
     {
         $this->request->allowMethod(['post']);
 
-        if ($this->Authentication->getResult()->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $newSavePesquisador = $service->savePesquisadorUpdate($data, null);
-
-            return $this->Util->convertToJson(201, $newSavePesquisador);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->savePesquisadorUpdate($this->request->getParsedBody(), null));
     }
 
     public function editPesquisador(PesquisadorService $service)
     {
         $this->request->allowMethod(['put']);
 
-        if ($this->Authentication->getResult()->isValid()) {
-
-            $id = $this->request->getQuery('id');
-            $data = $this->request->getParsedBody();
-            $newUpdatePesquisador = $service->savePesquisadorUpdate($data, $id);
-
-            return $this->Util->convertToJson(201, $newUpdatePesquisador);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->savePesquisadorUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getPesquisadorTable(PesquisadorService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getAllPesquisadores();
-
-            $this->set('saida', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['saida']);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('saida', $this->paginate($service->getAllPesquisadores()));
+        $this->viewBuilder()->setOption('serialize', ['saida']);
     }
-
-
 }

@@ -190,8 +190,22 @@ class UserServiceTest extends TestCase
     {
         $test = new UserService();
 
-
         $this->assertTrue($test->updateActiveAndDisable(1,true) instanceof User);
+    }
 
+    public function testUpdateUserActiveAndDisableIdNotFound()
+    {
+        $test = new UserService();
+
+        $this->expectException(BadRequestException::class);
+        $test->updateActiveAndDisable(1000000000000000000,true);
+    }
+
+    public function testUpdateUserActiveAndDisableWithWrongAttribute()
+    {
+        $test = new UserService();
+
+        $this->expectException(BadRequestException::class);
+        $test->updateActiveAndDisable(1,'string');
     }
 }

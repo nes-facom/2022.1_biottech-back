@@ -22,73 +22,31 @@ class CaixaMatrizController extends AppController
 
     public function addCaixaMatriz(CaixaMatrizService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $newSaveCaixaMatriz = $service->saveCaixaMatrizAndUpdate($data, null);
-
-            return $this->Util->convertToJson(201, $newSaveCaixaMatriz);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveCaixaMatrizAndUpdate($this->request->getParsedBody(), null));
     }
 
     public function editCaixaMatriz(CaixaMatrizService $service)
     {
         $this->request->allowMethod(['put']);
 
-        if ($this->Authentication->getResult()->isValid()) {
-
-            $id = $this->request->getQuery('id');
-            $data = $this->request->getParsedBody();
-            $newSaveCaixaMatriz = $service->saveCaixaMatrizAndUpdate($data, $id);
-
-            return $this->Util->convertToJson(201, $newSaveCaixaMatriz);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveCaixaMatrizAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getProgamacaoAcasalamentoTable(CaixaMatrizService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getProgamacaoAcasalamento();
-
-            $this->set('progamacaoAcasalamento', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['progamacaoAcasalamento']);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('progamacaoAcasalamento', $this->paginate($service->getProgamacaoAcasalamento()));
+        $this->viewBuilder()->setOption('serialize', ['progamacaoAcasalamento']);
     }
 
     public function getMatrizesTable(CaixaMatrizService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getMatrizes();
-
-            $this->set('matrizes', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['matrizes']);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('matrizes', $this->paginate($service->getMatrizes()));
+        $this->viewBuilder()->setOption('serialize', ['matrizes']);
     }
 }

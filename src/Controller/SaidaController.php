@@ -19,43 +19,18 @@ class SaidaController extends AppController
         parent::initialize();
     }
 
-    /**
-     * @throws \Exception
-     */
     public function addSaida(SaidaService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $newSaveSaida = $service->saveSaidaAndUpdate($data, null);
-
-            return $this->Util->convertToJson(201, $newSaveSaida);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveSaidaAndUpdate($this->request->getParsedBody(), null));
     }
-
 
     public function getSaidaTable(SaidaService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getSaida();
-
-            $this->set('saida', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['saida']);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('saida', $this->paginate($service->getSaida()));
+        $this->viewBuilder()->setOption('serialize', ['saida']);
     }
 }

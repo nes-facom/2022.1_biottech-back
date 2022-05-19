@@ -22,55 +22,27 @@ class SalaController extends AppController
 
     public function addSala(SalaService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
+        $data = $this->request->getParsedBody();
+        $service->saveSalaAndUpdate($data, null);
 
-            $data = $this->request->getParsedBody();
-            $service->saveSalaAndUpdate($data, null);
-
-            return $this->Util->convertToJson(201, []);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, []);
     }
 
     public function addTemperaturaUmidade(SalaService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $newSaveTemperaturaUmidade = $service->saveTemperaturaUmidadeAndUpdate($data, null);
-
-            return $this->Util->convertToJson(201, $newSaveTemperaturaUmidade);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveTemperaturaUmidadeAndUpdate($this->request->getParsedBody(), null));
     }
 
     public function getTemperaturaUmidadeTable(SalaService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getAllTemperaturaUmidade();
-
-            $this->set('saida', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['saida']);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('saida', $this->paginate($service->getAllTemperaturaUmidade()));
+        $this->viewBuilder()->setOption('serialize', ['saida']);
     }
 
 }

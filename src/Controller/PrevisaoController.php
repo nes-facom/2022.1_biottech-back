@@ -22,55 +22,23 @@ class PrevisaoController extends AppController
 
     public function addPrevisao(PrevisaoService $service)
     {
-
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $service->savePrevisaoAndUpdate($data, null);
-
-            return $this->Util->convertToJson(201, []);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->savePrevisaoAndUpdate($this->request->getParsedBody(), null));
     }
 
     public function editPrevisao(PrevisaoService $service)
     {
         $this->request->allowMethod(['put']);
 
-        if ($this->Authentication->getResult()->isValid()) {
-
-            $id = $this->request->getQuery('id');
-            $data = $this->request->getParsedBody();
-            $newUpdatePesquisador = $service->savePrevisaoAndUpdate($data, $id);
-
-            return $this->Util->convertToJson(201, $newUpdatePesquisador);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->savePrevisaoAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getPrevisaoTable(PrevisaoService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getPrevisao();
-
-            $this->set('saida', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['saida']);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('saida', $this->paginate($service->getPrevisao()));
+        $this->viewBuilder()->setOption('serialize', ['saida']);
     }
-
 }

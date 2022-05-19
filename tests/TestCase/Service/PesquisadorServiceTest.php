@@ -96,6 +96,27 @@ class PesquisadorServiceTest extends TestCase
         $this->assertTrue($test->savePesquisadorUpdate($data, 1) instanceof Pesquisador);
     }
 
+    public function testEditPesquisadorWithWrongEmail()
+    {
+        $test = new PesquisadorService();
+
+        $data = [
+            'nome' => base64_encode(random_bytes(10)),
+            'instituicao' => base64_encode(random_bytes(10)),
+            'setor' => base64_encode(random_bytes(10)),
+            'pos' => base64_encode(random_bytes(10)),
+            'ramal' => base64_encode(random_bytes(10)),
+            'email' => 'joana@gmail.com',
+            'orientador' => true,
+            'telefones' => [
+                '67959595',
+                '5165161'
+            ]
+        ];
+        $this->expectException(BadRequestException::class);
+        $test->savePesquisadorUpdate($data, 1);
+    }
+
     public function testEditPesquisadorIdNotFound()
     {
         $test = new PesquisadorService();

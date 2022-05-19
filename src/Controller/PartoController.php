@@ -23,60 +23,25 @@ class PartoController extends AppController
 
     public function getAllPartos()
     {
-
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $this->Parto->getAllPartos();
-
-            $response = $this->response
-                ->withType('application/json')
-                ->withStatus(200)
-                ->withStringBody(json_encode($responseGetAll));
-
-            return $this->Util->convertToJson(200, $responseGetAll);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('partos', $this->paginate($this->Parto->getAllPartos()));
+        $this->viewBuilder()->setOption('serialize', ['partos']);
     }
 
     public function addParto(PartoService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $newSaveParto = $service->savePartoAndUpdate($data);
-
-            return $this->Util->convertToJson(201, $newSaveParto);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->savePartoAndUpdate($this->request->getParsedBody(), null));
     }
 
     public function getNascDesmaTable(PartoService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getNascDesma();
-
-            $this->set('partos', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['partos']);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('partos', $this->paginate($service->getNascDesma()));
+        $this->viewBuilder()->setOption('serialize', ['partos']);
     }
 
 }

@@ -38,6 +38,20 @@ class SalaServiceTest extends TestCase
         $test->saveSalaAndUpdate($data, null);
     }
 
+    public function testSaveSalaWithWrongLinhagem()
+    {
+        $test = new SalaService();
+
+        $data = [
+            "linhagens" => [],
+            "num_sala" => rand(1000, 1000000000)
+        ];
+
+        $this->expectException(BadRequestException::class);
+        $test->saveSalaAndUpdate($data, null);
+    }
+
+
     public function testEditSala()
     {
         $test = new SalaService();
@@ -63,6 +77,19 @@ class SalaServiceTest extends TestCase
 
         $this->expectException(BadRequestException::class);
         $test->saveSalaAndUpdate($data, 1000000000);
+    }
+
+    public function testEditSalaWithWrongNumber()
+    {
+        $test = new SalaService();
+
+        $data = [
+            "linhagens" => [1, 2],
+            "num_sala" => 2
+        ];
+
+        $this->expectException(BadRequestException::class);
+        $test->saveSalaAndUpdate($data, 1);
     }
 
     public function testSaveTemperaturaUmidade()

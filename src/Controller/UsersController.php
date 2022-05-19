@@ -56,10 +56,8 @@ class UsersController extends AppController
 
     public function getCurrentUser()
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
             $identity = $this->Authentication->getIdentity();
@@ -84,51 +82,26 @@ class UsersController extends AppController
 
     public function getAllUsers(UserService $service)
     {
-
-        //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             return $this->Util->convertToJson(401, []);
         }
 
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
-            $id = $identity->getOriginalData()['id'];
-            $responseGetAll = $service->getAllUsers($active, $id);
-
-            return $this->Util->convertToJson(200, $responseGetAll);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(200, $service->getAllUsers(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN),  $identity->getOriginalData()['id']));
     }
 
     public function getUser(UserService $service)
     {
-        //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             return $this->Util->convertToJson(401, []);
         }
 
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $id = $this->request->getQuery('id');
-
-            return $this->Util->convertToJson(200, $service->getUser($id));
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(200, $service->getUser($this->request->getQuery('id')));
     }
 
     public function save(UserService $service)
@@ -137,145 +110,65 @@ class UsersController extends AppController
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             return $this->Util->convertToJson(401, []);
         }
-
         $this->request->allowMethod(['post']);
 
-        if ($this->Authentication->getResult()->isValid()) {
-            $data = $this->request->getParsedBody();
-            $newSaveUser = $service->saveUser($data);
-
-            return $this->Util->convertToJson(201, $newSaveUser);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveUser($this->request->getParsedBody()));
     }
 
     public function update(UserService $service)
     {
-
-        //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             return $this->Util->convertToJson(401, []);
         }
 
-        //seta os métodos aceitos
         $this->request->allowMethod(['put']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $id = $this->request->getQuery('id');
-
-            $user = $service->updateUser($id, $data);
-
-            return $this->Util->convertToJson(200, $user);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(200, $service->updateUser($this->request->getQuery('id'), $this->request->getParsedBody()));
     }
 
     public function updatePassword(UserService $service)
     {
-
         $identity = $this->Authentication->getIdentity();
 
-        //seta os métodos aceitos
         $this->request->allowMethod(['put']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
+        $service->updateUserPassword($identity->getOriginalData()['id'], $this->request->getParsedBody());
 
-            $data = $this->request->getParsedBody();
-            $id = $identity->getOriginalData()['id'];
-
-            $service->updateUserPassword($id, $data);
-
-            return $this->Util->convertToJson(200, []);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(200, []);
     }
 
     public function newPassword(UserService $service)
     {
-
-        //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             return $this->Util->convertToJson(401, []);
         }
 
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $id = $this->request->getQuery('id');
-
-            $user = $service->generateNewPassword($id);
-
-            return $this->Util->convertToJson(200, $user);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(200, $service->generateNewPassword($this->request->getQuery('id')));
     }
 
     public function activeAndDisable(UserService $service)
     {
 
-        //verificar se é admin e está ativo
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
             return $this->Util->convertToJson(401, []);
         }
 
-        //seta os métodos aceitos
         $this->request->allowMethod(['put']);
 
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
 
-            $id = $this->request->getQuery('id');
-            $active = filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN);
-            $user = $service->updateActiveAndDisable($id, $active);
-
-            return $this->Util->convertToJson(200, $user);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
     }
 
     public function updateAvatar(UserService $service)
     {
-        $identity = $this->Authentication->getIdentity();
-
-        //seta os métodos aceitos
         $this->request->allowMethod(['put']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            //$data = $this->request->input('json_decode', true);
-            $data = $this->request->getParsedBody();
-            $id = $identity->getOriginalData()['id'];
-
-            $user = $service->updateUserAvatar($id, $data);
-
-            return $this->Util->convertToJson(200, $user);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(200, $service->updateUserAvatar($this->Authentication->getIdentity()->getOriginalData()['id'], $this->request->getParsedBody()));
     }
 
 }

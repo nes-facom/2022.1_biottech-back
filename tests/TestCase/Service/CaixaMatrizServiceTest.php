@@ -16,7 +16,7 @@ class CaixaMatrizServiceTest extends TestCase
 
         $data = [
             "caixa_matriz_numero" => base64_encode(random_bytes(10)),
-            "data_acasalamento" =>  "2022-04-21",
+            "data_acasalamento" => "2022-04-21",
             "saida_da_colonia" => "2022-03-21",
             "data_obito" => "2022-03-25",
             "caixas" => [
@@ -44,7 +44,7 @@ class CaixaMatrizServiceTest extends TestCase
 
         $data = [
             "caixa_matriz_numero" => base64_encode(random_bytes(10)),
-            "data_acasalamento" =>  "2022-03-21",
+            "data_acasalamento" => "2022-03-21",
             "saida_da_colonia" => "2022-03-21",
             "data_obito" => "2022-03-25",
             "caixas" => [
@@ -69,7 +69,7 @@ class CaixaMatrizServiceTest extends TestCase
 
         $data = [
             "caixa_matriz_numero" => base64_encode(random_bytes(10)),
-            "data_acasalamento" =>  "2022-04-21",
+            "data_acasalamento" => "2022-04-21",
             "saida_da_colonia" => "2022-03-21",
             "data_obito" => "2022-03-25",
             "caixas" => [
@@ -89,13 +89,38 @@ class CaixaMatrizServiceTest extends TestCase
         $this->assertTrue($test->saveCaixaMatrizAndUpdate($data, 1) instanceof CaixaMatriz);
     }
 
+    public function testEditCaixaMatrizWithWrongNumber()
+    {
+        $test = new CaixaMatrizService();
+
+        $data = [
+            "caixa_matriz_numero" => "12345",
+            "data_acasalamento" => "2022-04-21",
+            "saida_da_colonia" => "2022-03-21",
+            "data_obito" => "2022-03-25",
+            "caixas" => [
+                [
+                    "caixa_numero" => "1",
+                    "peso" => 10
+                ],
+                [
+                    "caixa_numero" => "2",
+                    "peso" => 10
+                ]
+            ]
+        ];
+        $this->expectException(BadRequestException::class);
+        $test->saveCaixaMatrizAndUpdate($data, 1);
+
+    }
+
     public function testEditPesquisadorIdNotFound()
     {
         $test = new CaixaMatrizService();
 
         $data = [
             "caixa_matriz_numero" => base64_encode(random_bytes(10)),
-            "data_acasalamento" =>  "2022-04-21",
+            "data_acasalamento" => "2022-04-21",
             "saida_da_colonia" => "2022-03-21",
             "data_obito" => "2022-03-25",
             "caixas" => [

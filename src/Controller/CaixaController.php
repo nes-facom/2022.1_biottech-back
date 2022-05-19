@@ -23,56 +23,24 @@ class CaixaController extends AppController
 
     public function addCaixa(CaixaService $service)
     {
-
-        //seta os métodos aceitos
         $this->request->allowMethod(['post']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-
-            $data = $this->request->getParsedBody();
-            $service->saveCaixaAndUpdate($data, null);
-
-            return $this->Util->convertToJson(201, []);
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveCaixaAndUpdate($this->request->getParsedBody(), null));
     }
 
     public function editCaixa(CaixaService $service)
     {
         $this->request->allowMethod(['put']);
 
-        if ($this->Authentication->getResult()->isValid()) {
-
-            $id = $this->request->getQuery('id');
-            $data = $this->request->getParsedBody();
-            $newUpdatePesquisador = $service->saveCaixaAndUpdate($data, $id);
-
-            return $this->Util->convertToJson(201, $newUpdatePesquisador);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        return $this->Util->convertToJson(201, $service->saveCaixaAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getEntradaDadosTable(CaixaService $service)
     {
-        //seta os métodos aceitos
         $this->request->allowMethod(['get']);
 
-        //verifica se o token é valido
-        $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
-            $responseGetAll = $service->getEntradaDados();
-
-            $this->set('entradaDados', $this->paginate($responseGetAll));
-            $this->viewBuilder()->setOption('serialize', ['entradaDados']);
-
-        } else {
-            return $this->Util->convertToJson(401, []);
-        }
+        $this->set('entradaDados', $this->paginate($service->getEntradaDados()));
+        $this->viewBuilder()->setOption('serialize', ['entradaDados']);
     }
 
 }

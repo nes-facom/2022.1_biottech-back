@@ -153,7 +153,7 @@ class UserService
         $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
 
         try {
-            $user = $usersTable->where(['id' => $id])->first();
+            $user = $usersTable->where(['id' => $id])->firstOrFail();
         } catch (Exception $e) {
             throw new BadRequestException('Usuário não encontrado.');
         }
