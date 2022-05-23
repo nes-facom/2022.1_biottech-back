@@ -168,7 +168,7 @@ class SalaServiceTest extends TestCase
     {
         $test = new SalaService();
 
-        $testGet = $test->getAllSala();
+        $testGet = $test->getSalas();
 
         $this->assertTrue($testGet->firstOrFail() instanceof Sala);
     }
@@ -177,7 +177,7 @@ class SalaServiceTest extends TestCase
     {
         $test = new SalaService();
 
-        $testGet = $test->getAllTemperaturaUmidade();
+        $testGet = $test->getTemperaturaUmidades();
 
         $this->assertTrue($testGet->firstOrFail() instanceof TemperaturaUmidade);
     }
