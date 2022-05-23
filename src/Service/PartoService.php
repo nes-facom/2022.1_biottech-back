@@ -71,7 +71,12 @@ class PartoService
                 ]
             ]
         ]);
-
     }
 
+    public function getPartos(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Parto');
+
+        return $table->find('all');
+    }
 }

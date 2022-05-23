@@ -18,6 +18,7 @@ class PrevisaoController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+        $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
     }
 
     public function addPrevisao(PrevisaoService $service)
@@ -38,7 +39,15 @@ class PrevisaoController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('saida', $this->paginate($service->getPrevisao()));
-        $this->viewBuilder()->setOption('serialize', ['saida']);
+        $this->set('previsao', $this->paginate($service->getPrevisao()));
+        $this->viewBuilder()->setOption('serialize', ['previsao']);
+    }
+
+    public function getPrevisoes(PrevisaoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        $this->set('previsao', $this->paginate($service->getPrevisoes()));
+        $this->viewBuilder()->setOption('serialize', ['previsao']);
     }
 }

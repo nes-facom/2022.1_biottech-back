@@ -17,6 +17,7 @@ class SaidaController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+        $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
     }
 
     public function addSaida(SaidaService $service)
@@ -26,11 +27,26 @@ class SaidaController extends AppController
         return $this->Util->convertToJson(201, $service->saveSaidaAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function editSaida(SaidaService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(200, $service->saveSaidaAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
     public function getSaidaTable(SaidaService $service)
     {
         $this->request->allowMethod(['get']);
 
         $this->set('saida', $this->paginate($service->getSaida()));
+        $this->viewBuilder()->setOption('serialize', ['saida']);
+    }
+
+    public function getSaidas(SaidaService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        $this->set('saida', $this->paginate($service->getSaidas()));
         $this->viewBuilder()->setOption('serialize', ['saida']);
     }
 }

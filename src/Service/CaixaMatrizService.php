@@ -13,7 +13,6 @@ class CaixaMatrizService
 
     public function saveCaixaMatrizAndUpdate($data, $id)
     {
-
         $tableCaixaMatriz = TableRegistry::getTableLocator()->get('CaixaMatriz');
         $newEmptyTableCaixaMatriz = $tableCaixaMatriz->newEmptyEntity();
 
@@ -45,7 +44,6 @@ class CaixaMatrizService
         }
 
         try {
-
             $newEmptyTableCaixaMatriz->caixa_matriz_numero = $data['caixa_matriz_numero'];
             $newEmptyTableCaixaMatriz->data_acasalamento = $data['data_acasalamento'];
             $newEmptyTableCaixaMatriz->saida_da_colonia = $data['saida_da_colonia'];
@@ -72,14 +70,10 @@ class CaixaMatrizService
                 }
 
                 return $saveCaixaMatriz;
-
             });
-
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        };
-
-
+        }
     }
 
     public function getProgamacaoAcasalamento(): Query
@@ -146,6 +140,13 @@ class CaixaMatrizService
                 ]
             ]
         ]);
+    }
+
+    public function getCaixaMatrizes(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Caixamatriz');
+
+        return $table->find('all')->contain(['Caixa']);
     }
 
 }

@@ -143,7 +143,7 @@ class PesquisadorServiceTest extends TestCase
     {
         $test = new PesquisadorService();
 
-        $testGet = $test->getAllPesquisadores();
+        $testGet = $test->getPesquisador();
 
         $this->assertTrue($testGet->firstOrFail() instanceof Pesquisador);
     }

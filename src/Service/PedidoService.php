@@ -17,7 +17,7 @@ class PedidoService
      * @return Query
      * @throws \Exception
      */
-    public function getAllPedidos()
+    public function getPedidosTable()
     {
 
         $findInTable = [

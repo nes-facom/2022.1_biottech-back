@@ -43,4 +43,12 @@ class CaixaController extends AppController
         $this->viewBuilder()->setOption('serialize', ['entradaDados']);
     }
 
+    public function getCaixas(CaixaService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        $this->set('caixas', $this->paginate($service->getCaixas()));
+        $this->viewBuilder()->setOption('serialize', ['caixas']);
+    }
+
 }

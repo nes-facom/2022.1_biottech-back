@@ -49,4 +49,12 @@ class CaixaMatrizController extends AppController
         $this->set('matrizes', $this->paginate($service->getMatrizes()));
         $this->viewBuilder()->setOption('serialize', ['matrizes']);
     }
+
+    public function getCaixaMatrizes(CaixaMatrizService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        $this->set('caixa_matrizes', $this->paginate($service->getCaixaMatrizes()));
+        $this->viewBuilder()->setOption('serialize', ['caixa_matrizes']);
+    }
 }

@@ -8,6 +8,7 @@
 namespace App\Service;
 
 use Cake\Http\Exception\BadRequestException;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
 
@@ -41,6 +42,12 @@ class LinhagemService
         }
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable , $data), ['atomic' => true]);
+    }
 
+    public function getLinhagens(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Linhagem');
+
+        return $table->find('all');
     }
 }

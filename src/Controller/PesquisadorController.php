@@ -18,6 +18,7 @@ class PesquisadorController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+        $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
     }
 
     public function addPesquisador(PesquisadorService $service)
@@ -38,7 +39,15 @@ class PesquisadorController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('saida', $this->paginate($service->getAllPesquisadores()));
-        $this->viewBuilder()->setOption('serialize', ['saida']);
+        $this->set('pesquisador', $this->paginate($service->getPesquisador()));
+        $this->viewBuilder()->setOption('serialize', ['pesquisador']);
+    }
+
+    public function getPesquisadores(PesquisadorService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        $this->set('pesquisador', $this->paginate($service->getPesquisadores()));
+        $this->viewBuilder()->setOption('serialize', ['pesquisador']);
     }
 }

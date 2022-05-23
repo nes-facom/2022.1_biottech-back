@@ -86,11 +86,17 @@ class PesquisadorService
     }
 
 
-    public function getAllPesquisadores(): Query
+    public function getPesquisador(): Query
     {
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
 
         return $table->find('all')->contain(['Telefones']);
+    }
 
+    public function getPesquisadores(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Pesquisador');
+
+        return $table->find('all')->contain(['Telefones']);
     }
 }

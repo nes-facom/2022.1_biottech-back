@@ -86,4 +86,11 @@ class CaixaService
         ]);
     }
 
+    public function getCaixas(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Caixa');
+
+        return $table->find();
+    }
+
 }

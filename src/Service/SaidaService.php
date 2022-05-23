@@ -139,7 +139,13 @@ class SaidaService
                 ]
             ]
         ]);
+    }
 
+    public function getSaidas(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Saida');
+
+        return $table->find('all')->contain(['Previsao']);
     }
 
 }

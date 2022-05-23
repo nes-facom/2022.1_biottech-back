@@ -25,7 +25,6 @@ class LinhagemController extends AppController
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->saveLinhagemAndUpdate($this->request->getParsedBody(), null));
-
     }
 
     public function editLinhagem(LinhagemService $service)
@@ -33,5 +32,13 @@ class LinhagemController extends AppController
         $this->request->allowMethod(['put']);
 
         return $this->Util->convertToJson(201, $service->saveLinhagemAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
+    public function getLinhagens(LinhagemService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        $this->set('linhagens', $this->paginate($service->getLinhagens()));
+        $this->viewBuilder()->setOption('serialize', ['linhagens']);
     }
 }

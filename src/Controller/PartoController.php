@@ -21,11 +21,11 @@ class PartoController extends AppController
         $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
     }
 
-    public function getAllPartos()
+    public function getPartos(PartoService $service)
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('partos', $this->paginate($this->Parto->getAllPartos()));
+        $this->set('partos', $this->paginate($service->getPartos()));
         $this->viewBuilder()->setOption('serialize', ['partos']);
     }
 

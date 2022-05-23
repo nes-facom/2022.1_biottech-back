@@ -83,29 +83,37 @@ class SalaService
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
 
         try {
-           return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
     }
 
-    public function getAllTemperaturaUmidade(): Query
+    public function getTemperaturaUmidades(): Query
     {
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
 
-        return $table->find('all')->contain(['Sala']);
+        return $table->find()->select([
+                'data',
+                'temp_matutino',
+                'ur_matutino',
+                'temp_vespertino',
+                'ur_vespertino',
+                'observacoes',
+                'active']
+        );
     }
 
-    public function getAllSala(): Query
+    public function getSalas(): Query
     {
         $table = TableRegistry::getTableLocator()->get('Sala');
 

@@ -111,7 +111,13 @@ class PrevisaoService
                 ]
             ]
         ]);
+    }
 
+    public function getPrevisoes(): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Previsao');
+
+        return $table->find();
     }
 
 }
