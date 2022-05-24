@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\TableRegistry;
 use Migrations\AbstractSeed;
 
 /**
@@ -64,8 +65,10 @@ class DatabaseSeed extends AbstractSeed
             ]
         ];
 
-        $table = $this->table('nivel_projeto');
-        $table->insert($nivelProjeto)->save();
+        $table = TableRegistry::getTableLocator()->get('NivelProjeto');
+        $newEmptyTable = $table->newEmptyEntity();
+        $table->saveOrFail($table->patchEntity($newEmptyTable, $nivelProjeto), ['atomic' => true]);
+
 
         //add Sub Linha De Pesquisa
         $subLinhaPesquisa = [
