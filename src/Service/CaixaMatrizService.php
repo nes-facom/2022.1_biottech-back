@@ -78,7 +78,7 @@ class CaixaMatrizService
 
     public function getProgamacaoAcasalamento(): Query
     {
-        $table = TableRegistry::getTableLocator()->get('Caixamatriz');
+        $table = TableRegistry::getTableLocator()->get('CaixaMatriz');
 
         return $table->find('all')->select(['id',
             'caixa_matriz_numero',
@@ -144,7 +144,7 @@ class CaixaMatrizService
 
     public function getCaixaMatrizes(): Query
     {
-        $table = TableRegistry::getTableLocator()->get('Caixamatriz');
+        $table = TableRegistry::getTableLocator()->get('CaixaMatriz');
 
         return $table->find('all')->contain(['Caixa']);
     }
