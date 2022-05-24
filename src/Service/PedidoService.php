@@ -144,6 +144,129 @@ class PedidoService
         ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active]);
     }
 
+    public function getPedidos($search, $year, $active)
+    {
+
+        $findInTable = [
+            'LOWER(concat(".", equipe_executora, ".",
+             processo_sei, ".",
+             equipe_executora, ".",
+             data_solicitacao, ".",
+             titulo, ".",
+             especificar, ".",
+             exper, ".",
+             num_ceua, ".",
+             vigencia_ceua, ".",
+             num_aprovado, ".",
+             num_solicitado, ".",
+             adendo_1, ".",
+             adendo_2, ".",
+             sexo, ".",
+             idade, ".",
+             peso, ".",
+             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+
+        ];
+
+        $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');
+
+        return $pedidoTable->find('all')->select(['id',
+            'processo_sei',
+            'equipe_executora',
+            'data_solicitacao',
+            'titulo',
+            'especificar',
+            'exper',
+            'num_ceua',
+            'vigencia_ceua',
+            'num_aprovado',
+            'num_solicitado',
+            'adendo_1',
+            'adendo_2',
+            'sexo',
+            'idade',
+            'peso',
+            'observacoes',
+            'active'
+        ])->contain([
+            'Linhagem' => [
+                'fields' => [
+                    'id',
+                    'nome_linhagem'
+                ]
+            ]
+        ])->contain([
+            'Pesquisador' => [
+                'fields' => [
+                    'id',
+                    'nome',
+                    'instituicao',
+                    'setor',
+                    'pos',
+                    'ramal',
+                    'email',
+                    'orientador'
+                ]
+            ]
+        ])->contain([
+            'Finalidade' => [
+                'fields' => [
+                    'id',
+                    'nome_finalidade'
+                ]
+            ]
+        ])->contain([
+            'Laboratorio' => [
+                'fields' => [
+                    'id',
+                    'nome_laboratorio'
+                ]
+            ]
+        ])->contain([
+            'NivelProjeto' => [
+                'fields' => [
+                    'id',
+                    'nome_nivel_projeto'
+                ]
+            ]
+        ])->contain([
+            'LinhaPesquisa' => [
+                'fields' => [
+                    'id',
+                    'nome_linha_pesquisa'
+                ]
+            ]
+        ])->contain([
+            'Especie' => [
+                'fields' => [
+                    'id',
+                    'nome_especie'
+                ]
+            ]
+        ])->contain([
+            'Projeto' => [
+                'fields' => [
+                    'id',
+                    'nome_projeto'
+                ]
+            ]
+        ])->contain([
+            'VinculoInstitucional' => [
+                'fields' => [
+                    'id',
+                    'nome_vinculo_institucional'
+                ]
+            ]
+        ])->contain(['Previsao' => [
+            'fields' => [
+                'pedido_id',
+                'retirada_data'
+            ]
+        ]])->where([
+            'YEAR(data_solicitacao)' => $year
+        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active]);
+    }
+
     public function saveNivelProjetoAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');

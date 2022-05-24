@@ -29,6 +29,15 @@ class PedidoController extends AppController
         $this->viewBuilder()->setOption('serialize', ['pedidos']);
     }
 
+    public function getPedidos(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        $this->set('pedidos', $this->paginate($service->getPedidos($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
+        $this->viewBuilder()->setOption('serialize', ['pedidos']);
+    }
+
+
     public function getNivelProjetos(PedidoService $service)
     {
         $this->request->allowMethod(['get']);
