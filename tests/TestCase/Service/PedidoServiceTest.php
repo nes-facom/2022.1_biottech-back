@@ -482,10 +482,10 @@ class PedidoServiceTest extends TestCase
     }
 
 
-    public function testGetAllPedidos()
+    public function testGetPedidosTable()
     {
         $test = new PedidoService();
 
-       $this->assertNotNull($test->getPedidosTable(null, '2022'));
+       $this->assertNotNull($test->getPedidosTable(null, '2022',true));
     }
 }

@@ -322,6 +322,13 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function getLinhaPesquisas($active): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
+
+        return $table->find('all')->select(['nome_linha_pesquisa'])->where(['active' => $active]);
+    }
+
     public function saveFinalidadeAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Finalidade');
@@ -344,6 +351,13 @@ class PedidoService
         }
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+    }
+
+    public function getFinalidades($active): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Finalidade');
+
+        return $table->find('all')->select(['nome_finalidade'])->where(['active' => $active]);
     }
 
     public function saveLaboratorioAndUpdate($data, $id)
@@ -370,6 +384,13 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function getLaboratorios($active): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Laboratorio');
+
+        return $table->find('all')->select(['nome_laboratorio'])->where(['active' => $active]);
+    }
+
     public function saveVinculoInstitucionalAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
@@ -392,6 +413,13 @@ class PedidoService
         }
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+    }
+
+    public function getVinculoInstitucionais($active): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
+
+        return $table->find('all')->select(['nome_vinculo_institucional'])->where(['active' => $active]);
     }
 
     public function saveProjetoAndUpdate($data, $id)
@@ -418,6 +446,13 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function getProjetos($active): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Projeto');
+
+        return $table->find('all')->select(['nome_projeto'])->where(['active' => $active]);
+    }
+
     public function saveEspecieAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Especie');
@@ -440,6 +475,13 @@ class PedidoService
         }
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+    }
+
+    public function getEspecies($active): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('Especie');
+
+        return $table->find('all')->select(['nome_especie'])->where(['active' => $active]);
     }
 
     public function savePedidoAndUpdate($data, $id)

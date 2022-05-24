@@ -52,11 +52,25 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->saveNivelProjetoAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function getLinhaPesquisas(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getLinhaPesquisas(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
+
     public function addLinhaPesquisa(PedidoService $service)
     {
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->saveLinhaPesquisaAndUpdate($this->request->getParsedBody(), null));
+    }
+
+    public function getFinalidades(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getFinalidades(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
     public function addFinalidade(PedidoService $service)
@@ -66,11 +80,25 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->saveFinalidadeAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function getLaboratorios(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getLaboratorios(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
+
     public function addLaboratorio(PedidoService $service)
     {
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->saveLaboratorioAndUpdate($this->request->getParsedBody(), null));
+    }
+
+    public function getVinculoInstitucionais(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getVinculoInstitucionais(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
     public function addVinculoInstitucional(PedidoService $service)
@@ -80,11 +108,25 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->saveVinculoInstitucionalAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function getProjetos(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getProjetos(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
+
     public function addProjeto(PedidoService $service)
     {
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->saveProjetoAndUpdate($this->request->getParsedBody(), null));
+    }
+
+    public function getEspecies(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getEspecies(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
     public function addEspecie(PedidoService $service)
