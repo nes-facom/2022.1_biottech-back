@@ -69,6 +69,7 @@ class DatabaseSeed extends AbstractSeed
         $newEmptyTable = $table->newEmptyEntity();
         foreach ($nivelProjeto as $item) {
             $table->saveOrFail($table->patchEntity($newEmptyTable, $item), ['atomic' => true]);
+            $newEmptyTable = $table->newEmptyEntity();
         }
 
 
