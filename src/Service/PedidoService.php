@@ -291,6 +291,26 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function updateActiveAndDisableNivelProjeto($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('NivelProjeto');
+        $tableFind = TableRegistry::getTableLocator()->get('NivelProjeto')->find();
+
+        try {
+            $nivelProjeto = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Nivel Projeto não encontrado.');
+        }
+
+        $nivelProjeto->active = $active;
+
+        try {
+            return $table->saveOrFail($nivelProjeto);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
     public function getNivelProjetos($active): Query
     {
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
@@ -320,6 +340,26 @@ class PedidoService
         }
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+    }
+
+    public function updateActiveAndDisableLinhaPesquisa($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
+        $tableFind = TableRegistry::getTableLocator()->get('LinhaPesquisa')->find();
+
+        try {
+            $linhaPesquisa = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Linha Pesquisa não encontrada.');
+        }
+
+        $linhaPesquisa->active = $active;
+
+        try {
+            return $table->saveOrFail($linhaPesquisa);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function getLinhaPesquisas($active): Query
@@ -353,6 +393,26 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function updateActiveAndDisableFinalidade($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Finalidade');
+        $tableFind = TableRegistry::getTableLocator()->get('Finalidade')->find();
+
+        try {
+            $finalidade = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Finalidade não encontrada.');
+        }
+
+        $finalidade->active = $active;
+
+        try {
+            return $table->saveOrFail($finalidade);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
     public function getFinalidades($active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Finalidade');
@@ -382,6 +442,26 @@ class PedidoService
         }
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+    }
+
+    public function updateActiveAndDisableLaboratorio($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Laboratorio');
+        $tableFind = TableRegistry::getTableLocator()->get('Laboratorio')->find();
+
+        try {
+            $laboratorio = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Laboratorio não encontrada.');
+        }
+
+        $laboratorio->active = $active;
+
+        try {
+            return $table->saveOrFail($laboratorio);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function getLaboratorios($active): Query
@@ -415,6 +495,26 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function updateActiveAndDisableVinculoInstitucional($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
+        $tableFind = TableRegistry::getTableLocator()->get('VinculoInstitucional')->find();
+
+        try {
+            $vinculoInstitucional = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Vinculo Institucional não encontrado.');
+        }
+
+        $vinculoInstitucional->active = $active;
+
+        try {
+            return $table->saveOrFail($vinculoInstitucional);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
     public function getVinculoInstitucionais($active): Query
     {
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
@@ -444,6 +544,26 @@ class PedidoService
         }
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+    }
+
+    public function updateActiveAndDisableProjeto($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Projeto');
+        $tableFind = TableRegistry::getTableLocator()->get('Projeto')->find();
+
+        try {
+            $projeto = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Projeto não encontrado.');
+        }
+
+        $projeto->active = $active;
+
+        try {
+            return $table->saveOrFail($projeto);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
     public function getProjetos($active): Query
@@ -477,6 +597,26 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function updateActiveAndDisableEspecie($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Especie');
+        $tableFind = TableRegistry::getTableLocator()->get('Especie')->find();
+
+        try {
+            $especie = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Especie não encontrada.');
+        }
+
+        $especie->active = $active;
+
+        try {
+            return $table->saveOrFail($especie);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
     public function getEspecies($active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Especie');
@@ -505,7 +645,7 @@ class PedidoService
     }
 
 
-    public function updateActiveAndDisable($id, $active)
+    public function updateActiveAndDisablePedido($id, $active)
     {
         $table = TableRegistry::getTableLocator()->get('Pedido');
         $tableFind = TableRegistry::getTableLocator()->get('Pedido')->find();
