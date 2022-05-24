@@ -67,7 +67,10 @@ class DatabaseSeed extends AbstractSeed
 
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
         $newEmptyTable = $table->newEmptyEntity();
-        $table->saveOrFail($table->patchEntity($newEmptyTable, $nivelProjeto), ['atomic' => true]);
+        foreach ($nivelProjeto as $item) {
+            $table->saveOrFail($table->patchEntity($newEmptyTable, $item), ['atomic' => true]);
+        }
+
 
 
         //add Sub Linha De Pesquisa
