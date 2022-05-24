@@ -49,4 +49,11 @@ class SaidaController extends AppController
         $this->set('saida', $this->paginate($service->getSaidas()));
         $this->viewBuilder()->setOption('serialize', ['saida']);
     }
+
+    public function activeAndDisable(SaidaService $service)
+    {
+        $this->request->allowMethod(['delete']);
+
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
 }

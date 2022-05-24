@@ -120,4 +120,24 @@ class PrevisaoService
         return $table->find();
     }
 
+    public function updateActiveAndDisable($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Previsao');
+        $tableFind = TableRegistry::getTableLocator()->get('Previsao')->find();
+
+        try {
+            $previsao = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Pesquisador não encontrado.');
+        }
+
+        $previsao->active = $active;
+
+        try {
+            return $table->saveOrFail($previsao);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
 }

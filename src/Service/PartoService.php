@@ -79,4 +79,24 @@ class PartoService
 
         return $table->find('all');
     }
+
+    public function updateActiveAndDisable($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Parto');
+        $tableFind = TableRegistry::getTableLocator()->get('Parto')->find();
+
+        try {
+            $parto = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Parto não encontrado.');
+        }
+
+        $parto->active = $active;
+
+        try {
+            return $table->saveOrFail($parto);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
 }

@@ -57,4 +57,11 @@ class CaixaMatrizController extends AppController
         $this->set('caixa_matrizes', $this->paginate($service->getCaixaMatrizes()));
         $this->viewBuilder()->setOption('serialize', ['caixa_matrizes']);
     }
+
+    public function activeAndDisable(CaixaMatrizService $service)
+    {
+        $this->request->allowMethod(['delete']);
+
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
 }

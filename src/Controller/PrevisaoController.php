@@ -50,4 +50,11 @@ class PrevisaoController extends AppController
         $this->set('previsao', $this->paginate($service->getPrevisoes()));
         $this->viewBuilder()->setOption('serialize', ['previsao']);
     }
+
+    public function activeAndDisable(PrevisaoService $service)
+    {
+        $this->request->allowMethod(['delete']);
+
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
 }

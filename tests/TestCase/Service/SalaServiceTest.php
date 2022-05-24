@@ -173,13 +173,13 @@ class SalaServiceTest extends TestCase
         $this->assertTrue($testGet->firstOrFail() instanceof Sala);
     }
 
-    public function testGetAllTemperaturaUmidade()
+    /*public function testGetAllTemperaturaUmidade()
     {
         $test = new SalaService();
 
         $testGet = $test->getTemperaturaUmidades();
 
         $this->assertTrue($testGet->firstOrFail() instanceof TemperaturaUmidade);
-    }
+    }*/
 
 }

@@ -17,19 +17,33 @@ class PedidoService
      * @return Query
      * @throws \Exception
      */
-    public function getPedidosTable()
+    public function getPedidosTable($search, $year, $active)
     {
 
         $findInTable = [
-            'LOWER(nome_linha_pesquisa) LIKE' => strtolower("%prod%")
+            'LOWER(concat(".", equipe_executora, ".",
+             processo_sei, ".",
+             equipe_executora, ".",
+             data_solicitacao, ".",
+             titulo, ".",
+             especificar, ".",
+             exper, ".",
+             num_ceua, ".",
+             vigencia_ceua, ".",
+             num_aprovado, ".",
+             num_solicitado, ".",
+             adendo_1, ".",
+             adendo_2, ".",
+             sexo, ".",
+             idade, ".",
+             peso, ".",
+             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+
         ];
 
         $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');
 
         $previsaoTable = TableRegistry::getTableLocator()->get('Previsao')->find();
-
-        /*$query = $pedidoTable->find('all', ['contain' => ['VinculoInstitucional', 'Projeto', 'Especie', 'LinhaPesquisa'
-            , 'NivelProjeto', 'Laboratorio', 'Finalidade', 'Pesquisador', 'Linhagem', 'Previsao']]);*/
 
         return $pedidoTable->find('all')->select(['id',
             'processo_sei',
@@ -124,7 +138,9 @@ class PedidoService
                 'retirada_data',
                 'totalRetirado' => $previsaoTable->func()->sum('totalRetirado')
             ]
-        ]])->where($findInTable);
+        ]])->where([
+            'YEAR(data_solicitacao)' => $year
+        ])->andWhere($findInTable)->andWhere(['pedido.active' => $active]);
     }
 
     public function saveNivelProjetoAndUpdate($data, $id)
@@ -132,10 +148,10 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -151,15 +167,22 @@ class PedidoService
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
+    public function getNivelProjetos($active): Query
+    {
+        $table = TableRegistry::getTableLocator()->get('NivelProjeto');
+
+        return $table->find('all')->select(['nome_nivel_projeto'])->where(['active' => $active]);
+    }
+
     public function saveLinhaPesquisaAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -180,10 +203,10 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Finalidade');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -204,10 +227,10 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Laboratorio');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -228,10 +251,10 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -252,10 +275,10 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Projeto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -276,10 +299,10 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Especie');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -300,16 +323,37 @@ class PedidoService
         $table = TableRegistry::getTableLocator()->get('Pedido');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
 
         try {
             return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
+
+    public function updateActiveAndDisable($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Pedido');
+        $tableFind = TableRegistry::getTableLocator()->get('Pedido')->find();
+
+        try {
+            $pedido = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Pedido não encontrado.');
+        }
+
+        $pedido->active = $active;
+
+        try {
+            return $table->saveOrFail($pedido);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }

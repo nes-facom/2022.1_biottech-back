@@ -99,4 +99,24 @@ class PesquisadorService
 
         return $table->find('all')->contain(['Telefones']);
     }
+
+    public function updateActiveAndDisable($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Pesquisador');
+        $tableFind = TableRegistry::getTableLocator()->get('Pesquisador')->find();
+
+        try {
+            $pesquisador = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Pesquisador não encontrado.');
+        }
+
+        $pesquisador->active = $active;
+
+        try {
+            return $table->saveOrFail($pesquisador);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
 }

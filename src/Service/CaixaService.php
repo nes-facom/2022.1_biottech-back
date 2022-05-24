@@ -93,4 +93,24 @@ class CaixaService
         return $table->find();
     }
 
+    public function updateActiveAndDisable($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Caixa');
+        $tableFind = TableRegistry::getTableLocator()->get('Caixa')->find();
+
+        try {
+            $caixa = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Caixa não encontrado.');
+        }
+
+        $caixa->active = $active;
+
+        try {
+            return $table->saveOrFail($caixa);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
 }

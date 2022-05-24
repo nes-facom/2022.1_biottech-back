@@ -67,4 +67,18 @@ class SalaController extends AppController
         $this->viewBuilder()->setOption('serialize', ['salas']);
     }
 
+    public function activeAndDisableSala(SalaService $service)
+    {
+        $this->request->allowMethod(['delete']);
+
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisableSala($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
+
+    public function activeAndDisableTemperaturaUmidade(SalaService $service)
+    {
+        $this->request->allowMethod(['delete']);
+
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisableTemperaturaUmidade($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
+
 }

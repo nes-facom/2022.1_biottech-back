@@ -121,7 +121,6 @@ class UserService
         $user->avatar = $data['avatar'];
 
         return $table->saveOrFail($user);
-
     }
 
     public function generateNewPassword($id)
@@ -166,5 +165,4 @@ class UserService
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
     }
-
 }

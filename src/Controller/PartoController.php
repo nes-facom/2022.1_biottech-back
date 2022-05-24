@@ -44,4 +44,11 @@ class PartoController extends AppController
         $this->viewBuilder()->setOption('serialize', ['partos']);
     }
 
+    public function activeAndDisable(PartoService $service)
+    {
+        $this->request->allowMethod(['delete']);
+
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
+
 }

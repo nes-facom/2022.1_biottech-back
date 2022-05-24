@@ -25,8 +25,15 @@ class PedidoController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('pedidos', $this->paginate($service->getPedidosTable()));
+        $this->set('pedidos', $this->paginate($service->getPedidosTable($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['pedidos']);
+    }
+
+    public function getNivelProjetos(PedidoService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getNivelProjetos(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
     public function addNivelProjeto(PedidoService $service)
@@ -83,6 +90,13 @@ class PedidoController extends AppController
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->savePedidoAndUpdate($this->request->getParsedBody(), null));
+    }
+
+    public function activeAndDisable(PedidoService $service)
+    {
+        $this->request->allowMethod(['delete']);
+
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
 }

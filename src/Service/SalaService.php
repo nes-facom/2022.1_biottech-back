@@ -98,26 +98,58 @@ class SalaService
         }
     }
 
-    public function getTemperaturaUmidades(): Query
+    /*public function getTemperaturaUmidades(): Query
     {
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
 
-        return $table->find()->select([
-                'data',
-                'temp_matutino',
-                'ur_matutino',
-                'temp_vespertino',
-                'ur_vespertino',
-                'observacoes',
-                'active']
-        );
-    }
+        return $table->find()->contain('Sala');
+    }*/
 
     public function getSalas(): Query
     {
         $table = TableRegistry::getTableLocator()->get('Sala');
 
         return $table->find('all');
+    }
+
+    public function updateActiveAndDisableSala($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('Sala');
+        $tableFind = TableRegistry::getTableLocator()->get('Sala')->find();
+
+        try {
+            $sala = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Saida não encontrado.');
+        }
+
+        $sala->active = $active;
+
+        try {
+            return $table->saveOrFail($sala);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
+    }
+
+    public function updateActiveAndDisableTemperaturaUmidade($id, $active)
+    {
+        $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
+        $tableFind = TableRegistry::getTableLocator()->get('TemperaturaUmidade')->find();
+
+        try {
+            $temperaturaUmidade = $tableFind->where(['id' => $id])->firstOrFail();
+        } catch (Exception $e) {
+            throw new BadRequestException('Saida não encontrado.');
+        }
+
+        $temperaturaUmidade->active = $active;
+
+        try {
+            return $table->saveOrFail($temperaturaUmidade);
+        } catch (Exception $e) {
+            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+        }
     }
 
 }
