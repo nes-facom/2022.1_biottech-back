@@ -63,6 +63,7 @@ class PedidoService
             'peso',
             'observacoes',
             'saldoCEUA' => 'Pedido.num_aprovado - Pedido.num_solicitado + Pedido.adendo_1 + Pedido.adendo_2',
+            'active'
         ])->contain([
             'Linhagem' => [
                 'fields' => [
@@ -140,7 +141,7 @@ class PedidoService
             ]
         ]])->where([
             'YEAR(data_solicitacao)' => $year
-        ])->andWhere($findInTable)->andWhere(['pedido.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active]);
     }
 
     public function saveNivelProjetoAndUpdate($data, $id)
