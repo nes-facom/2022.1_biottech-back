@@ -38,8 +38,7 @@ class LinhagemController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('linhagens', $this->paginate($service->getLinhagens()));
-        $this->viewBuilder()->setOption('serialize', ['linhagens']);
+        return $this->Util->convertToJson(200, $service->getLinhagens());
     }
 
     public function activeAndDisable(LinhagemService $service)

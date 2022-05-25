@@ -38,7 +38,7 @@ class SaidaController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('saida', $this->paginate($service->getSaida()));
+        $this->set('saida', $this->paginate($service->getSaida($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['saida']);
     }
 
@@ -46,7 +46,7 @@ class SaidaController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('saida', $this->paginate($service->getSaidas()));
+        $this->set('saida', $this->paginate($service->getSaidas($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['saida']);
     }
 

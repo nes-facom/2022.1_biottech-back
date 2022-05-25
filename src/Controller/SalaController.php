@@ -51,19 +51,13 @@ class SalaController extends AppController
         return $this->Util->convertToJson(200, $service->saveTemperaturaUmidadeAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
-    public function getTemperaturaUmidadeTable(SalaService $service)
-    {
-        $this->request->allowMethod(['get']);
 
-        $this->set('temperatura', $this->paginate($service->getTemperaturaUmidades()));
-        $this->viewBuilder()->setOption('serialize', ['temperatura']);
-    }
 
     public function getSalas(SalaService $service)
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('salas', $this->paginate($service->getSalas()));
+        $this->set('salas', $this->paginate($service->getSalas($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['salas']);
     }
 

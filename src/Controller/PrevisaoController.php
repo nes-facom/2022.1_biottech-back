@@ -39,7 +39,7 @@ class PrevisaoController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('previsao', $this->paginate($service->getPrevisao()));
+        $this->set('previsao', $this->paginate($service->getPrevisao($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['previsao']);
     }
 
@@ -47,7 +47,7 @@ class PrevisaoController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('previsao', $this->paginate($service->getPrevisoes()));
+        $this->set('previsao', $this->paginate($service->getPrevisoes($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['previsao']);
     }
 

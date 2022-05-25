@@ -39,7 +39,7 @@ class PesquisadorController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('pesquisador', $this->paginate($service->getPesquisador()));
+        $this->set('pesquisador', $this->paginate($service->getPesquisador($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['pesquisador']);
     }
 
@@ -47,7 +47,7 @@ class PesquisadorController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('pesquisador', $this->paginate($service->getPesquisadores()));
+        $this->set('pesquisador', $this->paginate($service->getPesquisadores($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['pesquisador']);
     }
 

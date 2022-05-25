@@ -52,10 +52,18 @@ class CaixaService
         }
     }
 
-    public function getEntradaDados(): Query
+    public function getEntradaDados($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Caixa');
 
+        $findInTable = [
+            'LOWER(concat(".", caixa_numero, ".",
+             nascimento, ".",
+             sexo, ".",
+             num_animais, ".",
+             qtd_saida, ".",
+             ultima_saida, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
 
         return $table->find('all')->select(['id',
             'caixa_numero',
@@ -83,14 +91,25 @@ class CaixaService
                     'nome_linhagem'
                 ]
             ]
-        ]);
+        ])->where([
+            'YEAR(nascimento)' => $year
+        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);
     }
 
-    public function getCaixas(): Query
+    public function getCaixas($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Caixa');
 
-        return $table->find();
+        $findInTable = [
+            'LOWER(concat(".", caixa_numero, ".",
+             nascimento, ".",
+             sexo, ".",
+             ultima_saida, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
+        return $table->find()->where([
+            'YEAR(nascimento)' => $year
+        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);;
     }
 
     public function updateActiveAndDisable($id, $active)

@@ -128,8 +128,18 @@ class SaidaService
 
     }
 
-    public function getSaida(): Query
+    public function getSaida($search, $year, $active): Query
     {
+        $findInTable = [
+            'LOWER(concat(".", data_saida, ".",
+             tipo_saida, ".",
+             usuario, ".",
+             saida, ".",
+             Saida.sexo, ".",
+             sobra, ".",
+             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
         $table = TableRegistry::getTableLocator()->get('Saida');
 
         return $table->find('all')->contain([
@@ -138,14 +148,28 @@ class SaidaService
                     'caixa_numero'
                 ]
             ]
-        ]);
+        ])->where([
+            'YEAR(data_saida)' => $year
+        ])->andWhere($findInTable)->andWhere(['Saida.active' => $active]);
     }
 
-    public function getSaidas(): Query
+    public function getSaidas($search, $year, $active): Query
     {
+        $findInTable = [
+            'LOWER(concat(".", data_saida, ".",
+             tipo_saida, ".",
+             usuario, ".",
+             saida, ".",
+             Saida.sexo, ".",
+             sobra, ".",
+             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
         $table = TableRegistry::getTableLocator()->get('Saida');
 
-        return $table->find('all')->contain(['Previsao']);
+        return $table->find('all')->contain(['Previsao'])->where([
+            'YEAR(data_saida)' => $year
+        ])->andWhere($findInTable)->andWhere(['Saida.active' => $active]);
     }
 
     public function updateActiveAndDisable($id, $active)

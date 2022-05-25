@@ -98,18 +98,22 @@ class SalaService
         }
     }
 
-    /*public function getTemperaturaUmidades(): Query
+    public function getTemperaturaUmidades(): Query
     {
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
 
         return $table->find()->contain('Sala');
-    }*/
+    }
 
-    public function getSalas(): Query
+    public function getSalas($search, $active): Query
     {
+        $findInTable = [
+            'LOWER(num_sala) LIKE' => strtolower("%" . $search . "%")
+        ];
+
         $table = TableRegistry::getTableLocator()->get('Sala');
 
-        return $table->find('all');
+        return $table->find('all')->where($findInTable)->andWhere(['Sala.active' => $active]);
     }
 
     public function updateActiveAndDisableSala($id, $active)

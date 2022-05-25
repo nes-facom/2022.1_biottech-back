@@ -38,7 +38,6 @@ class PedidoService
              idade, ".",
              peso, ".",
              observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
-
         ];
 
         $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');

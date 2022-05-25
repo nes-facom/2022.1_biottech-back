@@ -52,10 +52,17 @@ class PrevisaoService
         }
     }
 
-    public function getPrevisao(): Query
+    public function getPrevisao($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Previsao');
         $saidaTable = TableRegistry::getTableLocator()->get('Saida')->find();
+
+        $findInTable = [
+            'LOWER(concat(".", num_previsao, ".",
+             retirada_num, ".",
+             retirada_data, ".",
+             status, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
 
         return $table->find('all')->select(['id',
             'pedido_id',
@@ -110,14 +117,25 @@ class PrevisaoService
                     ]
                 ]
             ]
-        ]);
+        ])->where([
+            'YEAR(retirada_data)' => $year
+        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active]);
     }
 
-    public function getPrevisoes(): Query
+    public function getPrevisoes($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Previsao');
 
-        return $table->find();
+        $findInTable = [
+            'LOWER(concat(".", num_previsao, ".",
+             retirada_num, ".",
+             retirada_data, ".",
+             status, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
+        return $table->find()->where([
+            'YEAR(retirada_data)' => $year
+        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active]);
     }
 
     public function updateActiveAndDisable($id, $active)

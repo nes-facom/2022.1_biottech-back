@@ -21,10 +21,10 @@ class PartoService
         $table = TableRegistry::getTableLocator()->get('Parto');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
         }
@@ -41,9 +41,14 @@ class PartoService
 
     }
 
-    public function getNascDesma(): Query
+    public function getNascDesma($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Parto');
+
+        $findInTable = [
+            'LOWER(concat(".", numero_parto, ".",
+             data_parto, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
 
         return $table->find('all')->select(['id',
             'numero_parto',
@@ -70,14 +75,23 @@ class PartoService
                     'data_obito'
                 ]
             ]
-        ]);
+        ])->where([
+            'YEAR(data_parto)' => $year
+        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active]);;
     }
 
-    public function getPartos(): Query
+    public function getPartos($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('Parto');
 
-        return $table->find('all');
+        $findInTable = [
+            'LOWER(concat(".", numero_parto, ".",
+             data_parto, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
+        return $table->find('all')->where([
+            'YEAR(data_parto)' => $year
+        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active]);
     }
 
     public function updateActiveAndDisable($id, $active)

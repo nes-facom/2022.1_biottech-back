@@ -38,7 +38,7 @@ class CaixaMatrizController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('progamacaoAcasalamento', $this->paginate($service->getProgamacaoAcasalamento()));
+        $this->set('progamacaoAcasalamento', $this->paginate($service->getProgamacaoAcasalamento($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['progamacaoAcasalamento']);
     }
 
@@ -46,7 +46,7 @@ class CaixaMatrizController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('matrizes', $this->paginate($service->getMatrizes()));
+        $this->set('matrizes', $this->paginate($service->getMatrizes($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['matrizes']);
     }
 
@@ -54,7 +54,7 @@ class CaixaMatrizController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('caixa_matrizes', $this->paginate($service->getCaixaMatrizes()));
+        $this->set('caixa_matrizes', $this->paginate($service->getCaixaMatrizes($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['caixa_matrizes']);
     }
 

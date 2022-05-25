@@ -25,7 +25,7 @@ class PartoController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('partos', $this->paginate($service->getPartos()));
+        $this->set('partos', $this->paginate($service->getPartos($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['partos']);
     }
 
@@ -40,7 +40,7 @@ class PartoController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('partos', $this->paginate($service->getNascDesma()));
+        $this->set('partos', $this->paginate($service->getNascDesma($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['partos']);
     }
 

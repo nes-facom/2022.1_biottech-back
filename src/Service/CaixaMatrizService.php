@@ -76,9 +76,16 @@ class CaixaMatrizService
         }
     }
 
-    public function getProgamacaoAcasalamento(): Query
+    public function getProgamacaoAcasalamento($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('CaixaMatriz');
+
+        $findInTable = [
+            'LOWER(concat(".", caixa_matriz_numero, ".",
+             data_acasalamento, ".",
+             saida_da_colonia, ".")) LIKE' => strtolower("%" . $search . "%")
+
+        ];
 
         return $table->find('all')->select(['id',
             'caixa_matriz_numero',
@@ -92,12 +99,21 @@ class CaixaMatrizService
                     'nascimento'
                 ]
             ]
-        ]);
+        ])->where([
+            'YEAR(data_acasalamento)' => $year
+        ])->andWhere($findInTable)->andWhere(['CaixaMatriz.active' => $active]);
     }
 
-    public function getMatrizes(): Query
+    public function getMatrizes($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('CaixaMatriz');
+
+        $findInTable = [
+            'LOWER(concat(".", caixa_matriz_numero, ".",
+             data_acasalamento, ".",
+             saida_da_colonia, ".",
+             data_obito, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
 
         return $table->find('all')->select(['id',
             'caixa_matriz_numero',
@@ -139,14 +155,38 @@ class CaixaMatrizService
                     ]
                 ]
             ]
-        ]);
+        ])->where([
+            'YEAR(data_acasalamento)' => $year
+        ])->andWhere($findInTable)->andWhere(['CaixaMatriz.active' => $active]);
     }
 
-    public function getCaixaMatrizes(): Query
+    public function getCaixaMatrizes($search, $year, $active): Query
     {
         $table = TableRegistry::getTableLocator()->get('CaixaMatriz');
 
-        return $table->find('all')->contain(['Caixa']);
+        $findInTable = [
+            'LOWER(concat(".", caixa_matriz_numero, ".",
+             data_acasalamento, ".",
+             saida_da_colonia, ".",
+             data_obito, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
+        return $table->find('all')->select(['id',
+            'caixa_matriz_numero',
+            'data_acasalamento',
+            'saida_da_colonia',
+            'data_obito',
+        ])->contain([
+            'Caixa' => [
+                'fields' => [
+                    'caixa_numero',
+                ]
+            ]
+        ])->where([
+            'YEAR(data_acasalamento)' => $year
+        ])->andWhere($findInTable)->andWhere(['CaixaMatriz.active' => $active]);
+
+
     }
 
     public function updateActiveAndDisable($id, $active)

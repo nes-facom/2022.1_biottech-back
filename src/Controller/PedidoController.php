@@ -198,7 +198,4 @@ class PedidoController extends AppController
 
         return $this->Util->convertToJson(200, $service->updateActiveAndDisablePedido($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
-
-
-
 }

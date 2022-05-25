@@ -86,18 +86,40 @@ class PesquisadorService
     }
 
 
-    public function getPesquisador(): Query
+    public function getPesquisador($search, $active): Query
     {
+        $findInTable = [
+            'LOWER(concat(".", nome, ".",
+             instituicao, ".",
+             setor, ".",
+             pos, ".",
+             ramal, ".",
+             email, ".",
+             orientador, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
 
-        return $table->find('all')->contain(['Telefones']);
+        return $table->find('all')->contain(['Telefones'])
+            ->where($findInTable)->andWhere(['Pesquisador.active' => $active]);
     }
 
-    public function getPesquisadores(): Query
+    public function getPesquisadores($search, $active): Query
     {
+        $findInTable = [
+            'LOWER(concat(".", nome, ".",
+             instituicao, ".",
+             setor, ".",
+             pos, ".",
+             ramal, ".",
+             email, ".",
+             orientador, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
 
-        return $table->find('all')->contain(['Telefones']);
+        return $table->find('all')->contain(['Telefones'])
+            ->where($findInTable)->andWhere(['Pesquisador.active' => $active]);
     }
 
     public function updateActiveAndDisable($id, $active)

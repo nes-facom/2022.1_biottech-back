@@ -39,7 +39,7 @@ class CaixaController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('entradaDados', $this->paginate($service->getEntradaDados()));
+        $this->set('entradaDados', $this->paginate($service->getEntradaDados($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['entradaDados']);
     }
 
@@ -47,7 +47,7 @@ class CaixaController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('caixas', $this->paginate($service->getCaixas()));
+        $this->set('caixas', $this->paginate($service->getCaixas($this->request->getQuery('search'), $this->request->getQuery('year'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
         $this->viewBuilder()->setOption('serialize', ['caixas']);
     }
 
