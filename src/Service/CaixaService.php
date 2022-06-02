@@ -122,7 +122,7 @@ class CaixaService
             ]
         ])->where([
             'YEAR(nascimento)' => $year
-        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);;
+        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);
     }
 
     public function updateActiveAndDisable($id, $active)
