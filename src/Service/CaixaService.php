@@ -107,7 +107,20 @@ class CaixaService
              ultima_saida, ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
-        return $table->find()->where([
+        return $table->find('all')->select(['id',
+            'caixa_numero',
+            'nascimento',
+            'sexo',
+            'num_animais',
+            'qtd_saida',
+            'ultima_saida'
+        ])->contain([
+            'Linhagem' => [
+                'fields' => [
+                    'nome_linhagem'
+                ]
+            ]
+        ])->where([
             'YEAR(nascimento)' => $year
         ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);;
     }
