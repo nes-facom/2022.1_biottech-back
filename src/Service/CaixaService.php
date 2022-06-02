@@ -76,7 +76,8 @@ class CaixaService
             'idade_atual' => 'DATEDIFF(CURRENT_DATE(), nascimento)',
             'ultima_saida_semana' => 'WEEK(ultima_saida, 0)',
             'dias_na_colonia' => 'DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))',
-            'semanas_na_colonia' => 'FLOOR(DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))/ 7)'
+            'semanas_na_colonia' => 'FLOOR(DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))/ 7)',
+            'active'
         ])->contain([
             'CaixaMatriz' => [
                 'foreignKey' => 'caixa_matriz_id',
@@ -113,7 +114,8 @@ class CaixaService
             'sexo',
             'num_animais',
             'qtd_saida',
-            'ultima_saida'
+            'ultima_saida',
+            'active'
         ])->contain([
             'Linhagem' => [
                 'fields' => [
@@ -122,7 +124,7 @@ class CaixaService
             ]
         ])->where([
             'YEAR(nascimento)' => $year
-        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);;
     }
 
     public function updateActiveAndDisable($id, $active)
