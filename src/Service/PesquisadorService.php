@@ -92,8 +92,8 @@ class PesquisadorService
             'LOWER(concat(".", nome, ".",
              instituicao, ".",
              setor, ".",
-             pos, ".",
-             ramal, ".",
+             IF(pos=null, pos , ""), ".",
+             IF(ramal=null, ramal , ""), ".",
              email, ".",
              orientador, ".")) LIKE' => strtolower("%" . $search . "%")
         ];
@@ -110,8 +110,8 @@ class PesquisadorService
             'LOWER(concat(".", nome, ".",
              instituicao, ".",
              setor, ".",
-             pos, ".",
-             ramal, ".",
+             IF(pos=null, pos , ""), ".",
+             IF(ramal=null, ramal , ""), ".",
              email, ".",
              orientador, ".")) LIKE' => strtolower("%" . $search . "%")
         ];

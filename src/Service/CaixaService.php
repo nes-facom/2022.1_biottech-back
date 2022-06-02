@@ -57,12 +57,12 @@ class CaixaService
         $table = TableRegistry::getTableLocator()->get('Caixa');
 
         $findInTable = [
-            'LOWER(concat(".", caixa_numero, ".",
-             nascimento, ".",
-             sexo, ".",
-             num_animais, ".",
-             qtd_saida, ".",
-             ultima_saida, ".")) LIKE' => strtolower("%" . $search . "%")
+            'LOWER(concat(".", Caixa.caixa_numero, ".",
+             Caixa.nascimento, ".",
+             Caixa.sexo, ".",
+             Caixa.num_animais, ".",
+             IF(Caixa.qtd_saida=null, Caixa.qtd_saida , ""), ".",
+             IF(Caixa.ultima_saida=null, Caixa.ultima_saida , ""), ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         return $table->find('all')->select(['id',
@@ -105,7 +105,7 @@ class CaixaService
             'LOWER(concat(".", Caixa.caixa_numero, ".",
              Caixa.nascimento, ".",
              Caixa.sexo, ".",
-             Caixa.ultima_saida, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(Caixa.ultima_saida=null, Caixa.ultima_saida , "") , ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         return $table->find('all')->select(['id',

@@ -23,21 +23,21 @@ class PedidoService
         $findInTable = [
             'LOWER(concat(".", equipe_executora, ".",
              processo_sei, ".",
-             equipe_executora, ".",
+             IF(equipe_executora=null, equipe_executora , ""), ".",
              data_solicitacao, ".",
              titulo, ".",
-             especificar, ".",
+             IF(especificar=null, especificar , ""), ".",
              exper, ".",
              num_ceua, ".",
              vigencia_ceua, ".",
              num_aprovado, ".",
              num_solicitado, ".",
-             adendo_1, ".",
-             adendo_2, ".",
+             IF(adendo_1=null, adendo_1 , ""), ".",
+             IF(adendo_2=null, adendo_2 , ""), ".",
              sexo, ".",
-             idade, ".",
-             peso, ".",
-             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(idade=null, idade , ""), ".",
+             IF(peso=null, peso , ""), ".",
+             IF(observacoes=null, observacoes , ""), ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         $pedidoTable = TableRegistry::getTableLocator()->get('Pedido');
@@ -149,21 +149,21 @@ class PedidoService
         $findInTable = [
             'LOWER(concat(".", equipe_executora, ".",
              processo_sei, ".",
-             equipe_executora, ".",
+             IF(equipe_executora=null, equipe_executora , ""), ".",
              data_solicitacao, ".",
              titulo, ".",
-             especificar, ".",
+             IF(especificar=null, especificar , ""), ".",
              exper, ".",
              num_ceua, ".",
              vigencia_ceua, ".",
              num_aprovado, ".",
              num_solicitado, ".",
-             adendo_1, ".",
-             adendo_2, ".",
+             IF(adendo_1=null, adendo_1 , ""), ".",
+             IF(adendo_2=null, adendo_2 , ""), ".",
              sexo, ".",
-             idade, ".",
-             peso, ".",
-             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(idade=null, idade , ""), ".",
+             IF(peso=null, peso , ""), ".",
+             IF(observacoes=null, observacoes , ""), ".")) LIKE' => strtolower("%" . $search . "%")
 
         ];
 

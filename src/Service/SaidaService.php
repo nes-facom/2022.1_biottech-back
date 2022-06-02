@@ -158,11 +158,11 @@ class SaidaService
         $findInTable = [
             'LOWER(concat(".", data_saida, ".",
              tipo_saida, ".",
-             usuario, ".",
+             IF(usuario=null, usuario , "") , ".",
              saida, ".",
              Saida.sexo, ".",
              sobra, ".",
-             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(observacoes=null, observacoes , "") , ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         $table = TableRegistry::getTableLocator()->get('Saida');

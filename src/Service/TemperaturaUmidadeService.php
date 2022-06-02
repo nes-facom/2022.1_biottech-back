@@ -13,11 +13,11 @@ class TemperaturaUmidadeService
 
         $findInTable = [
             'LOWER(concat(".", data, ".",
-             temp_matutino, ".",
-             ur_matutino, ".",
-             temp_vespertino, ".",
-             ur_vespertino, ".",
-             observacoes, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(temp_matutino=null, temp_matutino , ""), ".",
+             IF(ur_matutino=null, ur_matutino , ""), ".",
+             IF(temp_vespertino=null, temp_vespertino , ""), ".",
+             IF(ur_vespertino=null, ur_vespertino , ""), ".",
+             IF(observacoes=null, observacoes , ""), ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');

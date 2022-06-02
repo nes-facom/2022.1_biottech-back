@@ -83,7 +83,7 @@ class CaixaMatrizService
         $findInTable = [
             'LOWER(concat(".", caixa_matriz_numero, ".",
              data_acasalamento, ".",
-             saida_da_colonia, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(saida_da_colonia=null, saida_da_colonia , ""), ".")) LIKE' => strtolower("%" . $search . "%")
 
         ];
 
@@ -111,8 +111,8 @@ class CaixaMatrizService
         $findInTable = [
             'LOWER(concat(".", caixa_matriz_numero, ".",
              data_acasalamento, ".",
-             saida_da_colonia, ".",
-             data_obito, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(saida_da_colonia=null, saida_da_colonia , ""), ".",
+             IF(data_obito=null, data_obito , ""), ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         return $table->find('all')->select(['id',
@@ -167,8 +167,8 @@ class CaixaMatrizService
         $findInTable = [
             'LOWER(concat(".", caixa_matriz_numero, ".",
              data_acasalamento, ".",
-             saida_da_colonia, ".",
-             data_obito, ".")) LIKE' => strtolower("%" . $search . "%")
+             IF(saida_da_colonia=null, saida_da_colonia , ""), ".",
+             IF(data_obito=null, data_obito , ""), ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         return $table->find('all')->select(['id',
