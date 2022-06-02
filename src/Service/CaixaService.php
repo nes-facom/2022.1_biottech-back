@@ -102,10 +102,10 @@ class CaixaService
         $table = TableRegistry::getTableLocator()->get('Caixa');
 
         $findInTable = [
-            'LOWER(concat(".", caixa_numero, ".",
-             nascimento, ".",
-             sexo, ".",
-             ultima_saida, ".")) LIKE' => strtolower("%" . $search . "%")
+            'LOWER(concat(".", Caixa.caixa_numero, ".",
+             Caixa.nascimento, ".",
+             Caixa.sexo, ".",
+             Caixa.ultima_saida, ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
         return $table->find('all')->select(['id',
@@ -124,7 +124,7 @@ class CaixaService
             ]
         ])->where([
             'YEAR(nascimento)' => $year
-        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);;
+        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);
     }
 
     public function updateActiveAndDisable($id, $active)
