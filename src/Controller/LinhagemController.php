@@ -38,7 +38,7 @@ class LinhagemController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        return $this->Util->convertToJson(200, $service->getLinhagens());
+        return $this->Util->convertToJson(200, $service->getLinhagens($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
     public function activeAndDisable(LinhagemService $service)

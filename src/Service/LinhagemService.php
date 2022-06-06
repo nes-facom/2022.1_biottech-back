@@ -44,9 +44,13 @@ class LinhagemService
         return $table->saveOrFail($table->patchEntity($newEmptyTable , $data), ['atomic' => true]);
     }
 
-    public function getLinhagens(): Query
+    public function getLinhagens($search, $active): Query
     {
-        $table = TableRegistry::getTableLocator()->get('Linhagem');
+        $findInTable = [
+            'LOWER(concat(".", nome_linhagem, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
+
+        $table = TableRegistry::getTableLocator()->get('Linhagem')->where($findInTable)->andWhere(['active' => $active]);;
 
         return $table->find('all');
     }
