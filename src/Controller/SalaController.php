@@ -25,9 +25,7 @@ class SalaController extends AppController
     {
         $this->request->allowMethod(['post']);
 
-        $service->saveSalaAndUpdate($this->request->getParsedBody(), null);
-
-        return $this->Util->convertToJson(201, []);
+        return $this->Util->convertToJson(201, $service->saveSalaAndUpdate($this->request->getParsedBody(), null));
     }
 
     public function editSala(SalaService $service)
