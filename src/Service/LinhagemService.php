@@ -50,7 +50,7 @@ class LinhagemService
             'LOWER(concat(".", nome_linhagem, ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
-        $table = TableRegistry::getTableLocator()->get('Linhagem')->where($findInTable)->andWhere(['active' => $active]);;
+        $table = TableRegistry::getTableLocator()->get('Linhagem')->find('all')->where($findInTable)->andWhere(['active' => $active]);;
 
         return $table->find('all');
     }
