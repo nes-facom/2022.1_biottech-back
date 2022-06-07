@@ -44,7 +44,7 @@ class Pedido extends AbstractMigration
                 'values' => ['macho', 'femea'], 'null' => false
             ])
             ->addColumn('idade', 'integer', ['null' => true])
-            ->addColumn('peso', 'float', ['null' => true])
+            ->addColumn('peso', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('observacoes', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
             ->addForeignKey('vinculo_institucional_id', 'vinculo_institucional', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
