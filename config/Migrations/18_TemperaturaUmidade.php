@@ -19,9 +19,9 @@ class TemperaturaUmidade extends AbstractMigration
         $table = $this->table('temperatura_umidade');
         $table->addColumn('sala_id', 'integer', ['null' => true])
             ->addColumn('data', 'date', ['null' => false])
-            ->addColumn('temp_matutino', 'decimal', ['null' => true])
+            ->addColumn('temp_matutino', 'float', ['null' => true])
             ->addColumn('ur_matutino', 'string', ['limit' => 255, 'null' => true])
-            ->addColumn('temp_vespertino', 'decimal', ['null' => true])
+            ->addColumn('temp_vespertino', 'float', ['null' => true])
             ->addColumn('ur_vespertino', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('observacoes', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
