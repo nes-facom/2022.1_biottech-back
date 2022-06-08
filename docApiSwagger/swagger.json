@@ -69,7 +69,7 @@
                 },
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
                                 "type": "object",
                                 "required": ["username", "password"],
@@ -1335,7 +1335,8 @@
                                         },
                                         "exper": {
                                             "type": "string",
-                                            "example": "sim"
+                                            "example": "sim",
+                                            "description": "os valores aceitos no atributo ( exper ) são: 'sim' e 'não'"
                                         },
                                         "num_ceua": {
                                             "type": "string",
@@ -1363,7 +1364,8 @@
                                         },
                                         "sexo": {
                                             "type": "string",
-                                            "example": "macho"
+                                            "example": "macho",
+                                            "description": "os valores aceitos no atributo ( sexo ) são: 'macho' e 'femea'"
                                         },
                                         "idade": {
                                             "type": "integer",
@@ -1473,7 +1475,8 @@
                                     },
                                     "exper": {
                                         "type": "string",
-                                        "example": "sim"
+                                        "example": "sim",
+                                        "description": "os valores aceitos no atributo ( exper ) são: 'sim' e 'não'"
                                     },
                                     "num_ceua": {
                                         "type": "string",
@@ -1501,7 +1504,8 @@
                                     },
                                     "sexo": {
                                         "type": "string",
-                                        "example": "macho"
+                                        "example": "macho",
+                                        "description": "os valores aceitos no atributo ( sexo ) são: 'macho' e 'femea'"
                                     },
                                     "idade": {
                                         "type": "integer",
@@ -1575,7 +1579,7 @@
                         "in": "query",
                         "name": "search",
                         "description": "parâmetro responsável pela busca no banco de dados, deixar parâmetro igual a vazio (search=' ') caso deseje receber todos os dados dessa tabela",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
                             "example": ""
@@ -1621,7 +1625,8 @@
                                                     },
                                                     "exper": {
                                                         "type": "string",
-                                                        "example": "sim"
+                                                        "example": "sim",
+                                                        "description": "os valores aceitos no atributo ( exper ) são: 'sim' e 'não'"
                                                     },
                                                     "num_ceua": {
                                                         "type": "string",
@@ -1649,7 +1654,8 @@
                                                     },
                                                     "sexo": {
                                                         "type": "string",
-                                                        "example": "macho"
+                                                        "example": "macho",
+                                                        "description": "os valores aceitos no atributo ( sexo ) são: 'macho' e 'femea'"
                                                     },
                                                     "idade": {
                                                         "type": "integer",
@@ -1984,7 +1990,7 @@
                         "in": "query",
                         "name": "search",
                         "description": "parâmetro responsável pela busca no banco de dados, deixar parâmetro igual a vazio (search=' ') caso deseje receber todos os dados dessa tabela",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
                             "example": ""
@@ -2030,7 +2036,8 @@
                                                     },
                                                     "exper": {
                                                         "type": "string",
-                                                        "example": "sim"
+                                                        "example": "sim",
+                                                        "description": "os valores aceitos no atributo ( exper ) são: 'sim' e 'não'"
                                                     },
                                                     "num_ceua": {
                                                         "type": "string",
@@ -2058,7 +2065,8 @@
                                                     },
                                                     "sexo": {
                                                         "type": "string",
-                                                        "example": "macho"
+                                                        "example": "macho",
+                                                        "description": "os valores aceitos no atributo ( sexo ) são: 'macho' e 'femea'"
                                                     },
                                                     "idade": {
                                                         "type": "integer",
@@ -2412,7 +2420,7 @@
                         "in": "query",
                         "name": "search",
                         "description": "parâmetro responsável pela busca no banco de dados, deixar parâmetro igual a vazio (search=) caso deseje receber todos os dados dessa tabela",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
                             "example": ""
@@ -2756,7 +2764,7 @@
                         "in": "query",
                         "name": "search",
                         "description": "parâmetro responsável pela busca no banco de dados, deixar parâmetro igual a vazio (search=' ') caso deseje receber todos os dados dessa tabela",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
                             "example": ""
@@ -2975,7 +2983,7 @@
                         "in": "query",
                         "name": "search",
                         "description": "parâmetro responsável pela busca no banco de dados, deixar parâmetro igual a vazio (search=' ') caso deseje receber todos os dados dessa tabela",
-                        "required": true,
+                        "required": false,
                         "schema": {
                             "type": "string",
                             "example": ""
