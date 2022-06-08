@@ -38,6 +38,10 @@
         {
             "name": "Pesquisador",
             "description": "Operações relacionadas ao Pesquisador"
+        },
+        {
+            "name": "Parto",
+            "description": "Operações relacionadas ao Parto"
         }
     ],
     "paths": {
@@ -3364,6 +3368,721 @@
                                         "orientador": {
                                             "type": "boolean",
                                             "example": "false"
+                                        },
+                                        "active": {
+                                            "type": "boolean",
+                                            "example": false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    },
+                    "400": {
+                        "description": "Bad Request, ocorreu algum problema com a requisição"
+                    },
+                    "500": {
+                        "description": "Ocorreu um erro interno na api"
+                    }
+                }
+            }
+        },
+        "/parto/addParto.json": {
+            "post": {
+                "tags": ["Parto"],
+                "security": [{ "bearerAuth": [] }],
+                "summary": "Cadastro do Parto",
+                "operationId": "addParto",
+                "description": "Rota responsável pelo Cadastro do Parto",
+                "responses": {
+                    "201": {
+                        "description": "Parto cadastrado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "caixa_matriz_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "numero_parto": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "data_parto": {
+                                            "type": "string",
+                                            "example": "2022-05-01"
+                                        },
+                                        "num_macho": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "num_femea": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "des_macho": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "des_femea": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "qtd_canib": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "qtd_gamba": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "qtd_outros": {
+                                            "type": "integer",
+                                            "example": 0
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    },
+                    "400": {
+                        "description": "Bad Request, ocorreu algum problema com a requisição"
+                    },
+                    "500": {
+                        "description": "Ocorreu um erro interno na api"
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": [
+                                    "numero_parto",
+                                    "data_parto",
+                                    "num_macho",
+                                    "num_femea",
+                                    "des_macho",
+                                    "des_femea"
+                                ],
+                                "properties": {
+                                    "caixa_matriz_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "numero_parto": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "data_parto": {
+                                        "type": "string",
+                                        "example": "2022-05-01"
+                                    },
+                                    "num_macho": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "num_femea": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "des_macho": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "des_femea": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "qtd_canib": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "qtd_gamba": {
+                                        "type": "integer",
+                                        "example": 0
+                                    },
+                                    "qtd_outros": {
+                                        "type": "integer",
+                                        "example": 0
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": "Parto"
+                }
+            }
+        },
+        "/parto/getNascDesmaTable.json": {
+            "get": {
+                "tags": ["Parto"],
+                "security": [{ "bearerAuth": [] }],
+                "summary": "Buscar todos os Partos",
+                "operationId": "getNascDesmaTable",
+                "description": "Rota responsável por fazer a busca da Tabela 'NascDesma' disponível no Biotério",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "parâmetro responsável pela paginação, passar page=1 caso deseje acessar a primeira página da tabela.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "parâmetro responsável pelo limite de dados em cada página, passar limit=8 caso deseje receber até 8 dados por página.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 8
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "active",
+                        "description": "passar um active=true para buscar os Partos ativos e active=false para buscar os Partos inativos",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean",
+                            "example": true
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "year",
+                        "description": "parâmetro responsável pela busca de acordo com o ano desejado. OBS: A data utilizada para esse filtro: 'data_parto'",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2022
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "search",
+                        "description": "parâmetro responsável pela busca no banco de dados, deixar parâmetro igual a vazio (search=' ') caso deseje receber todos os dados dessa tabela",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A busca foi concluída com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "partos": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "numero_parto": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "data_parto": {
+                                                        "type": "string",
+                                                        "example": "2022-05-01"
+                                                    },
+                                                    "num_macho": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "num_femea": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "des_macho": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "des_femea": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "qtd_canib": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "qtd_gamba": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "qtd_outros": {
+                                                        "type": "string",
+                                                        "example": 0
+                                                    },
+                                                    "data_desmame": {
+                                                        "type": "string",
+                                                        "example": "2022-01-26"
+                                                    },
+                                                    "total_nascimento": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "total_desmamado": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "semana_nascimento": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "semana_desmame": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "caixa_matriz": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "caixa_matriz_numero": {
+                                                                "type": "string",
+                                                                "example": "03/21"
+                                                            },
+                                                            "data_acasalamento": {
+                                                                "type": "string",
+                                                                "example": "2022-01-05"
+                                                            },
+                                                            "saida_da_colonia": {
+                                                                "type": "string",
+                                                                "example": "2022-01-15"
+                                                            },
+                                                            "data_obito": {
+                                                                "type": "string",
+                                                                "example": "2022-01-30"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object",
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "current": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "perPage": {
+                                                    "type": "integer",
+                                                    "example": 8
+                                                },
+                                                "page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "requestedPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "pageCount": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "start": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "end": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "prevPage": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "nextPage": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "sort": {
+                                                    "type": "boolean",
+                                                    "example": null
+                                                },
+                                                "direction": {
+                                                    "type": "boolean",
+                                                    "example": null
+                                                },
+                                                "sortDefault": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "directionDefault": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "completeSort": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": ""
+                                                    }
+                                                },
+                                                "limit": {
+                                                    "type": "integer",
+                                                    "example": 8
+                                                },
+                                                "scope": {
+                                                    "type": "boolean",
+                                                    "example": null
+                                                },
+                                                "finder": {
+                                                    "type": "string",
+                                                    "example": "all"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    },
+                    "400": {
+                        "description": "Bad Request, ocorreu algum problema com a requisição"
+                    },
+                    "500": {
+                        "description": "Ocorreu um erro interno na api"
+                    }
+                }
+            }
+        },
+        "/parto/getPartos.json": {
+            "get": {
+                "tags": ["Parto"],
+                "security": [{ "bearerAuth": [] }],
+                "summary": "Buscar todos os Partos",
+                "operationId": "getPartos",
+                "description": "Rota responsável por fazer a busca dos dados da tabela Partos do banco de dados.",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "parâmetro responsável pela paginação, passar page=1 caso deseje acessar a primeira página da tabela.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "parâmetro responsável pelo limite de dados em cada página, passar limit=8 caso deseje receber até 8 dados por página.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 8
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "active",
+                        "description": "passar um active=true para buscar os Partos ativos e active=false para buscar os Partos inativos",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean",
+                            "example": true
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "year",
+                        "description": "parâmetro responsável pela busca de acordo com o ano desejado. OBS: A data utilizada para esse filtro: 'data_parto'",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2022
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "search",
+                        "description": "parâmetro responsável pela busca no banco de dados, deixar parâmetro igual a vazio (search=' ') caso deseje receber todos os dados dessa tabela",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A busca foi concluída com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "partos": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": "1"
+                                                    },
+                                                    "caixa_matriz_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "numero_parto": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "data_parto": {
+                                                        "type": "string",
+                                                        "example": "2022-05-01"
+                                                    },
+                                                    "num_macho": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "num_femea": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "des_macho": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "des_femea": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "qtd_canib": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "qtd_gamba": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "qtd_outros": {
+                                                        "type": "integer",
+                                                        "example": 0
+                                                    },
+                                                    "active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "pagination": {
+                                            "type": "object",
+                                            "properties": {
+                                                "count": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "current": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "perPage": {
+                                                    "type": "integer",
+                                                    "example": 8
+                                                },
+                                                "page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "requestedPage": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "pageCount": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "start": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "end": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "prevPage": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "nextPage": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "sort": {
+                                                    "type": "boolean",
+                                                    "example": null
+                                                },
+                                                "direction": {
+                                                    "type": "boolean",
+                                                    "example": null
+                                                },
+                                                "sortDefault": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "directionDefault": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "completeSort": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": ""
+                                                    }
+                                                },
+                                                "limit": {
+                                                    "type": "integer",
+                                                    "example": 8
+                                                },
+                                                "scope": {
+                                                    "type": "boolean",
+                                                    "example": null
+                                                },
+                                                "finder": {
+                                                    "type": "string",
+                                                    "example": "all"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Usuário não autorizado"
+                    },
+                    "400": {
+                        "description": "Bad Request, ocorreu algum problema com a requisição"
+                    },
+                    "500": {
+                        "description": "Ocorreu um erro interno na api"
+                    }
+                }
+            }
+        },
+        "/parto/activeAndDisable.json": {
+            "delete": {
+                "tags": ["Parto"],
+                "security": [{ "bearerAuth": [] }],
+                "summary": "Ativação e Desativação do Parto",
+                "operationId": "activeAndDisablePartor",
+                "description": "Rota responsável pela Ativação e Desativação do Parto",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "Passar o id do Parto que deseja desativar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "active",
+                        "description": "passar um active=true para ativar o Parto e active=false para desativar o Parto",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean",
+                            "example": false
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Parto ativado ou desativado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "caixa_matriz_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "numero_parto": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "data_parto": {
+                                            "type": "string",
+                                            "example": "2022-05-01"
+                                        },
+                                        "num_macho": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "num_femea": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "des_macho": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "des_femea": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "qtd_canib": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "qtd_gamba": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "qtd_outros": {
+                                            "type": "integer",
+                                            "example": 0
                                         },
                                         "active": {
                                             "type": "boolean",
