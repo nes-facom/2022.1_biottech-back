@@ -1,4 +1,4 @@
 # CakePHP
 
-bin/cake migrations migrate
-bin/cake migrations seed --seed=DatabaseSeed
+- php bin/cake.php migrations migrate
+- php bin/cake.php migrations seed --seed=DatabaseSeed
