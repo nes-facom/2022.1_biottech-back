@@ -73,8 +73,7 @@ class PrevisaoTable extends Table
             ->add('num_previsao', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('retirada_num')
-            ->maxLength('retirada_num', 255)
+            ->integer('retirada_num')
             ->requirePresence('retirada_num', 'create')
             ->notEmptyString('retirada_num');
 
@@ -90,7 +89,6 @@ class PrevisaoTable extends Table
 
         $validator
             ->scalar('status')
-            ->maxLength('status', 255)
             ->requirePresence('status', 'create')
             ->notEmptyString('status');
 

@@ -92,13 +92,11 @@ class PartoTable extends Table
 
         $validator
             ->integer('qtd_canib')
-            ->requirePresence('qtd_canib', 'create')
-            ->notEmptyString('qtd_canib');
+            ->allowEmptyString('qtd_canib');
 
         $validator
             ->integer('qtd_gamba')
-            ->requirePresence('qtd_gamba', 'create')
-            ->notEmptyString('qtd_gamba');
+            ->allowEmptyString('qtd_gamba');
 
         $validator
             ->integer('qtd_outros')

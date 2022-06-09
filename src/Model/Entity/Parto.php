@@ -16,8 +16,8 @@ use Cake\ORM\Entity;
  * @property int $num_femea
  * @property int $des_macho
  * @property int $des_femea
- * @property int $qtd_canib
- * @property int $qtd_gamba
+ * @property int|null $qtd_canib
+ * @property int|null $qtd_gamba
  * @property int|null $qtd_outros
  * @property bool $active
  *

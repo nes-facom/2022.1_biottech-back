@@ -11,7 +11,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int|null $pedido_id
  * @property int $num_previsao
- * @property string $retirada_num
+ * @property int $retirada_num
  * @property int $qtd_retirar
  * @property \Cake\I18n\FrozenDate $retirada_data
  * @property string $status
