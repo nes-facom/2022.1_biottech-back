@@ -66,7 +66,7 @@ class TemperaturaUmidadeTable extends Table
             ->notEmptyDate('data');
 
         $validator
-            ->decimal('temp_matutino')
+            ->numeric('temp_matutino')
             ->allowEmptyString('temp_matutino');
 
         $validator
@@ -75,7 +75,7 @@ class TemperaturaUmidadeTable extends Table
             ->allowEmptyString('ur_matutino');
 
         $validator
-            ->decimal('temp_vespertino')
+            ->numeric('temp_vespertino')
             ->allowEmptyString('temp_vespertino');
 
         $validator

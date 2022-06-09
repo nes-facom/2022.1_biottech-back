@@ -11,9 +11,9 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int|null $sala_id
  * @property \Cake\I18n\FrozenDate $data
- * @property string|null $temp_matutino
+ * @property float|null $temp_matutino
  * @property string|null $ur_matutino
- * @property string|null $temp_vespertino
+ * @property float|null $temp_vespertino
  * @property string|null $ur_vespertino
  * @property string|null $observacoes
  * @property bool $active

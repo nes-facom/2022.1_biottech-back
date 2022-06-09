@@ -6,17 +6,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * CaixaCaixaMatriz Entity
+ * EspecieLinhagem Entity
  *
  * @property int $id
- * @property int $caixa_matriz_id
- * @property int $caixa_id
- * @property float $peso
+ * @property int $especie_id
+ * @property int $linhagem_id
  *
- * @property \App\Model\Entity\CaixaMatriz $caixa_matriz
- * @property \App\Model\Entity\Caixa $caixa
+ * @property \App\Model\Entity\SubLinhaPesquisa $sub_linha_pesquisa
+ * @property \App\Model\Entity\LinhaPesquisa $linha_pesquisa
  */
-class CaixaCaixaMatriz extends Entity
+class EspecieLinhagem extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -28,10 +27,9 @@ class CaixaCaixaMatriz extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'caixa_matriz_id' => true,
-        'caixa_id' => true,
-        'peso' => true,
-        'caixa_matriz' => true,
-        'caixa' => true,
+        'especie_id' => true,
+        'linhagem_id' => true,
+        'sub_linha_pesquisa' => true,
+        'linha_pesquisa' => true,
     ];
 }

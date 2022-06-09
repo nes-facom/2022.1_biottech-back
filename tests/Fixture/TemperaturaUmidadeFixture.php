@@ -27,10 +27,10 @@ class TemperaturaUmidadeFixture extends TestFixture
             [
                 'id' => 1,
                 'sala_id' => 1,
-                'data' => '2022-05-12',
-                'temp_matutino' => 1.5,
+                'data' => '2022-06-09',
+                'temp_matutino' => 1,
                 'ur_matutino' => 'Lorem ipsum dolor sit amet',
-                'temp_vespertino' => 1.5,
+                'temp_vespertino' => 1,
                 'ur_vespertino' => 'Lorem ipsum dolor sit amet',
                 'observacoes' => 'Lorem ipsum dolor sit amet',
                 'active' => 1,

@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  * @property bool $active
  *
  * @property \App\Model\Entity\Pedido[] $pedido
+ * @property \App\Model\Entity\Linhagem[] $linhagem
  */
 class Especie extends Entity
 {
@@ -29,5 +30,6 @@ class Especie extends Entity
         'nome_especie' => true,
         'active' => true,
         'pedido' => true,
+        'linhagem' => true,
     ];
 }

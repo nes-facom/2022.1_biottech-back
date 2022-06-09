@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * Especie Model
  *
  * @property \App\Model\Table\PedidoTable&\Cake\ORM\Association\HasMany $Pedido
+ * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsToMany $Linhagem
  *
  * @method \App\Model\Entity\Especie newEmptyEntity()
  * @method \App\Model\Entity\Especie newEntity(array $data, array $options = [])
@@ -45,6 +46,11 @@ class EspecieTable extends Table
 
         $this->hasMany('Pedido', [
             'foreignKey' => 'especie_id',
+        ]);
+        $this->belongsToMany('Linhagem', [
+            'foreignKey' => 'especie_id',
+            'targetForeignKey' => 'linhagem_id',
+            'joinTable' => 'especie_linhagem',
         ]);
     }
 

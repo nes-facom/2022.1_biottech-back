@@ -28,7 +28,7 @@ class CaixaCaixaMatrizFixture extends TestFixture
                 'id' => 1,
                 'caixa_matriz_id' => 1,
                 'caixa_id' => 1,
-                'peso' => 1.5,
+                'peso' => 1,
             ],
         ];
         parent::init();

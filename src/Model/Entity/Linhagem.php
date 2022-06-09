@@ -14,6 +14,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Caixa[] $caixa
  * @property \App\Model\Entity\Pedido[] $pedido
+ * @property \App\Model\Entity\Especie[] $especie
  * @property \App\Model\Entity\Sala[] $sala
  */
 class Linhagem extends Entity
@@ -32,6 +33,7 @@ class Linhagem extends Entity
         'active' => true,
         'caixa' => true,
         'pedido' => true,
+        'especie' => true,
         'sala' => true,
     ];
 }

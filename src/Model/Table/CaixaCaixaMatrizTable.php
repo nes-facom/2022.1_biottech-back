@@ -73,7 +73,7 @@ class CaixaCaixaMatrizTable extends Table
             ->notEmptyString('caixa_id');
 
         $validator
-            ->decimal('peso')
+            ->numeric('peso')
             ->requirePresence('peso', 'create')
             ->notEmptyString('peso');
 
