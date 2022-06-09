@@ -49,7 +49,7 @@ class PedidoFixture extends TestFixture
                 'adendo_2' => 1,
                 'sexo' => 'Lorem ipsum dolor sit amet',
                 'idade' => 1,
-                'peso' => 1,
+                'peso' => 'Lorem ipsum dolor sit amet',
                 'observacoes' => 'Lorem ipsum dolor sit amet',
                 'active' => 1,
             ],

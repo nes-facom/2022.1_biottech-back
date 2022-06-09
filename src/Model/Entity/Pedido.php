@@ -32,7 +32,7 @@ use Cake\ORM\Entity;
  * @property int|null $adendo_2
  * @property string $sexo
  * @property int|null $idade
- * @property float|null $peso
+ * @property string $peso
  * @property string|null $observacoes
  * @property bool $active
  *
