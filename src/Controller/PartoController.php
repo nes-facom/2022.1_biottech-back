@@ -36,6 +36,13 @@ class PartoController extends AppController
         return $this->Util->convertToJson(201, $service->savePartoAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function editParto(PartoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(201, $service->savePartoAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
     public function getNascDesmaTable(PartoService $service)
     {
         $this->request->allowMethod(['get']);

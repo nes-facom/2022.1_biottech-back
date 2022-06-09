@@ -14,7 +14,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\LinhagemTable&\Cake\ORM\Association\BelongsTo $Linhagem
  * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsTo $CaixaMatriz
  * @property \App\Model\Table\SaidaTable&\Cake\ORM\Association\HasMany $Saida
- * @property \App\Model\Table\CaixaMatrizTable&\Cake\ORM\Association\BelongsToMany $CaixaMatriz
  *
  * @method \App\Model\Entity\Caixa newEmptyEntity()
  * @method \App\Model\Entity\Caixa newEntity(array $data, array $options = [])

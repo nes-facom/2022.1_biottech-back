@@ -32,7 +32,7 @@ class CaixaController extends AppController
     {
         $this->request->allowMethod(['put']);
 
-        return $this->Util->convertToJson(201, $service->saveCaixaAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+        return $this->Util->convertToJson(200, $service->saveCaixaAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getEntradaDadosTable(CaixaService $service)

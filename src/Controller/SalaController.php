@@ -50,7 +50,6 @@ class SalaController extends AppController
     }
 
 
-
     public function getSalas(SalaService $service)
     {
         $this->request->allowMethod(['get']);

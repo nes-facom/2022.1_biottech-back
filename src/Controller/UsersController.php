@@ -115,7 +115,7 @@ class UsersController extends AppController
         return $this->Util->convertToJson(201, $service->saveUser($this->request->getParsedBody()));
     }
 
-    public function update(UserService $service)
+    public function editUser(UserService $service)
     {
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {
@@ -127,7 +127,7 @@ class UsersController extends AppController
         return $this->Util->convertToJson(200, $service->updateUser($this->request->getQuery('id'), $this->request->getParsedBody()));
     }
 
-    public function updatePassword(UserService $service)
+    public function editPassword(UserService $service)
     {
         $identity = $this->Authentication->getIdentity();
 
@@ -158,12 +158,12 @@ class UsersController extends AppController
             return $this->Util->convertToJson(401, []);
         }
 
-        $this->request->allowMethod(['put']);
+        $this->request->allowMethod(['delete']);
 
         return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
-    public function updateAvatar(UserService $service)
+    public function editAvatar(UserService $service)
     {
         $this->request->allowMethod(['put']);
 

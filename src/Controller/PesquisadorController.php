@@ -32,7 +32,7 @@ class PesquisadorController extends AppController
     {
         $this->request->allowMethod(['put']);
 
-        return $this->Util->convertToJson(201, $service->savePesquisadorUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+        return $this->Util->convertToJson(200, $service->savePesquisadorUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getPesquisadorTable(PesquisadorService $service)

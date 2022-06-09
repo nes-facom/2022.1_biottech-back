@@ -32,7 +32,7 @@ class PrevisaoController extends AppController
     {
         $this->request->allowMethod(['put']);
 
-        return $this->Util->convertToJson(201, $service->savePrevisaoAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+        return $this->Util->convertToJson(200, $service->savePrevisaoAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getPrevisaoTable(PrevisaoService $service)

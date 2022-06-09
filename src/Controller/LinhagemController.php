@@ -31,7 +31,7 @@ class LinhagemController extends AppController
     {
         $this->request->allowMethod(['put']);
 
-        return $this->Util->convertToJson(201, $service->saveLinhagemAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+        return $this->Util->convertToJson(200, $service->saveLinhagemAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function getLinhagens(LinhagemService $service)
