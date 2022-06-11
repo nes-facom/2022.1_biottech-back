@@ -35,21 +35,6 @@ class SalaController extends AppController
         return $this->Util->convertToJson(200, $service->saveSalaAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
-    public function addTemperaturaUmidade(SalaService $service)
-    {
-        $this->request->allowMethod(['post']);
-
-        return $this->Util->convertToJson(201, $service->saveTemperaturaUmidadeAndUpdate($this->request->getParsedBody(), null));
-    }
-
-    public function editTemperaturaUmidade(SalaService $service)
-    {
-        $this->request->allowMethod(['put']);
-
-        return $this->Util->convertToJson(200, $service->saveTemperaturaUmidadeAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
-    }
-
-
     public function getSalas(SalaService $service)
     {
         $this->request->allowMethod(['get']);
@@ -58,18 +43,11 @@ class SalaController extends AppController
         $this->viewBuilder()->setOption('serialize', ['salas']);
     }
 
-    public function activeAndDisableSala(SalaService $service)
+    public function activeAndDisable(SalaService $service)
     {
         $this->request->allowMethod(['delete']);
 
-        return $this->Util->convertToJson(200, $service->updateActiveAndDisableSala($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
-    }
-
-    public function activeAndDisableTemperaturaUmidade(SalaService $service)
-    {
-        $this->request->allowMethod(['delete']);
-
-        return $this->Util->convertToJson(200, $service->updateActiveAndDisableTemperaturaUmidade($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+        return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
 }

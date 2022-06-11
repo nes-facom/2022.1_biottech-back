@@ -78,33 +78,6 @@ class SalaService
         }
     }
 
-    public function saveTemperaturaUmidadeAndUpdate($data, $id)
-    {
-        $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
-        $newEmptyTable = $table->newEmptyEntity();
-
-        if (isset($id)) {
-            try {
-                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            } catch (Exception $e) {
-                throw new BadRequestException('ID não encontrado.');
-            }
-        }
-
-        try {
-            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
-    }
-
-    public function getTemperaturaUmidades(): Query
-    {
-        $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
-
-        return $table->find()->contain('Sala');
-    }
-
     public function getSalas($search, $active): Query
     {
         $findInTable = [
@@ -116,7 +89,7 @@ class SalaService
         return $table->find('all')->where($findInTable)->andWhere(['Sala.active' => $active]);
     }
 
-    public function updateActiveAndDisableSala($id, $active)
+    public function updateActiveAndDisable($id, $active)
     {
         $table = TableRegistry::getTableLocator()->get('Sala');
         $tableFind = TableRegistry::getTableLocator()->get('Sala')->find();
@@ -131,26 +104,6 @@ class SalaService
 
         try {
             return $table->saveOrFail($sala);
-        } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
-        }
-    }
-
-    public function updateActiveAndDisableTemperaturaUmidade($id, $active)
-    {
-        $table = TableRegistry::getTableLocator()->get('TemperaturaUmidade');
-        $tableFind = TableRegistry::getTableLocator()->get('TemperaturaUmidade')->find();
-
-        try {
-            $temperaturaUmidade = $tableFind->where(['id' => $id])->firstOrFail();
-        } catch (Exception $e) {
-            throw new BadRequestException('Saida não encontrado.');
-        }
-
-        $temperaturaUmidade->active = $active;
-
-        try {
-            return $table->saveOrFail($temperaturaUmidade);
         } catch (Exception $e) {
             throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
         }
