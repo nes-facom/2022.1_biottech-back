@@ -41,7 +41,7 @@ class TemperaturaUmidadeController extends AppController
 
         return $this->Util->convertToJson(200, $service->saveTemperaturaUmidadeAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
-    public function activeAndDisableTemperaturaUmidade(TemperaturaUmidadeService $service)
+    public function activeAndDisable(TemperaturaUmidadeService $service)
     {
         $this->request->allowMethod(['delete']);
 
