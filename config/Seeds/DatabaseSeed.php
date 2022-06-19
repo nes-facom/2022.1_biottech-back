@@ -877,7 +877,7 @@ class DatabaseSeed extends AbstractSeed
 
 
         //add Projeto
-        $projeto= [
+        $projeto = [
             [
                 'nome_projeto' => 'Ensino'
             ],

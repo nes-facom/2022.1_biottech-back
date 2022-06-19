@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cake\I18n\FrozenTime;
 use Migrations\AbstractMigration;
 
 class Pesquisador extends AbstractMigration
@@ -25,6 +26,14 @@ class Pesquisador extends AbstractMigration
             ->addColumn('email', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('orientador', 'boolean', ['null' => false])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addIndex(['email'], ['unique' => true])
             ->create();
     }

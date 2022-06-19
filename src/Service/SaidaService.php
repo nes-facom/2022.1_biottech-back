@@ -167,7 +167,13 @@ class SaidaService
 
         $table = TableRegistry::getTableLocator()->get('Saida');
 
-        return $table->find('all')->contain(['Previsao'])->where([
+        return $table->find('all')->contain([
+            'Previsao' => [
+                'fields' => [
+                    'num_previsao'
+                ]
+            ]
+        ])->where([
             'YEAR(data_saida)' => $year
         ])->andWhere($findInTable)->andWhere(['Saida.active' => $active]);
     }

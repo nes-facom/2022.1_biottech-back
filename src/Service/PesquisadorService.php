@@ -9,6 +9,7 @@ namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -52,6 +53,7 @@ class PesquisadorService
             if ($table->find('all')->where(['email' => $data['email']])->first() != null) {
                 throw new BadRequestException('Já existe um Pesquisador com esse email.');
             }
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         $newEmptyTable->nome = $data['nome'];
@@ -61,6 +63,7 @@ class PesquisadorService
         $newEmptyTable->ramal = $data['ramal'];
         $newEmptyTable->email = $data['email'];
         $newEmptyTable->orientador = $data['orientador'];
+        $newEmptyTable->modified = FrozenTime::now();
 
         try {
             $connection = ConnectionManager::get('default');
@@ -101,7 +104,7 @@ class PesquisadorService
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
 
         return $table->find('all')->contain(['Telefones'])
-            ->where($findInTable)->andWhere(['Pesquisador.active' => $active]);
+            ->where($findInTable)->andWhere(['Pesquisador.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function getPesquisadores($search, $active): Query
@@ -119,7 +122,7 @@ class PesquisadorService
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
 
         return $table->find('all')->contain(['Telefones'])
-            ->where($findInTable)->andWhere(['Pesquisador.active' => $active]);
+            ->where($findInTable)->andWhere(['Pesquisador.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function updateActiveAndDisable($id, $active)
