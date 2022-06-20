@@ -39,6 +39,7 @@ class UsersController extends AppController
             $user = $result->getData();
             $payload = [
                 'sub' => $user->id,
+                'type'=>$user->type,
                 'exp' => time() + 86400,
             ];
 
