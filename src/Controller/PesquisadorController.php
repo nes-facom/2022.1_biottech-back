@@ -51,6 +51,14 @@ class PesquisadorController extends AppController
         $this->viewBuilder()->setOption('serialize', ['pesquisador']);
     }
 
+    public function getPesquisador(PesquisadorService $service)
+    {
+        $this->request->allowMethod(['get']);
+
+        return $this->Util->convertToJson(200, $service->getPesquisadorSelect(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
+    }
+
+
     public function activeAndDisable(PesquisadorService $service)
     {
         $this->request->allowMethod(['delete']);

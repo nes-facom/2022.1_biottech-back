@@ -314,7 +314,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
 
-        return $table->find('all')->select(['nome_nivel_projeto'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_nivel_projeto'])->where(['active' => $active]);
     }
 
     public function saveLinhaPesquisaAndUpdate($data, $id)
@@ -365,7 +365,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
 
-        return $table->find('all')->select(['nome_linha_pesquisa'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_linha_pesquisa'])->where(['active' => $active]);
     }
 
     public function saveFinalidadeAndUpdate($data, $id)
@@ -416,7 +416,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Finalidade');
 
-        return $table->find('all')->select(['nome_finalidade'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_finalidade'])->where(['active' => $active]);
     }
 
     public function saveLaboratorioAndUpdate($data, $id)
@@ -467,7 +467,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Laboratorio');
 
-        return $table->find('all')->select(['nome_laboratorio'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_laboratorio'])->where(['active' => $active]);
     }
 
     public function saveVinculoInstitucionalAndUpdate($data, $id)
@@ -518,7 +518,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
 
-        return $table->find('all')->select(['nome_vinculo_institucional'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_vinculo_institucional'])->where(['active' => $active]);
     }
 
     public function saveProjetoAndUpdate($data, $id)
@@ -569,7 +569,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Projeto');
 
-        return $table->find('all')->select(['nome_projeto'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_projeto'])->where(['active' => $active]);
     }
 
     public function saveEspecieAndUpdate($data, $id)
@@ -620,7 +620,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Especie');
 
-        return $table->find('all')->select(['nome_especie'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_especie'])->where(['active' => $active]);
     }
 
     public function savePedidoAndUpdate($data, $id)

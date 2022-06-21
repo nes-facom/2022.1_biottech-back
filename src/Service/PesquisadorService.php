@@ -125,6 +125,14 @@ class PesquisadorService
             ->where($findInTable)->andWhere(['Pesquisador.active' => $active])->order(['created' => 'DESC']);
     }
 
+    public function getPesquisadorSelect($active): Query
+    {
+
+        $table = TableRegistry::getTableLocator()->get('Pesquisador');
+
+        return $table->find('all')->select(['id', 'nome'])->where(['Pesquisador.active' => $active])->order(['created' => 'DESC']);
+    }
+
     public function updateActiveAndDisable($id, $active)
     {
         $table = TableRegistry::getTableLocator()->get('Pesquisador');
