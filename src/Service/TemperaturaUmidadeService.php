@@ -45,7 +45,7 @@ class TemperaturaUmidadeService
         try {
             return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+            throw new BadRequestException($e->getMessage());
         }
     }
 
