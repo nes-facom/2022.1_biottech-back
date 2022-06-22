@@ -147,7 +147,7 @@ class PedidoService
     {
 
         $findInTable = [
-            'LOWER(concat(".", equipe_executora, ".",
+            'LOWER(concat(".",
              processo_sei, ".",
              IF(equipe_executora=null, equipe_executora , ""), ".",
              data_solicitacao, ".",
@@ -627,10 +627,9 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Pedido');
         $newEmptyTable = $table->newEmptyEntity();
-
         if (isset($id)) {
             try {
-                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
+                $newEmptyTable  = $table->find()->where(['id' => $id])->where()->firstOrFail();
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
@@ -639,7 +638,7 @@ class PedidoService
         try {
             return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+            throw new BadRequestException($e->getMessage());
         }
     }
 

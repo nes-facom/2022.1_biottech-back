@@ -192,7 +192,14 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->savePedidoAndUpdate($this->request->getParsedBody(), null));
     }
 
-    public function activeAndDisablePedido(PedidoService $service)
+    public function editPedido(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(200, $service->savePedidoAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
+    public function activeAndDisable(PedidoService $service)
     {
         $this->request->allowMethod(['delete']);
 

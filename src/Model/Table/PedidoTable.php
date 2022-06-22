@@ -167,6 +167,7 @@ class PedidoTable extends Table
 
         $validator
             ->scalar('exper')
+            ->maxLength('exper', 255)
             ->requirePresence('exper', 'create')
             ->notEmptyString('exper');
 

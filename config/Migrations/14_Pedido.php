@@ -31,9 +31,7 @@ class Pedido extends AbstractMigration
             ->addColumn('data_solicitacao', 'date', ['null' => false])
             ->addColumn('titulo', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('especificar', 'string', ['limit' => 255, 'null' => true])
-            ->addColumn('exper', 'enum', [
-                'values' => ['sim', 'não'], 'null' => false
-            ])
+            ->addColumn('exper', 'string',  ['limit' => 255, 'null' => false])
             ->addColumn('num_ceua', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('vigencia_ceua', 'date', ['null' => false])
             ->addColumn('num_aprovado', 'integer', ['null' => false])
