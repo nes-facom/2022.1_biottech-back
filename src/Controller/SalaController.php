@@ -39,8 +39,7 @@ class SalaController extends AppController
     {
         $this->request->allowMethod(['get']);
 
-        $this->set('salas', $this->paginate($service->getSalas($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN))));
-        $this->viewBuilder()->setOption('serialize', ['salas']);
+        return $this->Util->convertToJson(200, $service->getSalas($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
     public function getSala(SalaService $service)

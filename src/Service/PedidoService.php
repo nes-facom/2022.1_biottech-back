@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -277,6 +278,8 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_nivel_projeto'])) {
@@ -286,6 +289,8 @@ class PedidoService
         if ($table->find('all')->where(['nome_nivel_projeto' => $data['nome_nivel_projeto']])->first() != null) {
             throw new BadRequestException('Já existe um Nivel Projeto cadastrado com esse nome.');
         }
+
+        $newEmptyTable->modified = FrozenTime::now();
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
@@ -314,7 +319,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('NivelProjeto');
 
-        return $table->find('all')->select(['id', 'nome_nivel_projeto'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_nivel_projeto'])->where(['active' => $active])->order(['created' => 'DESC']);
     }
 
     public function saveLinhaPesquisaAndUpdate($data, $id)
@@ -328,6 +333,8 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_linha_pesquisa'])) {
@@ -338,7 +345,15 @@ class PedidoService
             throw new BadRequestException('Já existe uma Linha de Pesquisa cadastrada com esse nome.');
         }
 
-        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+        $newEmptyTable->modified = FrozenTime::now();
+
+        try {
+            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+        } catch (Exception $e) {
+            throw new BadRequestException($e->getMessage());
+        }
+
+
     }
 
     public function updateActiveAndDisableLinhaPesquisa($id, $active)
@@ -365,7 +380,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('LinhaPesquisa');
 
-        return $table->find('all')->select(['id', 'nome_linha_pesquisa'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_linha_pesquisa'])->where(['active' => $active])->order(['created' => 'DESC']);
     }
 
     public function saveFinalidadeAndUpdate($data, $id)
@@ -379,6 +394,8 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_finalidade'])) {
@@ -388,6 +405,7 @@ class PedidoService
         if ($table->find('all')->where(['nome_finalidade' => $data['nome_finalidade']])->first() != null) {
             throw new BadRequestException('Já existe uma Finalidade cadastrada com esse nome.');
         }
+        $newEmptyTable->modified = FrozenTime::now();
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
@@ -416,7 +434,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Finalidade');
 
-        return $table->find('all')->select(['id', 'nome_finalidade'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_finalidade'])->where(['active' => $active])->order(['created' => 'DESC']);
     }
 
     public function saveLaboratorioAndUpdate($data, $id)
@@ -430,6 +448,8 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_laboratorio'])) {
@@ -439,6 +459,7 @@ class PedidoService
         if ($table->find('all')->where(['nome_laboratorio' => $data['nome_laboratorio']])->first() != null) {
             throw new BadRequestException('Já existe um Laboratório  cadastrada com esse nome.');
         }
+        $newEmptyTable->modified = FrozenTime::now();
 
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
@@ -467,7 +488,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Laboratorio');
 
-        return $table->find('all')->select(['id', 'nome_laboratorio'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_laboratorio'])->where(['active' => $active])->order(['created' => 'DESC']);
     }
 
     public function saveVinculoInstitucionalAndUpdate($data, $id)
@@ -481,6 +502,8 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_vinculo_institucional'])) {
@@ -490,7 +513,7 @@ class PedidoService
         if ($table->find('all')->where(['nome_vinculo_institucional' => $data['nome_vinculo_institucional']])->first() != null) {
             throw new BadRequestException('Já existe um Vinculo Institucional cadastrado com esse nome.');
         }
-
+        $newEmptyTable->modified = FrozenTime::now();
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
@@ -518,7 +541,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('VinculoInstitucional');
 
-        return $table->find('all')->select(['id', 'nome_vinculo_institucional'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_vinculo_institucional'])->where(['active' => $active])->order(['created' => 'DESC']);
     }
 
     public function saveProjetoAndUpdate($data, $id)
@@ -532,6 +555,8 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_projeto'])) {
@@ -541,7 +566,7 @@ class PedidoService
         if ($table->find('all')->where(['nome_projeto' => $data['nome_projeto']])->first() != null) {
             throw new BadRequestException('Já existe um Projeto cadastrado com esse nome.');
         }
-
+        $newEmptyTable->modified = FrozenTime::now();
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
@@ -569,7 +594,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Projeto');
 
-        return $table->find('all')->select(['id', 'nome_projeto'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_projeto'])->where(['active' => $active])->order(['created' => 'DESC']);
     }
 
     public function saveEspecieAndUpdate($data, $id)
@@ -583,6 +608,8 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_especie'])) {
@@ -592,7 +619,7 @@ class PedidoService
         if ($table->find('all')->where(['nome_especie' => $data['nome_especie']])->first() != null) {
             throw new BadRequestException('Já existe um Projeto cadastrado com esse nome.');
         }
-
+        $newEmptyTable->modified = FrozenTime::now();
         return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
@@ -620,7 +647,7 @@ class PedidoService
     {
         $table = TableRegistry::getTableLocator()->get('Especie');
 
-        return $table->find('all')->select(['id', 'nome_especie'])->where(['active' => $active]);
+        return $table->find('all')->select(['id', 'nome_especie'])->where(['active' => $active])->order(['created' => 'DESC']);
     }
 
     public function savePedidoAndUpdate($data, $id)
@@ -629,7 +656,7 @@ class PedidoService
         $newEmptyTable = $table->newEmptyEntity();
         if (isset($id)) {
             try {
-                $newEmptyTable  = $table->find()->where(['id' => $id])->where()->firstOrFail();
+                $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }

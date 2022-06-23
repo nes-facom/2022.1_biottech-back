@@ -19,6 +19,14 @@ class Finalidade extends AbstractMigration
         $table = $this->table('finalidade');
         $table->addColumn('nome_finalidade', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addIndex(['nome_finalidade'], ['unique' => true])
             ->create();
     }

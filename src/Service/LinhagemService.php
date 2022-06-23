@@ -8,6 +8,7 @@
 namespace App\Service;
 
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -25,12 +26,14 @@ class LinhagemService
         $table = TableRegistry::getTableLocator()->get('Linhagem');
         $newEmptyTable = $table->newEmptyEntity();
 
-        if(isset($id)){
+        if (isset($id)) {
             try {
                 $newEmptyTable = $table->find()->where(['id' => $id])->where()->firstOrFail();
-            }catch (Exception $e){
+            } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        } else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
         if (!isset($data['nome_linhagem'])) {
@@ -40,8 +43,8 @@ class LinhagemService
         if ($table->find('all')->where(['nome_linhagem' => $data['nome_linhagem']])->first() != null) {
             throw new BadRequestException('Já existe uma Linhagem com esse nome.');
         }
-
-        return $table->saveOrFail($table->patchEntity($newEmptyTable , $data), ['atomic' => true]);
+        $newEmptyTable->modified = FrozenTime::now();
+        return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
     }
 
     public function getLinhagens($search, $active): Query
@@ -50,7 +53,7 @@ class LinhagemService
             'LOWER(concat(".", nome_linhagem, ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
-        $table = TableRegistry::getTableLocator()->get('Linhagem')->find('all')->where($findInTable)->andWhere(['active' => $active]);;
+        $table = TableRegistry::getTableLocator()->get('Linhagem')->find('all')->where($findInTable)->andWhere(['active' => $active])->order(['created' => 'DESC']);
 
         return $table->find('all');
     }

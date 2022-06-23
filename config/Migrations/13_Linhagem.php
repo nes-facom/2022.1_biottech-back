@@ -20,6 +20,14 @@ class Linhagem extends AbstractMigration
         $table->addColumn('nome_linhagem', 'string', ['limit' => 255, 'null' => false])
             ->addIndex(['nome_linhagem'], ['unique' => true])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->create();
     }
 

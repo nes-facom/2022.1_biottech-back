@@ -74,8 +74,10 @@ class SalaService
                 return $saveSala;
             });
         } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+            throw new BadRequestException($e->getMessage());
         }
+
+
     }
 
     public function getSalas($search, $active): Query

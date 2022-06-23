@@ -19,6 +19,14 @@ class Especie extends AbstractMigration
         $table = $this->table('especie');
         $table->addColumn('nome_especie', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addIndex(['nome_especie'], ['unique' => true])
             ->create();
     }

@@ -52,6 +52,13 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->saveNivelProjetoAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function editNivelProjeto(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(201, $service->saveNivelProjetoAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
     public function activeAndDisableNivelProjeto(PedidoService $service)
     {
         $this->request->allowMethod(['delete']);
@@ -71,6 +78,13 @@ class PedidoController extends AppController
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->saveLinhaPesquisaAndUpdate($this->request->getParsedBody(), null));
+    }
+
+    public function editLinhaPesquisa(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(200, $service->saveLinhaPesquisaAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function activeAndDisableLinhaPesquisa(PedidoService $service)
@@ -94,6 +108,13 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->saveFinalidadeAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function editFinalidade(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(201, $service->saveFinalidadeAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
     public function activeAndDisableFinalidade(PedidoService $service)
     {
         $this->request->allowMethod(['delete']);
@@ -113,6 +134,13 @@ class PedidoController extends AppController
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->saveLaboratorioAndUpdate($this->request->getParsedBody(), null));
+    }
+
+    public function editLaboratorio(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(201, $service->saveLaboratorioAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function activeAndDisableLaboratorio(PedidoService $service)
@@ -136,6 +164,13 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->saveVinculoInstitucionalAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function editVinculoInstitucional(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(201, $service->saveVinculoInstitucionalAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
     public function activeAndDisableVinculoInstitucional(PedidoService $service)
     {
         $this->request->allowMethod(['delete']);
@@ -157,6 +192,13 @@ class PedidoController extends AppController
         return $this->Util->convertToJson(201, $service->saveProjetoAndUpdate($this->request->getParsedBody(), null));
     }
 
+    public function editProjeto(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(201, $service->saveProjetoAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
+    }
+
     public function activeAndDisableProjeto(PedidoService $service)
     {
         $this->request->allowMethod(['delete']);
@@ -176,6 +218,13 @@ class PedidoController extends AppController
         $this->request->allowMethod(['post']);
 
         return $this->Util->convertToJson(201, $service->saveEspecieAndUpdate($this->request->getParsedBody(), null));
+    }
+
+    public function editEspecie(PedidoService $service)
+    {
+        $this->request->allowMethod(['put']);
+
+        return $this->Util->convertToJson(201, $service->saveEspecieAndUpdate($this->request->getParsedBody(), $this->request->getQuery('id')));
     }
 
     public function activeAndDisableEspecie(PedidoService $service)

@@ -19,6 +19,14 @@ class LinhaPesquisa extends AbstractMigration
         $table = $this->table('linha_pesquisa');
         $table->addColumn('nome_linha_pesquisa', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addIndex(['nome_linha_pesquisa'], ['unique' => true])
             ->create();
     }

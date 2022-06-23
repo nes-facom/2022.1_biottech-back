@@ -19,6 +19,14 @@ class Projeto extends AbstractMigration
         $table = $this->table('projeto');
         $table->addColumn('nome_projeto', 'string', ['limit' => 255, 'null' => false])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addIndex(['nome_projeto'], ['unique' => true])
             ->create();
     }
