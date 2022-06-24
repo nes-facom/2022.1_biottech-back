@@ -15,7 +15,7 @@ class Saida extends AbstractMigration
     public function change()
     {
         $table = $this->table('saida');
-        $table->addColumn('caixa_id', 'integer', ['null' => true])
+        $table->addColumn('caixa_id', 'integer', ['null' => false])
             ->addColumn('previsao_id', 'integer', ['null' => true])
             ->addColumn('data_saida', 'date', ['null' => false])
             ->addColumn('tipo_saida', 'enum', [

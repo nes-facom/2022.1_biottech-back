@@ -63,6 +63,7 @@ class SaidaTable extends Table
     {
         $validator
             ->integer('caixa_id')
+            ->requirePresence('caixa_id', 'create')
             ->allowEmptyString('caixa_id');
 
         $validator
