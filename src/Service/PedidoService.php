@@ -141,7 +141,7 @@ class PedidoService
             ]
         ]])->where([
             'YEAR(data_solicitacao)' => $year
-        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active])->order(['created' => 'DESC']);
+        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active])->order(['Pedido.created' => 'DESC']);
     }
 
     public function getPedidos($search, $year, $active)
@@ -264,7 +264,7 @@ class PedidoService
             ]
         ]])->where([
             'YEAR(data_solicitacao)' => $year
-        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active])->order(['created' => 'DESC']);
+        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active])->order(['Pedido.created' => 'DESC']);
     }
 
     public function saveNivelProjetoAndUpdate($data, $id)
