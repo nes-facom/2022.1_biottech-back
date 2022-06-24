@@ -91,17 +91,6 @@ class SalaService
         return $table->find('all')->where($findInTable)->andWhere(['Sala.active' => $active]);
     }
 
-    public function getSala($search, $active)
-    {
-        $table = TableRegistry::getTableLocator()->get('Sala');
-
-        try {
-            return $table->find('all')->where(['num_sala' => $search])->andWhere(['Sala.active' => $active])->firstOrFail();
-        } catch (Exception $e) {
-            throw new BadRequestException('Sala não encontrada.');
-        }
-    }
-
     public function updateActiveAndDisable($id, $active)
     {
         $table = TableRegistry::getTableLocator()->get('Sala');

@@ -8,6 +8,7 @@
 namespace App\Service;
 
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -43,7 +44,10 @@ class PrevisaoService
             if ($table->find('all')->where(['num_previsao' => $data['num_previsao']])->first() != null) {
                 throw new BadRequestException('Já existe uma Previsão com esse número.');
             }
+            $newEmptyTable->created = FrozenTime::now();
         }
+
+        $newEmptyTable->modified = FrozenTime::now();
 
         try {
             return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
@@ -119,7 +123,7 @@ class PrevisaoService
             ]
         ])->where([
             'YEAR(retirada_data)' => $year
-        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function getPrevisoes($search, $year, $active): Query
@@ -135,7 +139,7 @@ class PrevisaoService
 
         return $table->find()->where([
             'YEAR(retirada_data)' => $year
-        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function updateActiveAndDisable($id, $active)

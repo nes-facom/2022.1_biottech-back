@@ -141,7 +141,7 @@ class PedidoService
             ]
         ]])->where([
             'YEAR(data_solicitacao)' => $year
-        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function getPedidos($search, $year, $active)
@@ -264,7 +264,7 @@ class PedidoService
             ]
         ]])->where([
             'YEAR(data_solicitacao)' => $year
-        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Pedido.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function saveNivelProjetoAndUpdate($data, $id)
@@ -660,7 +660,11 @@ class PedidoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        }else {
+            $newEmptyTable->created = FrozenTime::now();
         }
+
+        $newEmptyTable->modified = FrozenTime::now();
 
         try {
             return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);

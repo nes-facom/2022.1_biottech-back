@@ -47,10 +47,9 @@ class SaidaTable extends Table
         $this->belongsTo('Caixa', [
             'foreignKey' => 'caixa_id',
         ]);
-        $this->belongsToMany('Previsao', [
-            'foreignKey' => 'saida_id',
-            'targetForeignKey' => 'previsao_id',
-            'joinTable' => 'previsao_saida',
+
+        $this->belongsTo('Previsao', [
+            'foreignKey' => 'previsao_id',
         ]);
     }
 

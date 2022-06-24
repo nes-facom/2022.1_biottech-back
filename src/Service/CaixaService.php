@@ -127,6 +127,7 @@ class CaixaService
         ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);
     }
 
+
     public function updateActiveAndDisable($id, $active)
     {
         $table = TableRegistry::getTableLocator()->get('Caixa');

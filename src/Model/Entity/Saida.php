@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int|null $caixa_id
+ * @property int|null $previsao_id
  * @property \Cake\I18n\FrozenDate $data_saida
  * @property string $tipo_saida
  * @property string|null $usuario
@@ -36,6 +37,7 @@ class Saida extends Entity
      */
     protected $_accessible = [
         'caixa_id' => true,
+        'previsao_id' => true,
         'data_saida' => true,
         'tipo_saida' => true,
         'usuario' => true,

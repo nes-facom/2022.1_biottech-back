@@ -27,6 +27,14 @@ class Previsao extends AbstractMigration
             ])
             ->addColumn('totalRetirado', 'integer', ['null' => false, 'default' => 0])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addForeignKey('pedido_id', 'pedido', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->addIndex(['num_previsao'], ['unique' => true])
             ->create();

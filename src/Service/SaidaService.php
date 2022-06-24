@@ -74,10 +74,9 @@ class SaidaService
         $tableSaida = TableRegistry::getTableLocator()->get('Saida');
         $newEmptyTableSaida = $tableSaida->newEmptyEntity();
 
-        $tablePrevisaoSaida = TableRegistry::getTableLocator()->get('PrevisaoSaida');
-        $newEmptyTablePrevisaoSaida = $tablePrevisaoSaida->newEmptyEntity();
-
         $tablePrevisao = TableRegistry::getTableLocator()->get('Previsao');
+
+        $tableCaixa = TableRegistry::getTableLocator()->get('Caixa');
 
         if (isset($id)) {
             try {
@@ -86,13 +85,18 @@ class SaidaService
                 throw new BadRequestException('ID não encontrado.');
             }
 
-            foreach ($tablePrevisaoSaida->find()->select('id')->where(['saida_id' => $newEmptyTableSaida['id']]) as $row) {
-                $tablePrevisaoSaida->deleteOrFail($row);
+        }
+
+        if ($data['caixa_numero']) {
+            try {
+                $caixaId = $tableCaixa->find('all')->where(['caixa_numero' => $data['caixa_numero']])->andWhere(['Caixa.active' => true])->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('Sala não encontrada.');
             }
         }
 
         try {
-            $newEmptyTableSaida->caixa_id = $data['caixa_id'];
+            $newEmptyTableSaida->caixa_id = $caixaId->id;
             $newEmptyTableSaida->data_saida = $data['data_saida'];
             $newEmptyTableSaida->tipo_saida = $data['tipo_saida'];
             $newEmptyTableSaida->usuario = $data['usuario'];
@@ -105,19 +109,24 @@ class SaidaService
 
             $connection = ConnectionManager::get('default');
 
-            return $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $newEmptyTablePrevisaoSaida, $data, $tablePrevisaoSaida, $tablePrevisao) {
-                $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => true]);
+            return $connection->transactional(function () use ($tableSaida, $newEmptyTableSaida, $data, $tablePrevisao) {
 
                 if ($data['tipo_saida'] == 'fornecimento') {
-                    $newEmptyTablePrevisao = $tablePrevisao->find()->where(['id' => $data['previsao_id']])->first();
+
+                    try {
+                        $previsaoId = $tablePrevisao->find('all')->where(['num_previsao' => $data['num_previsao']])->andWhere(['Previsao.active' => true])->firstOrFail();
+                    } catch (Exception $e) {
+                        throw new BadRequestException('Sala não encontrada.');
+                    }
+
+                    $newEmptyTableSaida->previsao_id = $previsaoId->id;
+                    $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => true]);
+                    $newEmptyTablePrevisao = $tablePrevisao->find()->where(['id' => $previsaoId->id])->first();
                     $newEmptyTablePrevisao->totalRetirado = $newEmptyTablePrevisao->totalRetirado + $saveSaida->num_animais;
                     $tablePrevisao->saveOrFail($newEmptyTablePrevisao);
 
-                    $newEmptyTablePrevisaoSaida->previsao_id = $data['previsao_id'];
-
-                    $newEmptyTablePrevisaoSaida->saida_id = $saveSaida->id;
-
-                    $tablePrevisaoSaida->saveOrFail($newEmptyTablePrevisaoSaida, ['atomic' => true]);
+                } else {
+                    $saveSaida = $tableSaida->saveOrFail($newEmptyTableSaida, ['atomic' => true]);
                 }
                 return $saveSaida;
             });
@@ -171,6 +180,12 @@ class SaidaService
             'Previsao' => [
                 'fields' => [
                     'num_previsao'
+                ]
+            ]
+        ])->contain([
+            'Caixa' => [
+                'fields' => [
+                    'caixa_numero'
                 ]
             ]
         ])->where([

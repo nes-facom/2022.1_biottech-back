@@ -51,6 +51,7 @@ class PrevisaoController extends AppController
         $this->viewBuilder()->setOption('serialize', ['previsao']);
     }
 
+
     public function activeAndDisable(PrevisaoService $service)
     {
         $this->request->allowMethod(['delete']);

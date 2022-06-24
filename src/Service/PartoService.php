@@ -77,7 +77,7 @@ class PartoService
             ]
         ])->where([
             'YEAR(data_parto)' => $year
-        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active]);;
+        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active]);
     }
 
     public function getPartos($search, $year, $active): Query

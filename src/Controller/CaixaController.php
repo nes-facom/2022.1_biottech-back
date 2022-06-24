@@ -51,6 +51,7 @@ class CaixaController extends AppController
         $this->viewBuilder()->setOption('serialize', ['caixas']);
     }
 
+
     public function activeAndDisable(CaixaService $service)
     {
         $this->request->allowMethod(['delete']);

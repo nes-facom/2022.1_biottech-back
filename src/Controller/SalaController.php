@@ -42,13 +42,6 @@ class SalaController extends AppController
         return $this->Util->convertToJson(200, $service->getSalas($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
-    public function getSala(SalaService $service)
-    {
-        $this->request->allowMethod(['get']);
-
-        return $this->Util->convertToJson(200, $service->getSala($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
-    }
-
     public function activeAndDisable(SalaService $service)
     {
         $this->request->allowMethod(['delete']);

@@ -16,6 +16,7 @@ class Saida extends AbstractMigration
     {
         $table = $this->table('saida');
         $table->addColumn('caixa_id', 'integer', ['null' => true])
+            ->addColumn('previsao_id', 'integer', ['null' => true])
             ->addColumn('data_saida', 'date', ['null' => false])
             ->addColumn('tipo_saida', 'enum', [
                 'values' => ['fornecimento', 'acasalamento', 'eutanasia', 'obito', 'controle_sanitário'], 'null' => false
@@ -31,7 +32,16 @@ class Saida extends AbstractMigration
             ->addColumn('sobra', 'integer', ['null' => false])
             ->addColumn('observacoes', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addForeignKey('caixa_id', 'caixa', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+            ->addForeignKey('previsao_id', 'previsao', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->create();
     }
 }
