@@ -64,7 +64,8 @@ class PrevisaoTable extends Table
     {
         $validator
             ->integer('pedido_id')
-            ->allowEmptyString('pedido_id');
+            ->requirePresence('pedido_id', 'create')
+            ->notEmptyString('pedido_id');
 
         $validator
             ->integer('num_previsao')

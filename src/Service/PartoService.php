@@ -4,6 +4,7 @@
 namespace App\Service;
 
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -19,6 +20,7 @@ class PartoService
     public function savePartoAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Parto');
+        $tableCaixaMatriz = TableRegistry::getTableLocator()->get('CaixaMatriz');
         $newEmptyTable = $table->newEmptyEntity();
 
         if (isset($id)) {
@@ -27,16 +29,35 @@ class PartoService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
+        }else {
+            $newEmptyTable->created = FrozenTime::now();
         }
 
-        if ($table->find('all')->where(['numero_parto' => $data['numero_parto']])->first() != null) {
-            throw new BadRequestException('Já existe um Parto cadastrado com esse número.');
+        if ($data['caixa_matriz_numero']) {
+            try {
+                $caixaMatrizId = $tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->andWhere(['CaixaMatriz.active' => true])->firstOrFail();
+            } catch (Exception $e) {
+                throw new BadRequestException('Caixa Matriz não encontrada.');
+            }
         }
+
+        $newEmptyTable->caixa_matriz_id = $caixaMatrizId->id;
+        $newEmptyTable->numero_parto = $data['numero_parto'];
+        $newEmptyTable->data_parto = $data['data_parto'];
+        $newEmptyTable->num_macho = $data['num_macho'];
+        $newEmptyTable->num_femea = $data['num_femea'];
+        $newEmptyTable->des_macho = $data['des_macho'];
+        $newEmptyTable->des_femea = $data['des_femea'];
+        $newEmptyTable->qtd_canib = $data['qtd_canib'];
+        $newEmptyTable->qtd_gamba = $data['qtd_gamba'];
+        $newEmptyTable->qtd_outros = $data['qtd_outros'];
+        $newEmptyTable->modified = FrozenTime::now();
+
 
         try {
-            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+            return $table->saveOrFail($newEmptyTable, ['atomic' => true]);
         } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+            throw new BadRequestException($e->getMessage());
         }
 
     }
@@ -77,7 +98,7 @@ class PartoService
             ]
         ])->where([
             'YEAR(data_parto)' => $year
-        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function getPartos($search, $year, $active): Query
@@ -89,9 +110,16 @@ class PartoService
              data_parto, ".")) LIKE' => strtolower("%" . $search . "%")
         ];
 
-        return $table->find('all')->where([
+        return $table->find('all')->contain([
+            'CaixaMatriz' => [
+                'fields' => [
+                    'id',
+                    'caixa_matriz_numero'
+                ]
+            ]
+        ])->where([
             'YEAR(data_parto)' => $year
-        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active])->order(['created' => 'DESC']);
     }
 
     public function updateActiveAndDisable($id, $active)

@@ -58,7 +58,8 @@ class TemperaturaUmidadeTable extends Table
     {
         $validator
             ->integer('sala_id')
-            ->allowEmptyString('sala_id');
+            ->requirePresence('sala_id', 'create')
+            ->notEmptyString('sala_id');
 
         $validator
             ->date('data')

@@ -17,7 +17,7 @@ class Previsao extends AbstractMigration
     public function change()
     {
         $table = $this->table('previsao');
-        $table->addColumn('pedido_id', 'integer', ['null' => true])
+        $table->addColumn('pedido_id', 'integer', ['null' => false])
             ->addColumn('num_previsao', 'integer', ['null' => false])
             ->addColumn('retirada_num', 'integer', ['null' => false])
             ->addColumn('qtd_retirar', 'integer', ['null' => false])

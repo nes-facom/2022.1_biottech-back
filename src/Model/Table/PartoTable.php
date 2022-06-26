@@ -58,7 +58,8 @@ class PartoTable extends Table
     {
         $validator
             ->integer('caixa_matriz_id')
-            ->allowEmptyString('caixa_matriz_id');
+            ->requirePresence('caixa_matriz_id', 'create')
+            ->notEmptyString('caixa_matriz_id');
 
         $validator
             ->integer('numero_parto')
