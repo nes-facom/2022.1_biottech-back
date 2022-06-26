@@ -45,6 +45,10 @@ class CaixaTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->belongsTo('Caixa', [
+            'foreignKey' => 'caixa_id',
+        ]);
+
         $this->belongsTo('Linhagem', [
             'foreignKey' => 'linhagem_id',
         ]);

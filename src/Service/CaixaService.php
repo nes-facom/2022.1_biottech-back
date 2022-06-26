@@ -9,6 +9,7 @@ namespace App\Service;
 
 use App\Model\Entity\Caixa;
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -24,6 +25,7 @@ class CaixaService
     public function saveCaixaAndUpdate($data, $id)
     {
         $table = TableRegistry::getTableLocator()->get('Caixa');
+        $tableCaixaMatriz = TableRegistry::getTableLocator()->get('CaixaMatriz');
         $newEmptyTable = $table->newEmptyEntity();
 
         if (isset($id)) {
@@ -43,12 +45,23 @@ class CaixaService
             if ($table->find('all')->where(['caixa_numero' => $data['caixa_numero']])->first() != null) {
                 throw new BadRequestException('Já existe uma Caixa com esse número.');
             }
+            $newEmptyTable->created = FrozenTime::now();
         }
 
+        if (!empty($data['caixa_matriz_numero'])) {
+            try {
+                $caixaMatrizId = $tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->andWhere(['CaixaMatriz.active' => true])->firstOrFail();
+                $newEmptyTable->caixa_matriz_id = $caixaMatrizId->id;
+            } catch (Exception $e) {
+                throw new BadRequestException('Caixa Matriz não encontrada.');
+            }
+        }
+
+        $newEmptyTable->modified = FrozenTime::now();
         try {
             return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
         } catch (Exception $e) {
-            throw new BadRequestException('Ocorreu algum problema no cadastro, por favor entre em contato com o suporte técnico ou tente novamente mais tarde.');
+            throw new BadRequestException($e->getMessage());
         }
     }
 
@@ -80,7 +93,6 @@ class CaixaService
             'active'
         ])->contain([
             'CaixaMatriz' => [
-                'foreignKey' => 'caixa_matriz_id',
                 'fields' => [
                     'id',
                     'caixa_matriz_numero',
@@ -94,7 +106,7 @@ class CaixaService
             ]
         ])->where([
             'YEAR(nascimento)' => $year
-        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active])->order(['Caixa.created' => 'DESC']);
     }
 
     public function getCaixas($search, $year, $active): Query
@@ -119,12 +131,20 @@ class CaixaService
         ])->contain([
             'Linhagem' => [
                 'fields' => [
+                    'id',
                     'nome_linhagem'
+                ]
+            ]
+        ])->contain([
+            'CaixaMatriz' => [
+                'fields' => [
+                    'id',
+                    'caixa_matriz_numero',
                 ]
             ]
         ])->where([
             'YEAR(nascimento)' => $year
-        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Caixa.active' => $active])->order(['Caixa.created' => 'DESC']);
     }
 
 
