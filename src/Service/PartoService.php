@@ -98,7 +98,7 @@ class PartoService
             ]
         ])->where([
             'YEAR(data_parto)' => $year
-        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active])->order(['created' => 'DESC']);
+        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active])->order(['Parto.created' => 'DESC']);
     }
 
     public function getPartos($search, $year, $active): Query
@@ -119,7 +119,7 @@ class PartoService
             ]
         ])->where([
             'YEAR(data_parto)' => $year
-        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active])->order(['created' => 'DESC']);
+        ])->andWhere($findInTable)->andWhere(['Parto.active' => $active])->order(['Parto.created' => 'DESC']);
     }
 
     public function updateActiveAndDisable($id, $active)
