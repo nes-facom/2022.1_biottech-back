@@ -164,11 +164,4 @@ class UsersController extends AppController
         return $this->Util->convertToJson(200, $service->updateActiveAndDisable($this->request->getQuery('id'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN)));
     }
 
-    public function editAvatar(UserService $service)
-    {
-        $this->request->allowMethod(['put']);
-
-        return $this->Util->convertToJson(200, $service->updateUserAvatar($this->Authentication->getIdentity()->getOriginalData()['id'], $this->request->getParsedBody()));
-    }
-
 }

@@ -22,6 +22,14 @@ class CaixaMatriz extends AbstractMigration
             ->addColumn('saida_da_colonia', 'date', ['null' => true])
             ->addColumn('data_obito', 'date', ['null' => true])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
+            ->addColumn('created', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
+            ->addColumn('modified', 'datetime', [
+                'default' => null,
+                'null' => false,
+            ])
             ->addIndex(['caixa_matriz_numero'], ['unique' => true])
             ->create();
     }

@@ -77,10 +77,6 @@ class UsersTable extends Table
             ->boolean('active')
             ->notEmptyString('active');
 
-        $validator
-            ->scalar('avatar')
-            ->allowEmptyString('avatar');
-
         return $validator;
     }
 

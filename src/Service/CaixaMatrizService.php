@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -41,6 +42,7 @@ class CaixaMatrizService
             if ($tableCaixaMatriz->find('all')->where(['caixa_matriz_numero' => $data['caixa_matriz_numero']])->first() != null) {
                 throw new BadRequestException('Já existe uma Caixa Matriz com esse número.');
             }
+            $newEmptyTableCaixaMatriz->created = FrozenTime::now();
         }
 
         try {
@@ -48,6 +50,7 @@ class CaixaMatrizService
             $newEmptyTableCaixaMatriz->data_acasalamento = $data['data_acasalamento'];
             $newEmptyTableCaixaMatriz->saida_da_colonia = $data['saida_da_colonia'];
             $newEmptyTableCaixaMatriz->data_obito = $data['data_obito'];
+            $newEmptyTableCaixaMatriz->modified = FrozenTime::now();
 
             $connection = ConnectionManager::get('default');
 
@@ -157,7 +160,7 @@ class CaixaMatrizService
             ]
         ])->where([
             'YEAR(data_acasalamento)' => $year
-        ])->andWhere($findInTable)->andWhere(['CaixaMatriz.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['CaixaMatriz.active' => $active])->order(['CaixaMatriz.created' => 'DESC']);
     }
 
     public function getCaixaMatrizes($search, $year, $active): Query
@@ -184,7 +187,7 @@ class CaixaMatrizService
             ]
         ])->where([
             'YEAR(data_acasalamento)' => $year
-        ])->andWhere($findInTable)->andWhere(['CaixaMatriz.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['CaixaMatriz.active' => $active])->order(['CaixaMatriz.created' => 'DESC']);
 
 
     }

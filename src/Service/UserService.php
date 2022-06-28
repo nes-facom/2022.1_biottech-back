@@ -35,6 +35,8 @@ class UserService
         $user->username = $data['username'];
         $user->password = $data['password'];
         $user->type = $data['type'];
+        $user->created = FrozenTime::now();
+        $user->modified = FrozenTime::now();
 
         try {
             return $table->saveOrFail($user);
@@ -81,6 +83,7 @@ class UserService
 
         $user->name = $data['name'];
         $user->type = $data['type'];
+        $user->modified = FrozenTime::now();
 
         try {
             return $table->saveOrFail($user);
@@ -104,24 +107,11 @@ class UserService
         }
 
         $user->password = $data['password'];
+        $user->modified = FrozenTime::now();
 
         return $table->saveOrFail($user);
     }
 
-    public function updateUserAvatar($id, $data)
-    {
-        $table = TableRegistry::getTableLocator()->get('Users');
-        $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
-        try {
-            $user = $usersTable->where(['id' => $id])->firstOrFail();
-        } catch (Exception $e) {
-            throw new BadRequestException('Usuário não encontrado.');
-        }
-
-        $user->avatar = $data['avatar'];
-
-        return $table->saveOrFail($user);
-    }
 
     public function generateNewPassword($id)
     {
@@ -141,6 +131,7 @@ class UserService
         }
 
         $user->password = $randomString;
+        $user->modified = FrozenTime::now();
 
         $table->saveOrFail($user)->password;
         return $randomString;
@@ -158,6 +149,7 @@ class UserService
         }
 
         $user->active = $active;
+        $user->modified = FrozenTime::now();
 
         try {
             return $table->saveOrFail($user);

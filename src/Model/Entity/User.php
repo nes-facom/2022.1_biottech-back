@@ -15,7 +15,6 @@ use Cake\ORM\Entity;
  * @property string $password
  * @property int $type
  * @property bool $active
- * @property string|null $avatar
  */
 class User extends Entity
 {
@@ -33,8 +32,7 @@ class User extends Entity
         'username' => true,
         'password' => true,
         'type' => true,
-        'active' => true,
-        'avatar' => true,
+        'active' => true
     ];
 
     /**
