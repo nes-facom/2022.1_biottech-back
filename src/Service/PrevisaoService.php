@@ -123,7 +123,7 @@ class PrevisaoService
             ]
         ])->where([
             'YEAR(retirada_data)' => $year
-        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active])->order(['created' => 'DESC']);
+        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active])->order(['Previsao.created' => 'DESC']);
     }
 
     public function getPrevisoes($search, $year, $active): Query
@@ -139,7 +139,7 @@ class PrevisaoService
 
         return $table->find()->where([
             'YEAR(retirada_data)' => $year
-        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active])->order(['created' => 'DESC']);
+        ])->andWhere($findInTable)->andWhere(['Previsao.active' => $active])->order(['Previsao.created' => 'DESC']);
     }
 
     public function updateActiveAndDisable($id, $active)

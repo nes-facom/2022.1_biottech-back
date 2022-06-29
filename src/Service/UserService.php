@@ -45,18 +45,21 @@ class UserService
         }
     }
 
-    public function getAllUsers($active, $idCurrent)
+    public function getAllUsers($search, $active, $idCurrent)
     {
-        $usersTable = TableRegistry::getTableLocator()->get('Users')->find();
+        $findInTable = [
+            'LOWER(concat(".", name, ".",
+             username, ".")) LIKE' => strtolower("%" . $search . "%")
+        ];
 
-        $query = $usersTable->where(['active' => $active, 'id !=' => $idCurrent]);
+        $table = TableRegistry::getTableLocator()->get('Users');
 
-        foreach ($query as $row) {
-            unset($row["active"]);
-            unset($row["avatar"]);
-        }
-
-        return $query;
+        return $table->find('all')->select(['id',
+            'name',
+            'username',
+            'type',
+            'active'
+        ])->where($findInTable)->andWhere(['active' => $active, 'id !=' => $idCurrent])->order(['created' => 'DESC']);
     }
 
     public function getUser($id)

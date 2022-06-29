@@ -99,7 +99,8 @@ class CaixaMatrizService
                 'fields' => [
                     'id',
                     'caixa_numero',
-                    'nascimento'
+                    'nascimento',
+                    'sexo'
                 ]
             ]
         ])->where([
@@ -150,11 +151,16 @@ class CaixaMatrizService
                     'sexo',
                     'num_animais',
                     'qtd_saida',
-                    'ultima_saida',
+                    'ultima_saida'
                 ],
                 'Linhagem' => [
                     'fields' => [
                         'nome_linhagem'
+                    ]
+                ],
+                'CaixaMatriz' => [
+                    'fields' => [
+                        'caixa_matriz_numero'
                     ]
                 ]
             ]

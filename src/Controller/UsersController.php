@@ -20,6 +20,7 @@ class UsersController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+        $this->loadComponent('BryanCrowe/ApiPagination.ApiPagination');
     }
 
     public function beforeFilter(EventInterface $event)
@@ -39,7 +40,7 @@ class UsersController extends AppController
             $user = $result->getData();
             $payload = [
                 'sub' => $user->id,
-                'type'=>$user->type,
+                'type' => $user->type,
                 'exp' => time() + 86400,
             ];
 
@@ -90,7 +91,8 @@ class UsersController extends AppController
 
         $this->request->allowMethod(['get']);
 
-        return $this->Util->convertToJson(200, $service->getAllUsers(filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN),  $identity->getOriginalData()['id']));
+        $this->set('user', $this->paginate($service->getAllUsers($this->request->getQuery('search'), filter_var($this->request->getQuery('active'), FILTER_VALIDATE_BOOLEAN), $identity->getOriginalData()['id'])));
+        $this->viewBuilder()->setOption('serialize', ['user']);
     }
 
     public function getUser(UserService $service)
@@ -105,7 +107,7 @@ class UsersController extends AppController
         return $this->Util->convertToJson(200, $service->getUser($this->request->getQuery('id')));
     }
 
-    public function save(UserService $service)
+    public function addUser(UserService $service)
     {
         $identity = $this->Authentication->getIdentity();
         if ($identity->getOriginalData()['type'] == 1 || $identity->getOriginalData()['active'] == false) {

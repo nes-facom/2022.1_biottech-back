@@ -88,8 +88,8 @@ class CaixaService
             'sobra' => 'num_animais - qtd_saida',
             'idade_atual' => 'DATEDIFF(CURRENT_DATE(), nascimento)',
             'ultima_saida_semana' => 'WEEK(ultima_saida, 0)',
-            'dias_na_colonia' => 'DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))',
-            'semanas_na_colonia' => 'FLOOR(DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))/ 7)',
+            'dias_na_colonia' =>'IF(DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))<0, 0 , DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY)))',
+            'semanas_na_colonia' => 'IF(FLOOR(DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))/ 7)<0, 0 , FLOOR(DATEDIFF(CURRENT_DATE(), DATE_ADD(nascimento, INTERVAL 21 DAY))/ 7))',
             'active'
         ])->contain([
             'CaixaMatriz' => [
