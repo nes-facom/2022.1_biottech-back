@@ -212,8 +212,7 @@ class PedidoTable extends Table
         $validator
             ->scalar('peso')
             ->maxLength('peso', 255)
-            ->requirePresence('peso', 'create')
-            ->notEmptyString('peso');
+            ->allowEmptyString('peso');
 
         $validator
             ->scalar('observacoes')

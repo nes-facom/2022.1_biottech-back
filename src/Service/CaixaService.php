@@ -57,9 +57,17 @@ class CaixaService
             }
         }
 
+        $newEmptyTable->linhagem_id = $data['linhagem_id'];
+        $newEmptyTable->caixa_numero = $data['caixa_numero'];
+        $newEmptyTable->nascimento = $data['nascimento'];
+        $newEmptyTable->sexo = $data['sexo'];
+        $newEmptyTable->num_animais = $data['num_animais'];
+        $newEmptyTable->qtd_saida = $data['qtd_saida'];
+        $newEmptyTable->ultima_saida = $data['ultima_saida'];
         $newEmptyTable->modified = FrozenTime::now();
+
         try {
-            return $table->saveOrFail($table->patchEntity($newEmptyTable, $data), ['atomic' => true]);
+            return $table->saveOrFail( $newEmptyTable, ['atomic' => true]);
         } catch (Exception $e) {
             throw new BadRequestException($e->getMessage());
         }

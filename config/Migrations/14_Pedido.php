@@ -42,7 +42,7 @@ class Pedido extends AbstractMigration
                 'values' => ['macho', 'femea'], 'null' => false
             ])
             ->addColumn('idade', 'integer', ['null' => true])
-            ->addColumn('peso', 'string', ['limit' => 255, 'null' => false])
+            ->addColumn('peso', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('observacoes', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('active', 'boolean', ['default' => true, 'null' => false])
             ->addColumn('created', 'datetime', [

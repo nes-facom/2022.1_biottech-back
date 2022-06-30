@@ -31,7 +31,7 @@ use Cake\ORM\Entity;
  * @property int|null $adendo_1
  * @property int|null $adendo_2
  * @property string $sexo
- * @property int|null $idade
+ * @property int $idade
  * @property string $peso
  * @property string|null $observacoes
  * @property bool $active
