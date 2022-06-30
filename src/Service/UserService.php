@@ -84,7 +84,14 @@ class UserService
             throw new BadRequestException('Usuário não encontrado.');
         }
 
+        if (!!($table->find('all')->where(['id' => $id])->first()->username <=> $data['username'])) {
+            if ($table->find('all')->where(['username' => $data['username']])->first() != null) {
+                throw new BadRequestException('Já existe esse E-MAIL cadastrado.');
+            }
+        }
+
         $user->name = $data['name'];
+        $user->username = $data['username'];
         $user->type = $data['type'];
         $user->modified = FrozenTime::now();
 
