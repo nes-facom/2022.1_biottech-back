@@ -1,0 +1,31 @@
+:directories:
+  - .github
+  - bin
+  - gen
+  - logs
+  - nbproject
+  - plugins
+  - resources
+  - templates
+  - tests
+  - tmp
+  - vendor
+  - webroot
+  -
+:files:
+  - .editorconfig
+  - .gitattributes
+  - .gitignore
+  - .htaccess
+  - .phpunit.result.cache
+  - composer.json
+  - composer.lock
+  - ignore.yml
+  - index.php
+  - LICENSE
+  - phpcs.xml
+  - phpunit.xml
+  - phpunit.xml.dist
+  - Procfile
+
+
