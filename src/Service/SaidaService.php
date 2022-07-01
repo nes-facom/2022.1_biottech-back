@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Model\Entity\Saida;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\BadRequestException;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Exception;
@@ -84,7 +85,8 @@ class SaidaService
             } catch (Exception $e) {
                 throw new BadRequestException('ID não encontrado.');
             }
-
+        } else {
+            $newEmptyTableSaida->created = FrozenTime::now();
         }
 
         if ($data['caixa_numero']) {
@@ -105,6 +107,7 @@ class SaidaService
             $newEmptyTableSaida->sexo = $data['sexo'];
             $newEmptyTableSaida->sobra = $data['sobra'];
             $newEmptyTableSaida->observacoes = $data['observacoes'];
+            $newEmptyTableSaida->modified = FrozenTime::now();
 
 
             $connection = ConnectionManager::get('default');
@@ -159,7 +162,7 @@ class SaidaService
             ]
         ])->where([
             'YEAR(data_saida)' => $year
-        ])->andWhere($findInTable)->andWhere(['Saida.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Saida.active' => $active])->order(['Saida.created' => 'DESC']);
     }
 
     public function getSaidas($search, $year, $active): Query
@@ -190,7 +193,7 @@ class SaidaService
             ]
         ])->where([
             'YEAR(data_saida)' => $year
-        ])->andWhere($findInTable)->andWhere(['Saida.active' => $active]);
+        ])->andWhere($findInTable)->andWhere(['Saida.active' => $active])->order(['Saida.created' => 'DESC']);
     }
 
     public function updateActiveAndDisable($id, $active)
